@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <include
+                    android:id="@+id/tool_bar"
+                    layout="@layout/layout_toolbar" />
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/et_devName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginEnd="30dp"
+                        android:layout_marginTop="30dp"
+                        android:ellipsize="end"
+                        android:hint="@string/enter_dev_name"
+                        android:maxLength="16"
+                        android:singleLine="false"
+                        android:textColor="@android:color/black"/>
+
+                    <Button
+                        android:id="@+id/btn_modify"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginEnd="30dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="30dp"
+                        android:background="@drawable/main_button_selector"
+                        android:gravity="center"
+                        android:padding="0dp"
+                        android:singleLine="true"
+                        android:text="@string/modify"
+                        android:textColor="#fff"/>
+
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_marginTop="30dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:text="@string/camera_switch"
+                        android:textColor="#000" />
+
+                    <Switch
+                        android:id="@+id/camera_switch"
+                        android:layout_alignParentEnd="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_marginTop="30dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/tv_switch"
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#000"
+                        android:padding="10dp"
+                        android:text="@string/pir_detection"/>
+                    <Switch
+                        android:id="@+id/pir_switch"
+                        android:layout_alignParentEnd="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"/>
+
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_marginTop="30dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tv_night"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:text="@string/night_switch"
+                        android:textColor="#000" />
+
+
+                    <TextView
+                        android:layout_below="@+id/tv_night"
+                        android:id="@+id/tv_open"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#000"
+                        android:padding="10dp"
+                        android:text="@string/open"/>
+                    <RadioButton
+                        android:layout_below="@+id/tv_night"
+                        android:id="@+id/rb_open"
+                        android:layout_alignParentEnd="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"/>
+
+                    <TextView
+                        android:id="@+id/tv_close"
+                        android:layout_below="@id/tv_open"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#000"
+                        android:padding="10dp"
+                        android:text="@string/close"/>
+                    <RadioButton
+                        android:id="@+id/rb_close"
+                        android:layout_below="@id/tv_open"
+                        android:layout_alignParentEnd="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"/>
+
+                    <TextView
+                        android:id="@+id/tv_auto"
+                        android:layout_below="@id/tv_close"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#000"
+                        android:padding="10dp"
+                        android:text="@string/auto"/>
+                    <RadioButton
+                        android:id="@+id/rb_auto"
+                        android:layout_below="@id/tv_close"
+                        android:layout_alignParentEnd="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"/>
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:layout_marginTop="30dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#000"
+                        android:padding="10dp"
+                        android:text="@string/led_switch"/>
+                    <Switch
+                        android:id="@+id/led_switch"
+                        android:layout_alignParentEnd="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"/>
+                </RelativeLayout>
+
+
+
+                <RelativeLayout
+                    android:layout_marginTop="30dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        
+                        android:padding="10dp"
+                        android:text="@string/mic_switch"
+                        android:textColor="#000" />
+                    <Switch
+                        android:id="@+id/mic_switch"
+                        android:layout_alignParentEnd="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"/>
+                    
+                </RelativeLayout>
+
+
+
+
+
+
+
+
+            </LinearLayout>
+
+
+
+        </ScrollView>
+
+    </LinearLayout>
+</layout>

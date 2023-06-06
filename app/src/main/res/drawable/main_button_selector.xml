@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_enabled="false">
+        <shape xmlns:android="http://schemas.android.com/apk/res/android"
+               android:shape="rectangle">
+            <size android:width="22dp" android:height="18dp"/>
+            <!--<solid android:color="@color/mainButtonDisableColor"/>-->
+            <solid android:color="#80bbfd"/>
+            <corners android:radius="2dp"/>
+            <padding
+                android:bottom="2dp"
+                android:left="9dp"
+                android:right="9dp"
+                android:top="2dp"/>
+        </shape>
+    </item>
+    <item android:state_pressed="true">
+        <shape xmlns:android="http://schemas.android.com/apk/res/android"
+               android:shape="rectangle">
+            <size android:width="22dp" android:height="18dp"/>
+            <solid android:color="#80bbfd"/>
+            <corners android:radius="2dp"/>
+            <padding
+                android:bottom="2dp"
+                android:left="9dp"
+                android:right="9dp"
+                android:top="2dp"/>
+        </shape>
+    </item>
+    <item>
+        <shape xmlns:android="http://schemas.android.com/apk/res/android"
+               android:shape="rectangle">
+            <size android:width="22dp" android:height="18dp"/>
+            <!--<solid android:color="@color/mainButtonNormalColor"/>-->
+            <solid android:color="#2b8efb"/>
+            <corners android:radius="2dp"/>
+            <padding
+                android:bottom="2dp"
+                android:left="9dp"
+                android:right="9dp"
+                android:top="2dp"/>
+        </shape>
+    </item>
+</selector>

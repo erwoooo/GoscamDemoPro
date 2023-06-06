@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.gocam.goscamdemopro">
+
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.READ_PROFILE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.Manifest.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
+    <uses-permission android:name="android.permission.READ_LOGS" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+    <uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+
+    <!--设备硬件必须支持蓝牙-->
+    <uses-feature android:name="android.hardware.bluetooth" android:required="true"/>
+
+    <!-- Optional for location -->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" /> <!-- 用于开启 debug 版本的应用在6.0 系统上 层叠窗口权限 -->
+    <!--    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" /> &lt;!&ndash; Android Q后台定位权限 &ndash;&gt;-->
+    <!--    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />-->
+    <!--    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />-->
+    <!--    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />-->
+    <!--&lt;!&ndash;    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />&ndash;&gt;-->
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+
+    <uses-permission android:name="android.permission.REQUEST_COMPANION_RUN_IN_BACKGROUND" />
+    <uses-permission android:name="android.permission.REQUEST_COMPANION_USE_DATA_IN_BACKGROUND" />
+
+    <uses-permission android:name="android.permission.CHANGE_CONFIGURATION"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+
+    <!--TODO 联系人权限-->
+    <!--    <uses-permission android:name="android.permission.WRITE_CONTACTS" />-->
+    <!--    <uses-permission android:name="android.permission.READ_CONTACTS" />-->
+
+    <!--    <uses-feature android:name="android.software.companion_device_setup" />-->
+
+    <!--<uses-feature
+        android:name="android.hardware.camera2.full"
+        android:required="false" />-->
+
+    <!-- 激光推送权限 -->
+    <permission
+        android:name="${applicationId}.permission.JPUSH_MESSAGE"
+        android:protectionLevel="signature" /> <!-- Required  一些系统要求的权限，如访问网络等 -->
+    <uses-permission android:name="${applicationId}.permission.JPUSH_MESSAGE" />
+    <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+
+    <!--小米推送-->
+    <permission
+        android:name="${applicationId}.permission.MIPUSH_RECEIVE"
+        android:protectionLevel="signature" />
+    <uses-permission android:name="${applicationId}.permission.MIPUSH_RECEIVE" />
+
+    <!--OPPO推送-->
+    <uses-permission android:name="com.heytap.mcs.permission.RECIEVE_MCS_MESSAGE"/>
+    <uses-permission android:name="com.coloros.mcs.permission.RECIEVE_MCS_MESSAGE"/>
+
+    <!--魅族推送-->
+    <!--兼容Flyme5以下版本，魅族内部接入PushSDK必填，不然无法收到消息-->
+    <uses-permission android:name="com.meizu.flyme.push.permission.RECEIVE"/>
+    <permission android:name="${applicationId}.push.permission.MESSAGE" android:protectionLevel="signature"/>
+    <uses-permission android:name="${applicationId}.push.permission.MESSAGE"/>
+    <!--兼容Flyme3配置权限-->
+    <uses-permission android:name="com.meizu.c2dm.permission.RECEIVE"/>
+    <permission android:name="${applicationId}.permission.C2D_MESSAGE" android:protectionLevel="signature"/>
+    <uses-permission android:name="${applicationId}.permission.C2D_MESSAGE"/>
+
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:name=".GosApplication"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".login.LoginActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".MainActivity" />
+        <activity android:name=".login.RegisterActivity" />
+        <activity android:name=".login.ForgetPswActivity" />
+        <activity android:name=".login.ModifyPswActivity" />
+        <activity android:name=".add.WifiSelectActivity" />
+        <activity android:name=".add.QrCodeActivity" />
+        <activity android:name=".add.CheckBindStatusActivity" />
+        <activity android:name=".set.SettingActivity"/>
+    </application>
+
+</manifest>

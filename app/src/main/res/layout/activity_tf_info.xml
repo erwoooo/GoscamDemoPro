@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/tool_bar"
+            layout="@layout/layout_toolbar" />
+
+        <TextView
+            android:id="@+id/tv_status"
+            android:layout_below="@id/tool_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#000"
+            android:padding="10dp"
+            android:text="@string/tf_status" />
+
+        <TextView
+            android:id="@+id/tv_total_space"
+            android:layout_below="@id/tv_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#000"
+            android:padding="10dp"
+            android:text="@string/total_space" />
+
+        <TextView
+            android:id="@+id/tv_used_space"
+            android:layout_below="@id/tv_total_space"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#000"
+            android:padding="10dp"
+            android:text="@string/used_space" />
+
+        <TextView
+            android:id="@+id/tv_unused_space"
+            android:layout_below="@id/tv_used_space"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#000"
+            android:padding="10dp"
+            android:text="@string/unused_space" />
+
+        <Button
+            android:id="@+id/btn_format"
+            android:layout_below="@id/tv_unused_space"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="60dp"
+            android:background="@drawable/main_button_selector"
+            android:gravity="center"
+            android:padding="0dp"
+            android:singleLine="true"
+            android:text="@string/devinfo_format_sdcard"
+            android:textColor="#fff" />
+
+    </RelativeLayout>
+</layout>

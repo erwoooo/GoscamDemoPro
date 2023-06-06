@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include layout="@layout/layout_toolbar"/>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <Button
+                    android:id="@+id/btn_modify_name"
+                    style="@style/style_setting_item"
+                    android:text="@string/common_setting"
+                   />
+
+                <Button
+                    android:id="@+id/btn_dev_share"
+                    style="@style/style_setting_item"
+                    android:text="@string/dev_share"
+                    />
+
+                <Button
+                    android:id="@+id/btn_delete_dev"
+                    style="@style/style_setting_item"
+                    android:text="@string/delete_dev"
+                    />
+
+                <Button
+                    android:id="@+id/btn_move_motion"
+                    style="@style/style_setting_item"
+                    android:layout_marginTop="30dp"
+                    android:text="@string/move_motion"
+                    />
+
+
+
+                <Button
+                    android:id="@+id/btn_time"
+                    style="@style/style_setting_item"
+                    android:layout_marginTop="30dp"
+                    android:text="@string/time_j"
+                    />
+
+
+
+                <Button
+                    android:id="@+id/btn_tf_info"
+                    style="@style/style_setting_item"
+                    android:layout_marginTop="30dp"
+                    android:text="@string/tf_info"
+                    />
+
+                <Button
+                    android:id="@+id/btn_soft_update"
+                    style="@style/style_setting_item"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="@string/dev_soft_update"
+                    />
+            </LinearLayout>
+        </ScrollView>
+
+
+
+    </LinearLayout>
+</layout>

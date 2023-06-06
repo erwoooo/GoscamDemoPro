@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <EditText
+            android:id="@+id/et_userName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="60dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginBottom="30dp"
+            android:digits="@string/account_input_format"
+            android:ellipsize="end"
+            android:text="tianya202111@163.com"
+            android:hint="@string/sign_up_input_phone_number_or_email"
+            android:maxLength="81"
+            android:singleLine="false"
+            android:textColor="@android:color/black"/>
+
+        <EditText
+            android:id="@+id/et_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="start|center_vertical"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:hint="@string/input_password"
+            android:inputType="textPassword"
+            android:maxLength="16"
+            android:text="gg000000"
+            android:singleLine="true"
+            android:textAlignment="viewStart"
+            android:textColor="@android:color/black" />
+
+        <Button
+            android:id="@+id/btn_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="60dp"
+            android:background="@drawable/main_button_selector"
+            android:gravity="center"
+            android:padding="0dp"
+            android:singleLine="true"
+            android:text="@string/login_login"
+            android:textColor="#fff"/>
+
+        <TextView
+            android:id="@+id/tv_signUp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/login_sign_up"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="15dp"
+            android:padding="8dp"
+            android:gravity="center"
+            android:textColor="#2B8EFB"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tv_forget_psw"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/forget_user_password"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="15dp"
+            android:padding="8dp"
+            android:gravity="center"
+            android:textColor="#2B8EFB"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+</layout>
