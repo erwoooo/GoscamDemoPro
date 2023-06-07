@@ -8,9 +8,10 @@ import com.gocam.goscamdemopro.base.SingleLiveData
 import com.gocam.goscamdemopro.data.RemoteDataSource
 import com.gocam.goscamdemopro.entity.Device
 import com.gocam.goscamdemopro.entity.LoginBeanResult
+import com.gocam.goscamdemopro.utils.DeviceManager
 import kotlinx.coroutines.launch
 
-class MainViewModel:BaseViewModel<BaseModel>() {
+class MainViewModel : BaseViewModel<BaseModel>() {
     private val deviceResult = SingleLiveData<List<Device>>()
     val mDeviceList: SingleLiveData<List<Device>>
         get() = deviceResult
@@ -20,10 +21,11 @@ class MainViewModel:BaseViewModel<BaseModel>() {
     }
 
 
-
-    fun getDeviceList(){
+    fun getDeviceList() {
         viewModelScope.launch {
-            val deviceEntity = RemoteDataSource.getDeviceList(GosApplication.application.user!!.userName!!)
+            val deviceEntity =
+                RemoteDataSource.getDeviceList(GApplication.app.user.userName!!)
+            DeviceManager.getInstance().saveDevice(deviceEntity)
             deviceResult.postValue(deviceEntity)
         }
     }

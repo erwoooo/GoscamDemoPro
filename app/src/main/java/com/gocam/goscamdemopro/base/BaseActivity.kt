@@ -1,16 +1,13 @@
 package com.gocam.goscamdemopro.base
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
+import android.widget.Toast
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModelProvider
 import com.gocam.goscamdemopro.dialog.LoadingDialog
 import java.lang.reflect.ParameterizedType
 
 abstract class BaseActivity<VB : ViewDataBinding,VM : BaseViewModel<BaseModel>> : BaseBindActivity<VB>() {
-
-    private lateinit var loadingDialog: LoadingDialog
 
     protected lateinit var mViewModel : VM
 
@@ -20,7 +17,6 @@ abstract class BaseActivity<VB : ViewDataBinding,VM : BaseViewModel<BaseModel>> 
         super.onCreate(savedInstanceState)
         supportActionBar?.hide()
 
-        loadingDialog = LoadingDialog(this)
 
     }
 
@@ -42,11 +38,20 @@ abstract class BaseActivity<VB : ViewDataBinding,VM : BaseViewModel<BaseModel>> 
     }
 
 
-    fun showLoading() {
-        loadingDialog.showLoading()
+    open fun showLoading() {
+        LoadingDialog.disDialog()
+        LoadingDialog.showLoading(this)
     }
 
-    fun dismissLoading() {
-        loadingDialog.dismissLoading()
+    open fun dismissLoading() {
+        LoadingDialog.disDialog()
+    }
+
+    protected override fun showToast(msg: CharSequence?) {
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+    }
+
+    protected open fun showLToast(msg: CharSequence?) {
+        Toast.makeText(this, msg, Toast.LENGTH_LONG).show()
     }
 }

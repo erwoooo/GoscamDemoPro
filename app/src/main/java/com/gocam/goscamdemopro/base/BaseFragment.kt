@@ -6,7 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModelProvider
-import com.gocam.goscamdemopro.GosApplication
+import com.gocam.goscamdemopro.GApplication
+
 import java.lang.reflect.ParameterizedType
 
 abstract class BaseFragment<VB : ViewDataBinding, VM : BaseViewModel<BaseModel>> : BaseBindFragment<VB>() {
@@ -30,7 +31,7 @@ abstract class BaseFragment<VB : ViewDataBinding, VM : BaseViewModel<BaseModel>>
             BaseViewModel::class.java as Class<VM>
         }
         mViewModel = ViewModelProvider(this,
-            ViewModelProvider.AndroidViewModelFactory(GosApplication.application))[vmClass]
+            ViewModelProvider.AndroidViewModelFactory(GApplication.app))[vmClass]
         lifecycle.addObserver(mViewModel)
     }
 }

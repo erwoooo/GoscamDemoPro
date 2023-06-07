@@ -17,6 +17,7 @@ import com.gocam.goscamdemopro.databinding.ActivityMainBinding
 import com.gocam.goscamdemopro.entity.Device
 import com.gocam.goscamdemopro.net.RetrofitClient
 import com.gocam.goscamdemopro.play.PlayActivity
+import com.gocam.goscamdemopro.play.PlayJavaActivity
 import com.gocam.goscamdemopro.set.SettingActivity
 import kotlinx.coroutines.NonCancellable.start
 
@@ -74,15 +75,15 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         override fun onBindViewHolder(@NonNull vh: RecyclerView.ViewHolder, i: Int) {
             if (vh is Vh) {
                 val device: Device = deviceList.get(i)
-                (vh as Vh).tv.text = "DevName:" + device.devName
+                ("DevName:" + device.devName
                     .toString() + "\nDevId:" + device.devId.toString() +
                         "\nDevType:" + device.devType.toString() +
-                        "\nStatus:" + if (device.isOnline) "Online" else "Offline"
+                        "\nStatus:" + if (device.isOnline) "Online" else "Offline").also { (vh as Vh).tv.text = it }
                 vh.itemView.setOnClickListener(View.OnClickListener {
-//                    PlayActivity.startActivity(
-//                        this@Main,
-//                        device.devId
-//                    )
+                    PlayJavaActivity.startActivity(
+                        vh.itemView.context,
+                        device.devId
+                    )
                 })
                 (vh as Vh).ibtnTf.setOnClickListener {
 //                    TfDayActivity.startActivity(

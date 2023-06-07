@@ -1,7 +1,7 @@
 package com.gocam.goscamdemopro.data
 
 import android.annotation.SuppressLint
-import com.gocam.goscamdemopro.GosApplication
+import com.gocam.goscamdemopro.GApplication
 import com.gocam.goscamdemopro.entity.*
 import com.gocam.goscamdemopro.net.RetrofitClient
 import com.golway.uilib.bean.BaseResponse
@@ -61,7 +61,7 @@ object RemoteDataSource : DataSource {
                 Pair("UserName", username),
                 Pair("Password", gsoSession.encodeData(psw)),
                 Pair("MobileCN", ""),
-                Pair("UserType", GosApplication.application.userType),
+                Pair("UserType", GApplication.app.userType),
                 Pair("ProtocolType", 1),
             )
             val nMap = mapOf(
@@ -77,7 +77,7 @@ object RemoteDataSource : DataSource {
         val result = job.await()
         return if (result is BaseResponse<LoginBeanResult?>) {
             mToken = result.Body!!.AccessToken
-            GosApplication.application.user!!.userName = result.Body!!.UserName
+            GApplication.app.user.userName = result.Body!!.UserName
             result.Body
         } else {
             null
@@ -161,16 +161,15 @@ object RemoteDataSource : DataSource {
 
     override suspend fun modifyUserPassword(
         userName: String,
-        oldPsw: String,
+        code: String,
         newPsw: String,
         isEncPsw: Boolean
     ): CommonResult? {
         val job = asyncTask {
             val map = mapOf(
                 Pair("UserName", userName),
-                Pair("OldPassword", oldPsw),
-                Pair("NewPassword", newPsw),
-
+                Pair("VerifyCode", code),
+                Pair("NewPassword", gsoSession.encodeData(newPsw)),
             )
             val nMap = mapOf(
                 Pair("Body", map),

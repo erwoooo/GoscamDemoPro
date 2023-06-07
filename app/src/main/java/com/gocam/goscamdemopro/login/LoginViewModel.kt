@@ -2,7 +2,7 @@ package com.gocam.goscamdemopro.login
 
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.viewModelScope
-import com.gocam.goscamdemopro.GosApplication
+
 import com.gocam.goscamdemopro.base.BaseModel
 import com.gocam.goscamdemopro.base.BaseViewModel
 import com.gocam.goscamdemopro.base.SingleLiveData
@@ -23,22 +23,10 @@ class LoginViewModel : BaseViewModel<BaseModel>() {
 
     }
 
-    fun login(username: String, psw: String, uuid: String) {
+    fun login(username: String, psw: String) {
         viewModelScope.launch {
             val result = RemoteDataSource.login(username, psw)
             loginResult.postValue(result)
-//            if (isGetSuc) {
-//                val result = RemoteDataSource.login(username, psw)
-//                loginResult.postValue(result)
-//            } else {
-//                val bsAddressResult = RemoteDataSource.appGetBSAddress(uuid, null)
-//                bsAddressResult?.let {
-//                    if (it.ResultCode == 0) {
-//                        val result = RemoteDataSource.login(username, psw)
-//                        loginResult.postValue(result)
-//                    }
-//                }
-//            }
         }
     }
 

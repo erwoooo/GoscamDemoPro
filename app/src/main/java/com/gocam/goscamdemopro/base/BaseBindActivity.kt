@@ -1,10 +1,10 @@
 package com.gocam.goscamdemopro.base
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import com.gocam.goscamdemopro.dialog.LoadingDialog
 
 abstract class BaseBindActivity<VB : ViewDataBinding> : AppCompatActivity() {
 
@@ -27,6 +27,8 @@ abstract class BaseBindActivity<VB : ViewDataBinding> : AppCompatActivity() {
         super.onDestroy()
         mBinding?.unbind()
     }
-
+    protected open fun showToast(msg: CharSequence?) {
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+    }
 
 }
