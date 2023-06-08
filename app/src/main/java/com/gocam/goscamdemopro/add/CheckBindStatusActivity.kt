@@ -21,5 +21,9 @@ class CheckBindStatusActivity :
             //Obtain once per second
            val result =  RemoteDataSource.queryUserBindResult(GApplication.app.user.userName!!,token)
         }
+
+        mBinding?.toolBar?.backImg?.setOnClickListener {
+            finish()
+        }
     }
 }

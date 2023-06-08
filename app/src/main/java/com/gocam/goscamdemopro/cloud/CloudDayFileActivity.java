@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -38,7 +39,7 @@ public class CloudDayFileActivity extends BaseBindActivity<ActivityCloudDayBindi
     long mEndTime;
     RecyclerView mRecycleView;
     CloudDayFileAdapter mCloudDayFileAdapter;
-
+    ImageView ivBack;
     public static void startActivity(Activity activity, String deviceId, DayTime dayTime){
         Intent intent = new Intent(activity, CloudDayFileActivity.class);
         intent.putExtra("DEV_ID", deviceId);
@@ -86,7 +87,10 @@ public class CloudDayFileActivity extends BaseBindActivity<ActivityCloudDayBindi
         mRecycleView.setLayoutManager(layoutManager);
         mCloudDayFileAdapter = new CloudDayFileAdapter();
         mRecycleView.setAdapter(mCloudDayFileAdapter);
-
+        ivBack = findViewById(R.id.back_img);
+        ivBack.setOnClickListener(v->{
+            finish();
+        });
         mDeviceId = getIntent().getStringExtra("DEV_ID");
         mStartTime = getIntent().getLongExtra("START_TIME", 0);
         mEndTime = getIntent().getLongExtra("END_TIME", 0);

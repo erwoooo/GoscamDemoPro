@@ -1,5 +1,9 @@
 package com.gocam.goscamdemopro.play;
 
+import static com.gos.platform.api.devparam.DevParam.DevParamCmdType.CurrentTemperature;
+import static com.gos.platform.api.devparam.DevParam.DevParamCmdType.DeviceSwitch;
+import static com.gos.platform.api.devparam.DevParam.DevParamCmdType.LowpowerModeSetting;
+
 import android.content.Context;
 import android.content.Intent;
 import android.media.AudioFormat;
@@ -13,15 +17,20 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
 import android.os.Message;
+import android.os.SystemClock;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.gocam.goscamdemopro.R;
+import com.gocam.goscamdemopro.cloud.data.GosCloud;
+import com.gocam.goscamdemopro.entity.DevCap;
 import com.gocam.goscamdemopro.entity.Device;
 import com.gocam.goscamdemopro.utils.DeviceManager;
 import com.gocam.goscamdemopro.utils.dbg;
@@ -32,26 +41,56 @@ import com.gos.avplayer.contact.RecEventType;
 import com.gos.avplayer.jni.AvPlayerCodec;
 import com.gos.avplayer.surface.GLFrameSurface;
 import com.gos.avplayer.surface.GlRenderer;
+import com.gos.platform.api.GosSession;
+import com.gos.platform.api.contact.DeviceType;
+import com.gos.platform.api.contact.PlatCode;
 import com.gos.platform.api.contact.ResultCode;
+import com.gos.platform.api.devparam.CurTempParam;
+import com.gos.platform.api.devparam.DevParam;
+import com.gos.platform.api.devparam.DevParamResult;
+import com.gos.platform.api.devparam.DeviceSwitchParam;
+import com.gos.platform.api.devparam.LowpowerModeSettingParam;
+import com.gos.platform.api.domain.DeviceStatus;
+import com.gos.platform.api.inter.OnPlatformEventCallback;
+import com.gos.platform.api.result.DeviceParamReportNotifyResult;
+import com.gos.platform.api.result.NotifyDeviceParamResult;
+import com.gos.platform.api.result.NotifyDeviceStatusResult;
+import com.gos.platform.api.result.PlatResult;
+import com.gos.platform.api.result.QueryDeviceOnlineStatusResult;
 import com.gos.platform.device.base.Connection;
 import com.gos.platform.device.contact.ConnectStatus;
+import com.gos.platform.device.contact.OnOff;
 import com.gos.platform.device.contact.StreamType;
 import com.gos.platform.device.domain.AvFrame;
 import com.gos.platform.device.inter.IVideoPlay;
 import com.gos.platform.device.inter.OnDevEventCallback;
 import com.gos.platform.device.result.ConnectResult;
 import com.gos.platform.device.result.DevResult;
+import com.gos.platform.device.result.KeepAliveResult;
 
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.nio.ByteBuffer;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.TimeZone;
 
-public class PlayJavaActivity extends AppCompatActivity implements OnDevEventCallback, AvPlayerCodec.OnDecCallBack, AvPlayerCodec.OnRecCallBack, IVideoPlay {
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
+
+public class PlayJavaActivity extends AppCompatActivity implements OnDevEventCallback, OnPlatformEventCallback, AvPlayerCodec.OnDecCallBack, AvPlayerCodec.OnRecCallBack, IVideoPlay {
     public static final String EXTRA_DEVICE_ID = "EXTRA_DEVICE_ID";
     TextView mTvTitle;
+    ImageView ivBack;
     GLFrameSurface mGlFrameSurface;
     Button mBtnStartVideo;
     Button mBtnStopVideo;
@@ -72,7 +111,7 @@ public class PlayJavaActivity extends AppCompatActivity implements OnDevEventCal
     GosMediaPlayer mMediaPlayer;
     HandlerThread recordHandlerThread;
     HandlerThread audioHandlerThread;
-
+    private String mDeviceId;
     public static void startActivity(Context context, String deviceId) {
         Intent intent = new Intent(context, PlayJavaActivity.class);
         intent.putExtra(EXTRA_DEVICE_ID, deviceId);
@@ -84,11 +123,14 @@ public class PlayJavaActivity extends AppCompatActivity implements OnDevEventCal
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
         setContentView(R.layout.activity_play);
-        String deviceId = getIntent().getStringExtra(EXTRA_DEVICE_ID);
-        mDevice = DeviceManager.getInstance().findDeviceById(deviceId);
+        mDeviceId = getIntent().getStringExtra(EXTRA_DEVICE_ID);
+        mDevice = DeviceManager.getInstance().findDeviceById(mDeviceId);
         mConnection = mDevice.getConnection();
         mConnection.addOnEventCallbackListener(this);
-
+        ivBack = findViewById(R.id.back_img);
+        ivBack.setOnClickListener(v->{
+            finish();
+        });
         mTvTitle = findViewById(R.id.text_title);
         mTvTitle.setText(mDevice.devName);
         mGlFrameSurface = findViewById(R.id.gl_surface);
@@ -140,11 +182,13 @@ public class PlayJavaActivity extends AppCompatActivity implements OnDevEventCal
         audioHandlerThread = new HandlerThread("audio");
         audioHandlerThread.start();
         sAudioHandler = new AudioHandler(audioHandlerThread.getLooper());
+
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        GosCloud.getCloud().removeOnPlatformEventCallback(this);
         mConnection.removeOnEventCallbackListener(this);
         mGlRenderer.stopDisplay();
         mGlRenderer.release();
@@ -164,10 +208,159 @@ public class PlayJavaActivity extends AppCompatActivity implements OnDevEventCal
         sAudioRecord.release();
         sAudioTrack.stop();
         sAudioTrack.release();
+        GosCloud.getCloud().addOnPlatformEventCallback(this);
     }
 
     AudioTrack sAudioTrack;
     AudioHandler sAudioHandler;
+
+    @Override
+    public void OnPlatformEvent(PlatResult platResult) {
+        PlatResult.PlatCmd cmd = platResult.getPlatCmd();
+        switch (cmd) {
+            case NotifyDeviceStatus:
+                NotifyDeviceStatusResult result = (NotifyDeviceStatusResult) platResult;
+                for (int i = 0; i < result.getDeviceStatusList().size(); i++) {
+                    DeviceStatus deviceStatus = result.getDeviceStatusList().get(i);
+                    if (deviceStatus.deviceId.equals(mDeviceId) && mDevice != null &&
+                            (mDevice.devType == DeviceType.DOOR_BELL || mDevice.devType == DeviceType.BATTERY_IPC)) {
+                        //重新出发唤醒
+                        //if(keepAliveDisposable == null || keepAliveDisposable.isDisposed())
+                        if ( deviceStatus.deviceStatus != DeviceStatus.OFFLINE)
+                            handleDoorbellWakeup();
+                    }
+                }
+                break;
+            case getDeviceList:
+            case getDeviceListEx:
+                Device device = DeviceManager.getInstance().findDeviceById(mDeviceId);
+                if (device != null && (device.devType == DeviceType.DOOR_BELL || mDevice.devType == DeviceType.BATTERY_IPC)) {
+                    mDevice = device;
+                    //重新出发唤醒
+                    //if(keepAliveDisposable == null || keepAliveDisposable.isDisposed())
+                    if ( device.deviceStatus != DeviceStatus.OFFLINE)
+                        handleDoorbellWakeup();
+                }
+                break;
+            case NotifyDeviceParam:
+                NotifyDeviceParamResult result1 = (NotifyDeviceParamResult) platResult;
+                String paramJson = result1.paramJson;
+                try {
+                    JSONObject jsonObject = new JSONObject(paramJson);
+                    JSONArray jsonArray = jsonObject.optJSONArray("SubStatus");
+                    List<Integer> statusList = new ArrayList<>();
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        Object opt = jsonArray.opt(i);
+                        statusList.add((Integer) opt);
+                    }
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                break;
+            case DeviceParamReportNotify:
+
+                DeviceParamReportNotifyResult reportNotifyResult = (DeviceParamReportNotifyResult) platResult;
+                if (TextUtils.equals(reportNotifyResult.deviceId, mDeviceId)) {
+                    for (int i = 0; reportNotifyResult.getResponseCode() == 0 &&
+                            reportNotifyResult.devParamList != null && i < reportNotifyResult.devParamList.size(); i++) {
+                        DevParam devParam = reportNotifyResult.devParamList.get(i);
+                        switch (devParam.CMDType) {
+                            case CurrentTemperature:
+
+                                break;
+                            case DeviceSwitch:
+
+                                break;
+                        }
+                    }
+
+                }
+                break;
+        }
+    }
+
+    Runnable timeOutRunnable = new Runnable() {
+        @Override
+        public void run() {
+            isOfflineTimeOut = true;
+        }
+    };
+    boolean isOfflineTimeOut;
+    Disposable keepAliveDisposable;
+    protected  Handler mHandler = new Handler();
+    private void handleDoorbellWakeup() {
+        if (mDevice.devType == DeviceType.DOOR_BELL || mDevice.devType == DeviceType.BATTERY_IPC) {
+            if (keepAliveDisposable != null) {
+                keepAliveDisposable.dispose();
+                keepAliveDisposable = null;
+            }
+            mHandler.removeCallbacks(timeOutRunnable);
+            isOfflineTimeOut = false;
+            mHandler.postDelayed(timeOutRunnable, 20000);
+            Observable<Integer> obser = Observable.create(new ObservableOnSubscribe<Integer>() {
+                @Override
+                public void subscribe(ObservableEmitter<Integer> e) throws Exception {
+                    DevCap devCap = mDevice.getDevCap();
+                    if (mDevice.deviceStatus == DeviceStatus.OFFLINE && devCap.isSupDoorbellLowpower) {
+                        DevParamResult devParamResult = GosSession.getSession().AppGetDeviceParam(mDeviceId, LowpowerModeSetting);  //查询设备省电模式
+                        if (devParamResult.code == 0 && devParamResult.devParams != null && devParamResult.devParams.size() > 0) {
+                            LowpowerModeSettingParam devParam = (LowpowerModeSettingParam) devParamResult.devParams.get(0);
+                            mDevice.lowpowerSwitch = devParam.lowpowerSwitch;   //省电模式开关
+                            Log.e("handleDoorbellWakeup", "subscribe: " + devParam.lowpowerSwitch);  //省电模式开关
+                        }
+                    }
+
+                    //省电模式下，不能观看视频
+                    final boolean isSleep = mDevice.deviceStatus == DeviceStatus.OFFLINE && mDevice.lowpowerSwitch == OnOff.On;  //离线并且省电模式
+                    while (!isSleep && !isFinishing() &&
+                            (mDevice.deviceStatus != DeviceStatus.OFFLINE || !isOfflineTimeOut)
+                            && !e.isDisposed()) {  //没有离线
+                        //唤醒设备
+                        GosSession.getSession().wakeUpDeviceSyn(mDeviceId);
+
+                        SystemClock.sleep(1000);
+                        //查询设备在线状态
+                        QueryDeviceOnlineStatusResult statusResult = GosSession.getSession().queryDeviceOnlineStatusSyn(mDeviceId);
+                        if (statusResult.getResponseCode() == PlatCode.SUCCESS) {   //查询成功？
+                            Log.e("handleDoorbellWakeup", "subscribe 状态: " + statusResult.isOnline );
+                            mDevice.deviceStatus = statusResult.isOnline;  //赋值状态是否在线
+                            mDevice.setPlatDevOnline(mDevice.deviceStatus == DeviceStatus.ONLINE || mDevice.deviceStatus == DeviceStatus.SLEEP);  //在线或者休眠
+                        }
+                        dbg.D("handleDoorbellWakeup", "deviceStatus=" + mDevice.deviceStatus
+                                + ",code=" + statusResult.getResponseCode() + ",isDisposed=" + e.isDisposed() + "," + e);
+
+                        if (mDevice.deviceStatus != DeviceStatus.ONLINE)   //如果不是在线状态，继续环形查询
+                            continue;
+                        Log.e("handleDoorbellWakeup", "subscribe: 已经在线了" );
+                        //移除唤醒超时
+                        mHandler.removeCallbacks(timeOutRunnable);
+                        //只有当在线的时候才会到这里
+                        mDevice.getConnection().connect(0);
+
+
+                        while (!isFinishing() && !e.isDisposed()) {
+                            KeepAliveResult keepAliveResult = mDevice.getConnection().keepAliveSyn(0);  //心跳包
+                            if (keepAliveResult == null || keepAliveResult.getResponseCode() == ResultCode.SUCCESS) {
+                                SystemClock.sleep(5000);
+                            } else {
+                                break;
+                            }
+                        }
+                    }
+
+                    mHandler.removeCallbacks(timeOutRunnable);
+                    e.onNext(0);
+                    e.onComplete();
+                }
+            });
+            obser = obser.subscribeOn(Schedulers.newThread());//.observeOn(AndroidSchedulers.mainThread())
+            keepAliveDisposable = obser.subscribe();
+        }
+    }
+
 
     class AudioHandler extends Handler {
         public AudioHandler(Looper looper) {

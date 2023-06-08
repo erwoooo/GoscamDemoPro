@@ -35,16 +35,17 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
             btnLogin.setOnClickListener {
                 val userName = etUserName.text.toString()
                 val psw = etPassword.text.toString()
-                if (RegexUtils.isMatch(RegexUtils.REGEX_EMAIL, userName)) {
-                    if (userName.length < 4 || userName.length > 81) {
-                        showToast(getString(R.string.username_format_error_tip))
-                    } else if (checkPasswordPassed(psw)) {
-                        showLoading()
-                        mViewModel.login(etUserName.text.toString(), etPassword.text.toString())
-                    }
-
-                }
-
+//                if (RegexUtils.isMatch(RegexUtils.REGEX_EMAIL, userName)) {
+//                    if (userName.length < 4 || userName.length > 81) {
+//                        showToast(getString(R.string.username_format_error_tip))
+//                    } else if (checkPasswordPassed(psw)) {
+//
+//                    }
+//
+//                }
+                showLoading()
+                val uuid = Util.getPhoneUUID(this@LoginActivity)
+                mViewModel.login(etUserName.text.toString(), etPassword.text.toString(),uuid)
             }
 
 

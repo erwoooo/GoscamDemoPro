@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -32,6 +33,7 @@ import java.util.List;
 
 public class TfDayActivity extends BaseBindActivity<ActivityTfDayBinding> implements OnDevEventCallback {
     TextView mTvTitle;
+    ImageView ivBack;
     String mDevId;
     Device mDevice;
     RecyclerView mRecycleView;
@@ -97,7 +99,10 @@ public class TfDayActivity extends BaseBindActivity<ActivityTfDayBinding> implem
         mRecycleView.setLayoutManager(layoutManager);
         mTfDayAdapter = new TfDayAdapter();
         mRecycleView.setAdapter(mTfDayAdapter);
-
+        ivBack = findViewById(R.id.back_img);
+        ivBack.setOnClickListener(v->{
+            finish();
+        });
         mDevId = getIntent().getStringExtra("DEV_ID");
         mDevice = DeviceManager.getInstance().findDeviceById(mDevId);
         mDevice.getConnection().addOnEventCallbackListener(this);

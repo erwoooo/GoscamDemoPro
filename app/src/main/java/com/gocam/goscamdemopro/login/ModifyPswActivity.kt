@@ -11,6 +11,10 @@ class ModifyPswActivity : BaseActivity<ActivityModifyPswBinding,ModifyPswViewMod
     }
 
     override fun onCreateData(bundle: Bundle?) {
-
+        mBinding?.apply {
+            toolBar.backImg.setOnClickListener {
+                finish()
+            }
+        }
     }
 }

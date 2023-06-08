@@ -14,6 +14,7 @@ import android.os.Message;
 
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -51,6 +52,7 @@ public class TfFilePlayActivity extends BaseBindActivity<ActivityTfFilePlayBindi
     GosMediaPlayer mMediaPlayer;
     int mStartTime;
     int mEndTime;
+    ImageView ivBack;
 
     public static void startActivity(Activity activity, String deviceId, StRecordInfo info){
         Intent intent = new Intent(activity, TfFilePlayActivity.class);
@@ -79,7 +81,10 @@ public class TfFilePlayActivity extends BaseBindActivity<ActivityTfFilePlayBindi
         gl.setEGLContextClientVersion(2);
         glRenderer = new GlRenderer(gl);
         gl.setRenderer(glRenderer);
-
+        ivBack = findViewById(R.id.back_img);
+        ivBack.setOnClickListener(v->{
+            finish();
+        });
         mStartTime = getIntent().getIntExtra("START_TIME",0);
         mEndTime = getIntent().getIntExtra("END_TIME",0);
         mDevId = getIntent().getStringExtra("DEV_ID");

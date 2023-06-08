@@ -37,6 +37,10 @@ class DevShareActivity : BaseActivity<ActivityDevShareBinding, DevShareViewModel
             }
         })
         mBinding?.apply {
+            toolBar.backImg.setOnClickListener {
+                finish()
+            }
+
             recycleView.apply {
                 layoutManager = LinearLayoutManager(this@DevShareActivity)
                 adapter = shareAdapter

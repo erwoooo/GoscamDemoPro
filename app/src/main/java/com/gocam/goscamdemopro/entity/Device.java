@@ -2,10 +2,13 @@ package com.gocam.goscamdemopro.entity;
 
 import android.text.TextUtils;
 
+import com.gocam.goscamdemopro.GApplication;
 import com.gos.platform.api.contact.DeviceType;
+import com.gos.platform.api.domain.DeviceStatus;
 import com.gos.platform.api.response.GetDeviceListResponse;
 import com.gos.platform.device.base.Connection;
 import com.gos.platform.device.contact.ConnType;
+import com.gos.platform.device.contact.ConnectStatus;
 import com.gos.platform.device.ulife.UlifeConnection;
 
 import java.util.ArrayList;
@@ -86,7 +89,7 @@ public class Device {
 
     public synchronized Connection getConnection(){
         if(connection == null){
-            connection = ConnectionManager.createConnectionIfNoExist(devId);
+            connection = ConnectionManager.createConnectionIfNoExist(devId,streamPassword);
         }
         return connection;
     }
@@ -98,13 +101,13 @@ public class Device {
 
     public static class ConnectionManager{
         private static List<Connection> connectionList = new ArrayList<>();
-        public synchronized static Connection createConnectionIfNoExist(String deviceId){
+        public synchronized static Connection createConnectionIfNoExist(String deviceId,String psw){
             for(Connection conn : connectionList){
                 if(TextUtils.equals(conn.getDeviceID(), deviceId)){
                     return conn;
                 }
             }
-            Connection connection = new UlifeConnection(deviceId, "", "",
+            Connection connection = new UlifeConnection(deviceId, GApplication.app.user.getUserName(), psw,
                     ConnType.TYPE_P2P, true);
             connectionList.add(connection);
             return connection;
@@ -176,6 +179,30 @@ public class Device {
             }
         }
         return timeZone;
+    }
+
+
+    /**
+     * 平台端设备在线状态
+     */
+    public boolean isPlatDevOnline() {
+        return isOnline;
+    }
+
+    public void setPlatDevOnline(boolean isOnline) {
+        this.isOnline = isOnline;
+        if (connection != null) {
+            //统一在此处使用这个方法
+            if(deviceStatus == DeviceStatus.ONLINE){
+                connection.setPlatDevOnline(true);
+            }else{
+                //deviceStatus == DeviceStatus.OFFLINE || deviceStatus == DeviceStatus.SLEEP
+                //如果设备不现在，设置离线，
+                connection.setPlatDevOnline(false);
+                ////清楚连接
+                connection.setConnectStatus(ConnectStatus.CONNECT_LOST);
+            }
+        }
     }
 
 

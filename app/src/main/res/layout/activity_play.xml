@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".play.PlayJavaActivity">
-    <include layout="@layout/layout_toolbar"/>
+    <include layout="@layout/layout_toolbar" android:id="@+id/tool_bar" />
 
     <com.gos.avplayer.surface.GLFrameSurface
         android:id="@+id/gl_surface"

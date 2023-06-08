@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -36,6 +37,7 @@ import java.util.List;
 
 public class TfDayFileActivity extends BaseBindActivity<ActivityTfDayBinding> implements OnDevEventCallback {
     TextView mTvTitle;
+    ImageView ivBack;
     RecyclerView mRecycleView;
     String mDevId;
     Device mDevice;
@@ -63,7 +65,10 @@ public class TfDayFileActivity extends BaseBindActivity<ActivityTfDayBinding> im
         mRecycleView.setLayoutManager(layoutManager);
         mTfDayFileAdapter = new TfDayFileAdapter();
         mRecycleView.setAdapter(mTfDayFileAdapter);
-
+        ivBack = findViewById(R.id.back_img);
+        ivBack.setOnClickListener(v->{
+            finish();
+        });
         mDevId = getIntent().getStringExtra("DEV_ID");
         String dayTime = getIntent().getStringExtra("DAY_TIME");
         int type = getIntent().getIntExtra("TYPE", 0);

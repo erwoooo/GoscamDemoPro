@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -40,6 +41,7 @@ import java.util.List;
 
 public class CloudDayActivity extends BaseBindActivity<ActivityCloudDayBinding> implements OnPlatformEventCallback {
     TextView mTvTitle;
+    ImageView ivBack;
     String mDevId;
     GosCloud mGosCloud;
     RecyclerView mRecycleView;
@@ -131,7 +133,10 @@ public class CloudDayActivity extends BaseBindActivity<ActivityCloudDayBinding> 
     public void onCreateData(@Nullable Bundle bundle) {
         mTvTitle = findViewById(R.id.text_title);
         mTvTitle.setText(R.string.day_time);
-
+        ivBack = findViewById(R.id.back_img);
+        ivBack.setOnClickListener(v->{
+            finish();
+        });
         mRecycleView = findViewById(R.id.recycle_view);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         mRecycleView.setLayoutManager(layoutManager);

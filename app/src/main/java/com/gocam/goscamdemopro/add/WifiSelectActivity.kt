@@ -15,6 +15,9 @@ class WifiSelectActivity : BaseBindActivity<ActivityWifiSelectBinding>() {
 
     override fun onCreateData(bundle: Bundle?) {
 
+        mBinding?.toolBar?.backImg?.setOnClickListener {
+            finish()
+        }
         mBinding?.apply {
 
             btnIpc.setOnClickListener {

@@ -48,6 +48,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(),
         }
 
         mBinding?.apply {
+            toolBar.backImg.visibility=View.INVISIBLE
             toolBar.rightImg.apply {
                 visibility = View.VISIBLE
                 setImageResource(R.mipmap.icon_add)

@@ -22,6 +22,10 @@ class CommonSetActivity : BaseActivity<ActivityCommonSetBinding, CommonSetViewMo
         deviceId = intent.getStringExtra("dev").toString()
 
         mBinding?.apply {
+            toolBar.backImg.setOnClickListener {
+                finish()
+            }
+
             btnModify.setOnClickListener {
                 val userName = etDevName.text.toString()
                 if (!userName.isNullOrEmpty())

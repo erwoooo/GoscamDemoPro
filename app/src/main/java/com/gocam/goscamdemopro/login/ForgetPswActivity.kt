@@ -17,7 +17,9 @@ class ForgetPswActivity : BaseActivity<ActivityForgetPswBinding, ForgetPswViewMo
     override fun onCreateData(bundle: Bundle?) {
 
         mBinding?.apply {
-
+            toolBar.backImg.setOnClickListener {
+                finish()
+            }
             btnCode.setOnClickListener {
                 val userName = etUserName.text.toString()
                 if (RegexUtils.isMatch(RegexUtils.REGEX_EMAIL, userName)) {

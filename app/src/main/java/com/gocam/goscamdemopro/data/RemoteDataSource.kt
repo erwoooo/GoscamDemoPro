@@ -13,6 +13,7 @@ import com.gos.platform.api.GosSession
 import com.gos.platform.api.devparam.DevParam.DevParamCmdType
 
 import com.gos.platform.api.request.Request.MsgType.*
+import com.gos.platform.device.GosConnection
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.util.ArrayList
 
@@ -83,6 +84,7 @@ object RemoteDataSource : DataSource {
             GApplication.app.user.token = result.Body!!.AccessToken
             gsoSession.accessToken = result.Body!!.AccessToken
             gsoSession.userName = result.Body!!.UserName
+            GosConnection.TransportProtype()
             result.Body
         } else {
             null

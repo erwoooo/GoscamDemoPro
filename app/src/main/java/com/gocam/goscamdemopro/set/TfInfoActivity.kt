@@ -15,7 +15,9 @@ class TfInfoActivity : BaseActivity<ActivityTfInfoBinding, TfInfoViewModel>() {
     override fun onCreateData(bundle: Bundle?) {
         val deviceId = intent.getStringExtra("dev") as String
         mViewModel?.getTfInfo(deviceId)
-
+        mBinding?.toolBar?.backImg?.setOnClickListener {
+            finish()
+        }
         mBinding?.btnFormat?.setOnClickListener {
             mViewModel?.formatSd(deviceId)
         }

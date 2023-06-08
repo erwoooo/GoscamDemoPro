@@ -28,6 +28,11 @@ class SettingActivity : BaseBindActivity<ActivitySettingBinding>() {
 
 
         mBinding?.apply {
+
+            toolBar.backImg.setOnClickListener {
+                finish()
+            }
+
             btnModifyName.setOnClickListener {
                 val intent = Intent(this@SettingActivity, CommonSetActivity::class.java)
                 intent.putExtra("dev", mDevice.devId)

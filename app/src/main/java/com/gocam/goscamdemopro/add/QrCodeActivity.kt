@@ -30,6 +30,9 @@ class QrCodeActivity : BaseBindActivity<ActivityQrcodeBinding>(), QRBitmapCreate
         ssid = intent.getStringExtra("ssid").toString()
         psw = intent.getStringExtra("psw") as String
 
+        mBinding?.toolBar?.backImg?.setOnClickListener {
+            finish()
+        }
         showLoading()
         lifecycleScope.launch {
             val result = RemoteDataSource.getBindToken(GApplication.app.user.userName!!, "")

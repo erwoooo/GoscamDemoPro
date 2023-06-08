@@ -12,7 +12,7 @@
         android:orientation="vertical"
         tools:context=".MainActivity">
 
-        <include layout="@layout/layout_toolbar" />
+        <include layout="@layout/layout_toolbar" android:id="@+id/tool_bar" />
 
         <ScrollView
             android:layout_width="match_parent"

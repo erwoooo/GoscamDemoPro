@@ -9,6 +9,7 @@ import com.gocam.goscamdemopro.data.RemoteDataSource
 import com.gocam.goscamdemopro.entity.Device
 import com.gocam.goscamdemopro.entity.LoginBeanResult
 import com.gocam.goscamdemopro.utils.DeviceManager
+import com.gos.platform.api.GosSession
 import kotlinx.coroutines.launch
 
 class MainViewModel : BaseViewModel<BaseModel>() {

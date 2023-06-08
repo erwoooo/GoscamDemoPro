@@ -27,6 +27,10 @@ class DevSoftUpdateActivity : BaseActivity<ActivityDevSoftUpdateBinding, DevUpda
         mBinding?.apply {
             tvSoftInfo.text = mDevice.deviceSfwVer
             tvHardInfo.text = mDevice.deviceHdwVer
+
+            toolBar.backImg.setOnClickListener {
+                finish()
+            }
         }
 
         mViewModel?.getDeviceFirmware(mDevice.deviceHdType)

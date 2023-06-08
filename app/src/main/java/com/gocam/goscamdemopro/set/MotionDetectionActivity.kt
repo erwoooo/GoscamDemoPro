@@ -64,6 +64,11 @@ class MotionDetectionActivity : BaseActivity<ActivityMotionDetectionBinding, Mot
             }
         }
         mBinding?.apply {
+
+            toolBar.backImg.setOnClickListener {
+                finish()
+            }
+
             recycleView.layoutManager = GridLayoutManager(this@MotionDetectionActivity, 4)
             recycleView.adapter = adapter
 

@@ -14,6 +14,7 @@ import android.os.Message;
 
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -71,7 +72,7 @@ public class CloudFilePlayActivity extends BaseBindActivity<ActivityCloudFilePla
     boolean playInit;
     OSSClient mOssClient;
     User mUser;
-
+    ImageView ivBack;
     final String Tag = "CloudFilePlayActivity";
     HandlerThread mDownloadThread;
     DownloadHandler mDownloadHandler;
@@ -155,7 +156,10 @@ public class CloudFilePlayActivity extends BaseBindActivity<ActivityCloudFilePla
         mTvTitle = findViewById(R.id.text_title);
         mTvTitle.setText(R.string.file_play);
         mTvTime = findViewById(R.id.tv_time);
-
+        ivBack = findViewById(R.id.back_img);
+        ivBack.setOnClickListener(v->{
+            finish();
+        });
         GLFrameSurface gl = findViewById(R.id.glsurface);
         gl.setEGLContextClientVersion(2);
         mGlRenderer = new GlRenderer(gl);
