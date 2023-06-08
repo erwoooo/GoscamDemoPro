@@ -58,6 +58,7 @@
             android:textColor="#fff" />
 
         <Button
+            android:visibility="invisible"
             android:id="@+id/btn_doorbell"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

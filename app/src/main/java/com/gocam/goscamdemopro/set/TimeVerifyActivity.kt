@@ -9,6 +9,9 @@ class TimeVerifyActivity : BaseActivity<ActivityTimeVerifyBinding,TimeVerifyView
     override fun getLayoutId(): Int = R.layout.activity_time_verify
 
     override fun onCreateData(bundle: Bundle?) {
-        TODO("Not yet implemented")
+        val deviceId = intent.getStringExtra("dev") as String
+        mBinding?.btnVerify?.setOnClickListener {
+            mViewModel.setTimeVerify(deviceId)
+        }
     }
 }

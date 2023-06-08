@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rl"
+    android:layout_width="65dp"
+    android:layout_height="45dp"
+    android:background="#ddd"
+    android:layout_margin="1px"
+    tools:context=".set.MotionDetectionActivity">
+</RelativeLayout>

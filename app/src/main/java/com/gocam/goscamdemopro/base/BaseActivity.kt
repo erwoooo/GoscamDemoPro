@@ -15,7 +15,6 @@ abstract class BaseActivity<VB : ViewDataBinding,VM : BaseViewModel<BaseModel>> 
     override fun onCreate(savedInstanceState: Bundle?) {
         initViewModel()
         super.onCreate(savedInstanceState)
-        supportActionBar?.hide()
 
 
     }
@@ -38,20 +37,4 @@ abstract class BaseActivity<VB : ViewDataBinding,VM : BaseViewModel<BaseModel>> 
     }
 
 
-    open fun showLoading() {
-        LoadingDialog.disDialog()
-        LoadingDialog.showLoading(this)
-    }
-
-    open fun dismissLoading() {
-        LoadingDialog.disDialog()
-    }
-
-    protected override fun showToast(msg: CharSequence?) {
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
-    }
-
-    protected open fun showLToast(msg: CharSequence?) {
-        Toast.makeText(this, msg, Toast.LENGTH_LONG).show()
-    }
 }

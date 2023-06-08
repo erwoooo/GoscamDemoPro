@@ -113,6 +113,18 @@
         <activity android:name=".add.CheckBindStatusActivity" />
         <activity android:name=".set.SettingActivity"/>
         <activity android:name=".play.PlayJavaActivity"/>
+        <activity android:name=".set.CommonSetActivity"/>
+        <activity android:name=".set.DevShareActivity"/>
+        <activity android:name=".set.MotionDetectionActivity"/>
+        <activity android:name=".set.TfInfoActivity"/>
+        <activity android:name=".set.TimeVerifyActivity"/>
+        <activity android:name=".set.DevSoftUpdateActivity"/>
+        <activity android:name=".tf.TfDayActivity"/>
+        <activity android:name=".tf.TfDayFileActivity"/>
+        <activity android:name=".tf.TfFilePlayActivity"/>
+        <activity android:name=".cloud.CloudDayActivity"/>
+        <activity android:name=".cloud.CloudDayFileActivity"/>
+        <activity android:name=".cloud.CloudFilePlayActivity"/>
     </application>
 
 </manifest>

@@ -3,6 +3,7 @@ package com.gocam.goscamdemopro.utils;
 import android.text.TextUtils;
 
 import com.gocam.goscamdemopro.entity.Device;
+import com.gos.platform.device.base.Connection;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -67,7 +68,8 @@ public class DeviceManager {
         }
         deviceList.addAll(list);
         for (Device device : deviceList) {
-            device.getConnection();
+            Connection connection = device.getConnection();
+            connection.setPlatDevOnline(device.isOnline);
         }
         return deviceList;
     }

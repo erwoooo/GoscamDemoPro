@@ -73,7 +73,7 @@ public class PlayJavaActivity extends AppCompatActivity implements OnDevEventCal
     HandlerThread recordHandlerThread;
     HandlerThread audioHandlerThread;
 
-    public static void startActivity(Context context, String deviceId){
+    public static void startActivity(Context context, String deviceId) {
         Intent intent = new Intent(context, PlayJavaActivity.class);
         intent.putExtra(EXTRA_DEVICE_ID, deviceId);
         context.startActivity(intent);
@@ -130,7 +130,7 @@ public class PlayJavaActivity extends AppCompatActivity implements OnDevEventCal
 
         sAudioTrack = new AudioTrack(AudioManager.STREAM_VOICE_CALL,//STREAM_VOICE_CALL  STREAM_MUSIC
                 sampleRate, AudioFormat.CHANNEL_OUT_MONO, AudioFormat.ENCODING_PCM_16BIT,
-                nMinBufSize, AudioTrack.MODE_STREAM,sAudioRecord.getAudioSessionId());//,
+                nMinBufSize, AudioTrack.MODE_STREAM, sAudioRecord.getAudioSessionId());//,
 
         sAudioTrack.play();
 
@@ -168,8 +168,9 @@ public class PlayJavaActivity extends AppCompatActivity implements OnDevEventCal
 
     AudioTrack sAudioTrack;
     AudioHandler sAudioHandler;
+
     class AudioHandler extends Handler {
-        public AudioHandler(Looper looper){
+        public AudioHandler(Looper looper) {
             super(looper);
         }
 
@@ -177,17 +178,19 @@ public class PlayJavaActivity extends AppCompatActivity implements OnDevEventCal
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             byte[] data = (byte[]) msg.obj;
-            if(sAudioTrack.getPlayState() != AudioTrack.PLAYSTATE_PLAYING)
+            if (sAudioTrack.getPlayState() != AudioTrack.PLAYSTATE_PLAYING)
                 sAudioTrack.play();
-            sAudioTrack.write(data,0,data.length);
+            sAudioTrack.write(data, 0, data.length);
         }
     }
 
     AudioRecord sAudioRecord;
     RecordHandler sRecordHandler;
+
     class RecordHandler extends Handler {
         public boolean isStartRecord;
-        public RecordHandler(Looper looper){
+
+        public RecordHandler(Looper looper) {
             super(looper);
         }
 
@@ -195,14 +198,14 @@ public class PlayJavaActivity extends AppCompatActivity implements OnDevEventCal
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             byte[] audioData = new byte[640];
-            if(sAudioRecord.getState() == AudioRecord.STATE_INITIALIZED){
+            if (sAudioRecord.getState() == AudioRecord.STATE_INITIALIZED) {
                 sAudioRecord.startRecording();
             }
 
             String fileTalkDataPath = null;
             FileOutputStream fos = null;
-            if(FILE_TYPE == talkType){
-                fileTalkDataPath = Environment.getExternalStorageDirectory().getAbsolutePath()+"/temp.g711";
+            if (FILE_TYPE == talkType) {
+                fileTalkDataPath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/temp.g711";
                 try {
                     fos = new FileOutputStream(fileTalkDataPath);
                 } catch (FileNotFoundException e) {
@@ -210,18 +213,18 @@ public class PlayJavaActivity extends AppCompatActivity implements OnDevEventCal
                 }
             }
 
-            while (isStartRecord){
-                int size = sAudioRecord.read(audioData, 0,audioData.length);
+            while (isStartRecord) {
+                int size = sAudioRecord.read(audioData, 0, audioData.length);
                 if (size == audioData.length) {
                     byte[] g711Buf = new byte[320];
-                    int len = AvPlayerCodec.nativeEncodePCMtoG711A(8000,1,audioData,audioData.length,g711Buf);
-                    if(len>0){
-                        if(STREAM_TYPE == talkType){
+                    int len = AvPlayerCodec.nativeEncodePCMtoG711A(8000, 1, audioData, audioData.length, g711Buf);
+                    if (len > 0) {
+                        if (STREAM_TYPE == talkType) {
                             mConnection.sendTalkData(0, 53, 8000, 0, g711Buf, g711Buf.length);
-                        }else{
+                        } else {
                             try {
-                                fos.write(g711Buf, 0 , g711Buf.length);
-                            }catch (Exception e){
+                                fos.write(g711Buf, 0, g711Buf.length);
+                            } catch (Exception e) {
                                 e.printStackTrace();
                             }
                         }
@@ -229,12 +232,12 @@ public class PlayJavaActivity extends AppCompatActivity implements OnDevEventCal
                 }
             }
 
-            if(STREAM_TYPE == talkType){
+            if (STREAM_TYPE == talkType) {
                 mConnection.stopTalk(0);
-            }else if(FILE_TYPE == talkType){
-                try{
+            } else if (FILE_TYPE == talkType) {
+                try {
                     fos.close();
-                }catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
                 mConnection.sendSpeakFile(0, fileTalkDataPath, 0);
@@ -242,56 +245,57 @@ public class PlayJavaActivity extends AppCompatActivity implements OnDevEventCal
         }
     }
 
-    public void connect(View view){
-        if(mConnection.isConnected()){
+    public void connect(View view) {
+        if (mConnection.isConnected()) {
             showToast("connect success");
             mBtnStartVideo.setEnabled(true);
             mBtnStartTalk.setEnabled(true);
-        }else {
-                mConnection.connect(0);
+        } else {
+            mConnection.connect(0);
         }
     }
 
-    public void openStream(View view){
-        if(mConnection.isConnected()){
+    public void openStream(View view) {
+        if (mConnection.isConnected()) {
             mBtnStartRecord.setEnabled(true);
             mBtnCapture.setEnabled(true);
 
             int timestamp = (int) (System.currentTimeMillis() / 1000L);
             int timezone = (TimeZone.getDefault().getRawOffset() / 3600000) + 24;// on the IPC side, -24,
-            if(TimeZone.getDefault().inDaylightTime(new Date())){
+            if (TimeZone.getDefault().inDaylightTime(new Date())) {
                 timezone++;
             }
             mConnection.startVideo(0, StreamType.VIDEO_AUDIO, mDevice.getStreamPsw(), timestamp, timezone, this);
         }
     }
 
-    public void stopStream(View view){
+    public void stopStream(View view) {
         mConnection.stopVideo(0, this);
 
     }
 
-    public void startTalk(View view){
-        if(mConnection.isConnected()){
+    public void startTalk(View view) {
+        if (mConnection.isConnected()) {
             mConnection.startTalk(0, mDevice == null ? "" : mDevice.getStreamPsw());
             mBtnStopTalk.setEnabled(true);
         }
     }
 
-    public void stopTalk(View view){
+    public void stopTalk(View view) {
         sRecordHandler.isStartRecord = false;
     }
 
     String recordPath;
-    public void startRecord(View view){
+
+    public void startRecord(View view) {
         mBtnStartRecord.setEnabled(false);
         mBtnStopRecord.setEnabled(true);
 
-        recordPath = Environment.getExternalStorageDirectory().getAbsolutePath()+"/"+System.currentTimeMillis()+".mp4";
-        mMediaPlayer.startRecord(recordPath,0);
+        recordPath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + System.currentTimeMillis() + ".mp4";
+        mMediaPlayer.startRecord(recordPath, 0);
     }
 
-    public void stopRecord(View view){
+    public void stopRecord(View view) {
         mBtnStartRecord.setEnabled(true);
         mBtnStopRecord.setEnabled(false);
 
@@ -300,8 +304,8 @@ public class PlayJavaActivity extends AppCompatActivity implements OnDevEventCal
         dbg.D("PlayActivity", recordPath);
     }
 
-    public void capture(View view){
-        String capturePath = Environment.getExternalStorageDirectory().getAbsolutePath()+"/"+System.currentTimeMillis()+".jpg";
+    public void capture(View view) {
+        String capturePath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + System.currentTimeMillis() + ".jpg";
         mMediaPlayer.capture(capturePath);
         showToast("pic save path : " + capturePath);
         dbg.D("PlayActivity", capturePath);
@@ -309,14 +313,16 @@ public class PlayJavaActivity extends AppCompatActivity implements OnDevEventCal
 
     @Override
     public void onDevEvent(String s, DevResult devResult) {
-        if(!TextUtils.equals(s, mDevice.devId)){return;}
+        if (!TextUtils.equals(s, mDevice.devId)) {
+            return;
+        }
 
         DevResult.DevCmd devCmd = devResult.getDevCmd();
         int code = devResult.getResponseCode();
-        switch (devCmd){
+        switch (devCmd) {
             case connect:
                 ConnectResult connectResult = (ConnectResult) devResult;
-                if(connectResult.getConnectStatus() == ConnectStatus.CONNECT_SUCCESS){
+                if (connectResult.getConnectStatus() == ConnectStatus.CONNECT_SUCCESS) {
                     mBtnStartVideo.setEnabled(true);
                     mBtnStartTalk.setEnabled(true);
                     mBtnStartRecord.setEnabled(true);
@@ -325,7 +331,7 @@ public class PlayJavaActivity extends AppCompatActivity implements OnDevEventCal
                 }
                 break;
             case startVideo:
-                if(ResultCode.SUCCESS == code){
+                if (ResultCode.SUCCESS == code) {
                     mBtnStopVideo.setEnabled(true);
                     showToast("start video success");
                 }
@@ -333,11 +339,11 @@ public class PlayJavaActivity extends AppCompatActivity implements OnDevEventCal
             case stopVideo:
                 break;
             case startTalk:
-                if(ResultCode.SUCCESS == code){
+                if (ResultCode.SUCCESS == code) {
                     sRecordHandler.isStartRecord = true;
                     sRecordHandler.sendEmptyMessage(0);
                     showToast("start talk success");
-                }else{
+                } else {
                     mConnection.stopTalk(0);
                 }
                 break;
@@ -352,10 +358,10 @@ public class PlayJavaActivity extends AppCompatActivity implements OnDevEventCal
 
     @Override
     public void decCallBack(DecType type, byte[] data, int dataSize, int width, int height, int rate, int ch, int flag, int frameNo, String aiInfo) {
-        if(DecType.YUV420 == type){
+        if (DecType.YUV420 == type) {
             ByteBuffer buf = ByteBuffer.wrap(data);
-            mGlRenderer.update(buf ,width, height);
-        }else if(DecType.AUDIO == type){
+            mGlRenderer.update(buf, width, height);
+        } else if (DecType.AUDIO == type) {
             byte[] t = new byte[dataSize];
             System.arraycopy(data, 0, t, 0, dataSize);
             Message obtain = Message.obtain();
@@ -373,7 +379,7 @@ public class PlayJavaActivity extends AppCompatActivity implements OnDevEventCal
     public void onVideoStream(String s, AvFrame avFrame) {
         byte[] temp = new byte[avFrame.data.length];
         System.arraycopy(avFrame.data, 0, temp, 0, avFrame.data.length);
-        mMediaPlayer.putFrame(temp, temp.length,1);
+        mMediaPlayer.putFrame(temp, temp.length, 1);
     }
 
 

@@ -5,6 +5,7 @@ import com.golway.uilib.bean.BaseResponse
 import okhttp3.RequestBody
 import retrofit2.Response
 import retrofit2.http.*
+import retrofit2.http.Body
 
 interface ApiService {
 
@@ -52,5 +53,17 @@ interface ApiService {
 
     @POST(".")
     suspend fun unbindSmartDevice(@Body body: RequestBody):Response<BaseResponse<ShareDeviceResult?>>
+
+    @POST(".")
+    suspend fun getDeviceParams(@Body body: RequestBody):Response<DeviceParamResponse?>
+
+    @POST(".")
+    suspend fun setDeviceParams(@Body body: RequestBody):Response<DeviceParamResponse?>
+
+    @POST(".")
+    suspend fun checkNewVer(@Body body: RequestBody):Response<BaseResponse<FirmWareParam?>>
+
+    @POST(".")
+    suspend fun getCMDParam(@Body body: RequestBody):Response<CmdResponseParam?>
 
 }

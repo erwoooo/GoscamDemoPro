@@ -24,6 +24,15 @@
             android:textColor="#000" />
 
         <TextView
+            android:id="@+id/tv_hard_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:textColor="#000" />
+
+        <TextView
             android:id="@+id/tv_soft_new"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

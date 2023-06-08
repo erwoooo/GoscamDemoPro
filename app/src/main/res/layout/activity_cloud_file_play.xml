@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".MainActivity">
+
+        <include layout="@layout/layout_toolbar" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/btn_play"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/main_button_selector"
+                    android:textColor="#fff"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginEnd="30dp"
+                    android:layout_marginTop="20dp"
+                    android:onClick="startPlay"
+                    android:text="@string/start_play" />
+
+                <Button
+                    android:id="@+id/btn_stop"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/main_button_selector"
+                    android:textColor="#fff"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginEnd="30dp"
+                    android:layout_marginTop="20dp"
+                    android:onClick="stopPlay"
+                    android:text="@string/stop_play" />
+
+                <Button
+                    android:id="@+id/btn_capture"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/main_button_selector"
+                    android:textColor="#fff"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginEnd="30dp"
+                    android:layout_marginTop="20dp"
+                    android:onClick="capturePic"
+                    android:text="@string/capture" />
+
+                <com.gos.avplayer.surface.GLFrameSurface
+                    android:id="@+id/glsurface"
+                    android:layout_marginTop="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp" />
+
+                <TextView
+                    android:id="@+id/tv_time"
+                    android:layout_marginStart="30dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="----:--:--"
+                    android:textColor="#000" />
+
+                <Button
+                    android:id="@+id/btn_parse"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/main_button_selector"
+                    android:textColor="#fff"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginEnd="30dp"
+                    android:layout_marginTop="20dp"
+                    android:onClick="toParseMp4"
+                    android:text="@string/to_mp_file" />
+
+                <Button
+                    android:id="@+id/btn_get_preview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/main_button_selector"
+                    android:textColor="#fff"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginEnd="30dp"
+                    android:layout_marginTop="20dp"
+                    android:onClick="getPreviewPic"
+                    android:text="@string/get_preview" />
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+</layout>

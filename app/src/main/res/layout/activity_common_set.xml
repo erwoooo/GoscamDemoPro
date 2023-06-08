@@ -92,12 +92,13 @@
                         android:textColor="#000"
                         android:padding="10dp"
                         android:text="@string/pir_detection"/>
+
                     <Switch
                         android:id="@+id/pir_switch"
-                        android:layout_alignParentEnd="true"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:padding="10dp"/>
+                        android:layout_alignParentEnd="true"
+                        android:padding="10dp" />
 
 
                 </RelativeLayout>
@@ -176,12 +177,13 @@
                         android:textColor="#000"
                         android:padding="10dp"
                         android:text="@string/led_switch"/>
+
                     <Switch
                         android:id="@+id/led_switch"
-                        android:layout_alignParentEnd="true"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:padding="10dp"/>
+                        android:layout_alignParentEnd="true"
+                        android:padding="10dp" />
                 </RelativeLayout>
 
 

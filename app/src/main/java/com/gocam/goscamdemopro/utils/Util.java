@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
+import android.text.TextUtils;
 import android.util.Log;
 
 import java.net.NetworkInterface;
@@ -120,5 +121,40 @@ public class Util {
         return (0xff & byt[nBeginPos]) | (0xff & byt[nBeginPos + 1]) << 8
                 | (0xff & byt[nBeginPos + 2]) << 16
                 | (0xff & byt[nBeginPos + 3]) << 24;
+    }
+
+    public static String getStorage(long value) {
+        String result = null;
+        int GB = 1024;
+        if (value % 1024 != 0) {
+            long gb = value / GB;
+            if (gb == 0)
+                result = String.format("%sMB", value);
+            else
+                result = String.format("%s.%sGB", value / GB, value % GB);
+        } else {
+            result = String.format("%sGB", value / GB);
+        }
+        return result;
+    }
+
+    public static boolean[] parserIntEnable2BooleanArray(int iEnable, int len){
+        boolean[] bEnable = new boolean[len];
+        for(int i=0; i<bEnable.length; i++){
+            int val = iEnable & 0x1;
+            System.out.println(val);
+            bEnable[i] = val==1;
+            if(i != bEnable.length-1){
+                iEnable = iEnable>>1;
+            }
+        }
+        return bEnable;
+    }
+
+    //ture 有新版本
+    public static boolean compareDeviceSoftwareVersion(String version, String newVersion){
+        return !TextUtils.isEmpty(newVersion)
+                && !TextUtils.isEmpty(version)
+                && version.compareToIgnoreCase(newVersion) < 0;
     }
 }
