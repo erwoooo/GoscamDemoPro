@@ -66,4 +66,10 @@ interface ApiService {
     @POST(".")
     suspend fun getCMDParam(@Body body: RequestBody):Response<CmdResponseParam?>
 
+
+    @POST(".")
+    suspend fun wakeUpDevice(@Body body: RequestBody):Response<BaseResponse<WakeUpParam?>>
+
+    @POST(".")
+    suspend fun queryDeviceStatus(@Body body: RequestBody):Response<BaseResponse<DevicePlatStatus?>>
 }

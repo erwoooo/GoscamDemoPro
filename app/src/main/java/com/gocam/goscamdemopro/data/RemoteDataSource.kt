@@ -84,6 +84,7 @@ object RemoteDataSource : DataSource {
             GApplication.app.user.token = result.Body!!.AccessToken
             gsoSession.accessToken = result.Body!!.AccessToken
             gsoSession.userName = result.Body!!.UserName
+
             GosConnection.TransportProtype()
             result.Body
         } else {
@@ -558,6 +559,52 @@ object RemoteDataSource : DataSource {
         val result = job.await()
         Log.e(TAG, "checkNewVer: $result")
         return if (result is BaseResponse<FirmWareParam?>)
+            result.Body
+        else
+            null
+    }
+
+    override suspend fun wakeDevice(deviceId: String) : WakeUpParam?{
+        val job = asyncTask {
+            val map = mapOf(
+                Pair("DeviceId", deviceId),
+            )
+            val nMap = mapOf(
+                Pair("Body", map),
+                Pair("MessageType", WakeUpDeviceRequest)
+            )
+            val json = Gson().toJson(nMap).toRequestBody()
+            val response = RetrofitClient.apiService.wakeUpDevice(json)
+            Log.e(TAG, "wakeDevice: $response", )
+            return@asyncTask response.body()
+        }
+
+        val result = job.await()
+        Log.e(TAG, "wakeDevice: $result", )
+        return if(result is BaseResponse<WakeUpParam?>)
+            result.Body
+        else
+            null
+    }
+
+
+    override suspend fun queryDeviceOnlineStatusSyn(deviceId: String) : DevicePlatStatus?{
+        val job = asyncTask {
+            val map = mapOf(
+                Pair("DeviceId", deviceId),
+            )
+            val nMap = mapOf(
+                Pair("Body", map),
+                Pair("MessageType", QueryDeviceOnlineStatusRequest)
+            )
+            val json = Gson().toJson(nMap).toRequestBody()
+            val response = RetrofitClient.apiService.queryDeviceStatus(json)
+            Log.e(TAG, "wakeDevice: $response", )
+            return@asyncTask response.body()
+        }
+
+        val result = job.await()
+        return if (result is BaseResponse<DevicePlatStatus?>)
             result.Body
         else
             null

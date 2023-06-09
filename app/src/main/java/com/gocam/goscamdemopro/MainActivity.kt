@@ -108,7 +108,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(),
                     (vh as Vh).tv.text = it
                 }
                 vh.itemView.setOnClickListener(View.OnClickListener {
-                    PlayJavaActivity.startActivity(
+                    PlayActivity.startActivity(
                         vh.itemView.context,
                         device.devId
                     )

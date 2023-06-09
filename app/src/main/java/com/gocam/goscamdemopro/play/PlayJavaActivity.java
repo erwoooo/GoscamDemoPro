@@ -30,6 +30,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.gocam.goscamdemopro.R;
 import com.gocam.goscamdemopro.cloud.data.GosCloud;
+import com.gocam.goscamdemopro.data.RemoteDataSource;
 import com.gocam.goscamdemopro.entity.DevCap;
 import com.gocam.goscamdemopro.entity.Device;
 import com.gocam.goscamdemopro.utils.DeviceManager;
@@ -282,6 +283,16 @@ public class PlayJavaActivity extends AppCompatActivity implements OnDevEventCal
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if ( mDevice != null &&
+                (mDevice.devType == DeviceType.DOOR_BELL || mDevice.devType == DeviceType.BATTERY_IPC)) {
+            handleDoorbellWakeup();
+        }
+
+    }
+
     Runnable timeOutRunnable = new Runnable() {
         @Override
         public void run() {
@@ -305,7 +316,7 @@ public class PlayJavaActivity extends AppCompatActivity implements OnDevEventCal
                 public void subscribe(ObservableEmitter<Integer> e) throws Exception {
                     DevCap devCap = mDevice.getDevCap();
                     if (mDevice.deviceStatus == DeviceStatus.OFFLINE && devCap.isSupDoorbellLowpower) {
-                        DevParamResult devParamResult = GosSession.getSession().AppGetDeviceParam(mDeviceId, LowpowerModeSetting);  //查询设备省电模式
+                        DevParamResult devParamResult = GosSession.getSession().AppGetDeviceParam(mDeviceId,LowpowerModeSetting);  //查询设备省电模式
                         if (devParamResult.code == 0 && devParamResult.devParams != null && devParamResult.devParams.size() > 0) {
                             LowpowerModeSettingParam devParam = (LowpowerModeSettingParam) devParamResult.devParams.get(0);
                             mDevice.lowpowerSwitch = devParam.lowpowerSwitch;   //省电模式开关

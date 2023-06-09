@@ -37,6 +37,7 @@
                     android:background="@drawable/main_button_selector"
                     />
                 <Button
+                    android:enabled="false"
                     android:id="@+id/btn_OpenStream"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -49,6 +50,7 @@
                     android:background="@drawable/main_button_selector"
                     />
                 <Button
+                    android:enabled="false"
                     android:id="@+id/btn_CloseStream"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -61,6 +63,7 @@
                     android:background="@drawable/main_button_selector"
                     />
                 <Button
+                    android:enabled="false"
                     android:id="@+id/btn_StartTalk"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -73,6 +76,7 @@
                     android:background="@drawable/main_button_selector"
                     />
                 <Button
+                    android:enabled="false"
                     android:id="@+id/btn_Stop_Talk"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -85,6 +89,7 @@
                     android:background="@drawable/main_button_selector"
                     />
                 <Button
+                    android:enabled="false"
                     android:id="@+id/btn_Start_record"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -97,6 +102,7 @@
                     android:background="@drawable/main_button_selector"
                     />
                 <Button
+                    android:enabled="false"
                     android:id="@+id/btn_Stop_record"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -109,6 +115,7 @@
                     android:background="@drawable/main_button_selector"
                     />
                 <Button
+                    android:enabled="false"
                     android:id="@+id/btn_capture"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

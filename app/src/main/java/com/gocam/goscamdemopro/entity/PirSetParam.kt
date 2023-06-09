@@ -48,6 +48,10 @@ data class MicSwitchParam(
     val device_mic_switch: Int
 ) : BaseDeviceParam()
 
+data class LowPowerParam(
+    val a_doorbell_lowpower: Int
+) : BaseDeviceParam()
+
 data class MotionParam(
     var c_sensitivity: Int,
     var c_switch: Int,
@@ -83,3 +87,25 @@ data class UpgradeStatusParam(
 ) : BaseDeviceParam()
 
 
+data class WakeUpParam(
+    val DeviceId: String,
+    val DstInfo: DstInfo,
+    val SessionId: String,
+    val SrcInfo: SrcInfo
+)
+
+data class DstInfo(
+    val Session: String,
+    val SvrId: String
+)
+
+data class SrcInfo(
+    val Session: String,
+    val SvrId: String
+)
+
+data class DevicePlatStatus(
+    val DeviceId: String,
+    val IsOnline: Int,
+    val SessionId: String
+)

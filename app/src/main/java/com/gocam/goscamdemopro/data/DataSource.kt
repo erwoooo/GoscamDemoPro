@@ -58,4 +58,8 @@ interface DataSource {
     suspend fun getCmdParam(baseDeviceParam: BaseDeviceParam,deviceId: String):CmdResponseBody?
 
     suspend fun checkNewVer(deviceType: String):FirmWareParam?
+
+    suspend fun wakeDevice(deviceId: String):WakeUpParam?
+
+    suspend fun queryDeviceOnlineStatusSyn(deviceId: String):DevicePlatStatus?
 }

@@ -11,10 +11,12 @@ import android.text.TextUtils
 import android.widget.Button
 
 import com.gocam.goscamdemopro.R
+import com.gocam.goscamdemopro.base.BaseActivity
 import com.gocam.goscamdemopro.base.BaseBindActivity
 import com.gocam.goscamdemopro.databinding.ActivityPlayVideoBinding
 import com.gocam.goscamdemopro.entity.Device
 import com.gocam.goscamdemopro.utils.DeviceManager
+import com.gocam.goscamdemopro.utils.dbg
 import com.gos.avplayer.GosMediaPlayer
 import com.gos.avplayer.contact.BufferCacheType
 import com.gos.avplayer.contact.DecType
@@ -22,6 +24,7 @@ import com.gos.avplayer.contact.RecEventType
 import com.gos.avplayer.jni.AvPlayerCodec
 import com.gos.avplayer.surface.GLFrameSurface
 import com.gos.avplayer.surface.GlRenderer
+import com.gos.platform.api.contact.DeviceType
 import com.gos.platform.api.contact.ResultCode
 import com.gos.platform.device.base.Connection
 import com.gos.platform.device.contact.ConnectStatus
@@ -35,9 +38,10 @@ import com.gos.platform.device.result.DevResult.DevCmd
 import java.io.FileNotFoundException
 import java.io.FileOutputStream
 import java.lang.Exception
+import java.nio.ByteBuffer
 import java.util.*
 
-class PlayActivity : BaseBindActivity<ActivityPlayVideoBinding>(), OnDevEventCallback,
+class PlayActivity : BaseActivity<ActivityPlayVideoBinding,PlayViewModel>(), OnDevEventCallback,
     AvPlayerCodec.OnDecCallBack, AvPlayerCodec.OnRecCallBack, IVideoPlay {
     override fun getLayoutId(): Int = R.layout.activity_play_video
     var glFrameSurface: GLFrameSurface? = null
@@ -59,6 +63,8 @@ class PlayActivity : BaseBindActivity<ActivityPlayVideoBinding>(), OnDevEventCal
     var sAudioRecord: AudioRecord? = null
     var sAudioTrack: AudioTrack? = null
     var sRecordHandler: RecordHandler? = null
+
+    var sAudioHandler: AudioHandler? = null
 
     companion object {
 
@@ -98,16 +104,6 @@ class PlayActivity : BaseBindActivity<ActivityPlayVideoBinding>(), OnDevEventCal
 
             var fileTalkDataPath: String? = null
             var fos: FileOutputStream? = null
-            if (FILE_TYPE == talkType) {
-                fileTalkDataPath =
-                    Environment.getExternalStorageDirectory().absolutePath + "/temp.g711"
-                try {
-                    fos = FileOutputStream(fileTalkDataPath)
-                } catch (e: FileNotFoundException) {
-                    e.printStackTrace()
-                }
-            }
-
             while (isStartRecord) {
                 val size = sAudioRecord!!.read(audioData, 0, audioData.size)
                 if (size == audioData.size) {
@@ -122,12 +118,6 @@ class PlayActivity : BaseBindActivity<ActivityPlayVideoBinding>(), OnDevEventCal
                     if (len > 0) {
                         if (STREAM_TYPE == talkType) {
                             mConnection!!.sendTalkData(0, 53, 8000, 0, g711Buf, g711Buf.size)
-                        } else {
-                            try {
-                                fos!!.write(g711Buf, 0, g711Buf.size)
-                            } catch (e: Exception) {
-                                e.printStackTrace()
-                            }
                         }
                     }
                 }
@@ -135,13 +125,6 @@ class PlayActivity : BaseBindActivity<ActivityPlayVideoBinding>(), OnDevEventCal
 
             if (STREAM_TYPE == talkType) {
                 mConnection!!.stopTalk(0)
-            } else if (FILE_TYPE == talkType) {
-                try {
-                    fos!!.close()
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
-                mConnection!!.sendSpeakFile(0, fileTalkDataPath, 0)
             }
         }
 
@@ -154,7 +137,9 @@ class PlayActivity : BaseBindActivity<ActivityPlayVideoBinding>(), OnDevEventCal
         if (mDevice == null)
             finish()
         glFrameSurface = mBinding?.glSurface
-
+        mBinding?.toolBar!!.backImg.setOnClickListener {
+            finish()
+        }
         glFrameSurface?.setEGLContextClientVersion(2)
         mGlRenderer = GlRenderer(glFrameSurface)
         glFrameSurface?.apply {
@@ -195,6 +180,13 @@ class PlayActivity : BaseBindActivity<ActivityPlayVideoBinding>(), OnDevEventCal
 
         mConnection = mDevice?.connection
         mConnection?.addOnEventCallbackListener(this)
+
+        recordHandlerThread = HandlerThread("record")
+        recordHandlerThread!!.start()
+        sRecordHandler = RecordHandler(recordHandlerThread!!.looper)
+        audioHandlerThread = HandlerThread("audio")
+        audioHandlerThread!!.start()
+        sAudioHandler = AudioHandler(audioHandlerThread!!.looper)
 
         mBinding?.btnConnect?.apply {
             setOnClickListener {
@@ -246,11 +238,46 @@ class PlayActivity : BaseBindActivity<ActivityPlayVideoBinding>(), OnDevEventCal
                         sRecordHandler!!.isStartRecord = false
                     }
                 }
+
+                mBinding?.btnCloseStream.apply {
+                    setOnClickListener {
+                        mConnection!!.stopVideo(0, this@PlayActivity)
+                    }
+                }
+                mBinding?.btnStartRecord?.setOnClickListener {
+                    mBinding?.btnStartRecord?.isEnabled = false
+                    mBinding?.btnStopRecord?.isEnabled = true
+
+                    val recordPath =
+                        Environment.getExternalStorageDirectory().absolutePath + "/" + System.currentTimeMillis() + ".mp4"
+                    mMediaPlayer!!.startRecord(recordPath, 0)
+                }
+
+                mBinding?.btnCapture?.setOnClickListener {
+                    val capturePath =
+                        Environment.getExternalStorageDirectory().absolutePath + "/" + System.currentTimeMillis() + ".jpg"
+                    mMediaPlayer!!.capture(capturePath)
+                    showLToast("pic save path : $capturePath")
+                    dbg.D("PlayActivity", capturePath)
+                }
             }
 
         }
+
+        mViewModel?.mDeviceOnline?.observe(this){
+            mDevice?.setOnline(it)
+            mConnection?.setPlatDevOnline(it)
+        }
     }
 
+    override fun onResume() {
+        super.onResume()
+        if (mDevice != null &&
+            (mDevice!!.devType == DeviceType.DOOR_BELL || mDevice!!.devType == DeviceType.BATTERY_IPC)
+        ) {
+            mViewModel.handleDoorbellWakeup(devId!!)
+        }
+    }
 
     override fun onDevEvent(devId: String?, devResult: DevResult) {
         if (!TextUtils.equals(devId, mDevice!!.devId)) {
@@ -263,12 +290,12 @@ class PlayActivity : BaseBindActivity<ActivityPlayVideoBinding>(), OnDevEventCal
             DevCmd.connect -> {
                 val connectResult = devResult as ConnectResult
                 if (connectResult.connectStatus == ConnectStatus.CONNECT_SUCCESS) {
+                    showToast("connect success")
                     mBinding?.apply {
                         btnOpenStream.isEnabled = true
                         btnStartTalk.isEnabled = true
                         btnStartRecord.isEnabled = true
                         btnCapture.isEnabled = true
-                        showToast("connect success")
                     }
                 }
             }
@@ -303,7 +330,16 @@ class PlayActivity : BaseBindActivity<ActivityPlayVideoBinding>(), OnDevEventCal
         frameNo: Int,
         aiInfo: String?
     ) {
-
+        if (DecType.YUV420 == type) {
+            val buf = ByteBuffer.wrap(data)
+            mGlRenderer!!.update(buf, width, height)
+        } else if (DecType.AUDIO == type) {
+            val t = ByteArray(dataSize)
+            System.arraycopy(data, 0, t, 0, dataSize)
+            val obtain = Message.obtain()
+            obtain.obj = t
+            sAudioHandler?.sendMessage(obtain)
+        }
     }
 
     /**
@@ -311,10 +347,35 @@ class PlayActivity : BaseBindActivity<ActivityPlayVideoBinding>(), OnDevEventCal
      * avFrame: Audio & Video Data Streaming
      */
     override fun onVideoStream(devId: String?, avFrame: AvFrame?) {
-
+        val temp = ByteArray(avFrame!!.data.size)
+        System.arraycopy(avFrame.data, 0, temp, 0, avFrame.data.size)
+        mMediaPlayer!!.putFrame(temp, temp.size, 1)
     }
 
     override fun recCallBack(type: RecEventType?, data: Long, flag: Long) {
 
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mConnection!!.removeOnEventCallbackListener(this)
+        mGlRenderer!!.stopDisplay()
+        mGlRenderer!!.release()
+
+        mMediaPlayer!!.stop()
+        mMediaPlayer!!.releasePort()
+        mMediaPlayer!!.setOnDecCallBack(this)
+        mMediaPlayer!!.setOnRecCallBack(this)
+
+        recordHandlerThread!!.quitSafely()
+        audioHandlerThread!!.quitSafely()
+        sAudioHandler!!.removeCallbacksAndMessages(null)
+        mConnection!!.stopTalk(0)
+        mConnection!!.stopVideo(0, this)
+
+        sAudioRecord!!.stop()
+        sAudioRecord!!.release()
+        sAudioTrack!!.stop()
+        sAudioTrack!!.release()
     }
 }
