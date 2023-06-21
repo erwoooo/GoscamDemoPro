@@ -462,7 +462,6 @@ object RemoteDataSource : DataSource {
             )
 
             val json = Gson().toJson(map).toRequestBody()
-
             val response = RetrofitClient.apiService.getDeviceParams(json)
 
             return@asyncTask response.body()?.Body

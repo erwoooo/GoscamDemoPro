@@ -9,6 +9,9 @@ import com.gocam.goscamdemopro.entity.DevParamArray
 import com.gocam.goscamdemopro.entity.Device
 import com.gocam.goscamdemopro.entity.TimeParam
 import com.gocam.goscamdemopro.utils.DeviceManager
+import com.gos.platform.api.devparam.BatteryInfoParam
+import com.gos.platform.api.devparam.DevParam.DevParamCmdType
+import com.gos.platform.api.devparam.DevParam.DevParamCmdType.BatteryInfo
 import com.gos.platform.api.devparam.DevParam.DevParamCmdType.TimeZoneInfo
 import kotlinx.coroutines.launch
 
@@ -21,9 +24,11 @@ class TimeVerifyViewModel: BaseViewModel<BaseModel>() {
     fun setTimeVerify(deviceId:String){
         val device = DeviceManager.getInstance().findDeviceById(deviceId)
         viewModelScope.launch {
+
+
             val timeParam = TimeParam(
                 (System.currentTimeMillis() / 1000).toInt(),
-                device.timezoneVerifyType
+                device.getVerifyTimezone()
             )
             val devParamArray = DevParamArray(
                 TimeZoneInfo,

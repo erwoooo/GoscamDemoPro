@@ -23,6 +23,8 @@
     <string name="message_dev_empty">No device yet</string>
 
     <string name="connect">Connect</string>
+    <string name="start_audio">Start audio</string>
+    <string name="stop_audio">Stop audio</string>
     <string name="start_video">Start video</string>
     <string name="stop_video">Stop video</string>
     <string name="start_talk">Start talk</string>

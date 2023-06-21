@@ -37,3 +37,8 @@ data class GetUpgradeInfoRequestParam(
     val upgrade_md5: String,
     val upgrade_len: Int
 ):BaseDeviceParam()
+
+data class KeepLiveParam(
+    val CMDType: Int,
+    val channel: Int
+) : BaseDeviceParam()

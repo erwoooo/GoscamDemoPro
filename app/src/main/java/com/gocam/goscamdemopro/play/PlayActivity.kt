@@ -75,11 +75,13 @@ class PlayActivity : BaseActivity<ActivityPlayVideoBinding,PlayViewModel>(), OnD
         }
     }
 
+    var playAudio = true;
     inner class AudioHandler : Handler {
         constructor(looper: Looper) : super(looper)
-
         override fun handleMessage(msg: Message) {
             super.handleMessage(msg)
+            if (!playAudio)
+                return
             val data = msg.obj as ByteArray
             sAudioTrack?.apply {
                 if (playState != AudioTrack.PLAYSTATE_PLAYING) {
@@ -260,6 +262,15 @@ class PlayActivity : BaseActivity<ActivityPlayVideoBinding,PlayViewModel>(), OnD
                     showLToast("pic save path : $capturePath")
                     dbg.D("PlayActivity", capturePath)
                 }
+
+                mBinding?.btnAudio?.setOnClickListener {
+                    playAudio = !playAudio
+                    if(playAudio){
+                        mDevice?.connection?.startAudio(0)
+                    }else{
+                        mDevice?.connection?.stopAudio(0)
+                    }
+                }
             }
 
         }
@@ -296,6 +307,7 @@ class PlayActivity : BaseActivity<ActivityPlayVideoBinding,PlayViewModel>(), OnD
                         btnStartTalk.isEnabled = true
                         btnStartRecord.isEnabled = true
                         btnCapture.isEnabled = true
+                        btnAudio.isEnabled = true
                     }
                 }
             }

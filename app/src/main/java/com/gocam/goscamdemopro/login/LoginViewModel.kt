@@ -18,7 +18,7 @@ class LoginViewModel : BaseViewModel<BaseModel>() {
     private val loginResult = SingleLiveData<LoginBeanResult>()
     val mLoginResult: SingleLiveData<LoginBeanResult>
         get() = loginResult
-    private var isGetSuc: Boolean = false
+    private var isGetSuc: Boolean = true
 
     override fun onCreate(owner: LifecycleOwner) {
         super.onCreate(owner)
