@@ -54,6 +54,8 @@ public class GosCloud {
     private static String GET_CLOUD_VIDEO_LIST_URL;
     private static String GET_FACE_CLOUD_VIDEO_LIST_URL;
     private static String GET_CLOUD_ALARM_VIDEO_LIST_URL_BY_TIME;
+    private static String GET_PLAY_FILE_LIST_BY_PAGE;//分页获取云存储数据
+
     private static String GET_ALL_CLOUD_ALARM_VIDEO_LIST_URL;
     private static String GET_CLOUD_VIDEO_PIC_LIST_URL;
     private static String PLAY_URL;
@@ -129,6 +131,8 @@ public class GosCloud {
             GET_CLOUD_VIDEO_LIST_URL = URL_HEAD + "/cloudstore/cloudstore-service/file/time-line";
             GET_FACE_CLOUD_VIDEO_LIST_URL = URL_HEAD + "/cloudstore/cloudstore-service/face/move-video/time-line/details";
             GET_CLOUD_ALARM_VIDEO_LIST_URL_BY_TIME = URL_HEAD + "/cloudstore/cloudstore-service/move-video/time-line";
+            GET_PLAY_FILE_LIST_BY_PAGE = URL_HEAD + "/cloudstore/cloudstore-service/move-video/time-line/details/pagination";
+
             GET_ALL_CLOUD_ALARM_VIDEO_LIST_URL = URL_HEAD + "/cloudstore/cloudstore-service/move-video/all";
             GET_CLOUD_VIDEO_PIC_LIST_URL = URL_HEAD + "/cloudstore/cloudstore-service/move-pic/time-line";
             PLAY_URL = URL_HEAD + "/cloudstore/cloudstore-service/video/play";
@@ -214,6 +218,9 @@ public class GosCloud {
         });
         return true;
     }
+
+
+
     public GetCloudSetMenuInfoResult getCloudSetMenuInfo(final String devId, String token, String username) {
         HttpParams params = new HttpParams();
         params.put("device_id", devId);
@@ -425,6 +432,49 @@ public class GosCloud {
             e.printStackTrace();
             return new GetCloudAlarmVideoListResult(PlatResult.PlatCmd.getCloudAlarmVideoListByTime, -1, null, 0);
         }
+    }
+
+    /**
+     * 获取视频文件列表,带分页
+     *
+     * @param devId
+     * @param startTime 起始时间
+     * @param endTime   结束时间
+     * @param token
+     * @param username
+     * @param pageNum   页码 从1开始
+     * @param size      每页的数量
+     * @param sort      sort=asc降序,sort=desc升序
+     *                  size=xxx&page_number=xxx
+     * @return
+     */
+    public boolean getPlayFileListByPage(String devId, long startTime, long endTime, String token
+            , String username, int size, int pageNum, String sort) {
+        HttpParams params = new HttpParams();
+        params.put("device_id", devId);
+        params.put("start_time", startTime);
+        params.put("end_time", endTime);
+        params.put("token", token);
+        params.put("check", "novel");
+        params.put("username", username);
+        params.put("version", ServerVersion);
+        params.put("size", size);
+        params.put("page_number", pageNum);
+        params.put("sort", sort);
+        OkGo.<String>get(GET_PLAY_FILE_LIST_BY_PAGE).params(params).headers(HeaderKey, HeaderValue).execute(new StringCallback() {
+
+            @Override
+            public void onSuccess(Response<String> response) {
+                String body = response.body();
+                post(new GetCloudPlayFileListResult(200, body, 0,startTime, endTime, 0));
+            }
+
+            @Override
+            public void onError(Response<String> response) {
+                post(new GetCloudPlayFileListResult(-1, null, 0,startTime, endTime, 0));
+            }
+        });
+        return true;
     }
 
     /**

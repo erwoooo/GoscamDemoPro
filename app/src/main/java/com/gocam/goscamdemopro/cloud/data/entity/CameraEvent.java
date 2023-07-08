@@ -1,11 +1,14 @@
 package com.gocam.goscamdemopro.cloud.data.entity;
 
 
-
 import androidx.annotation.NonNull;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+/**
+ * Created by zhaolong on 2017/8/30.
+ */
 
 public class  CameraEvent implements Cloneable, Comparable {
     public final Object lock = new Object();
@@ -15,6 +18,8 @@ public class  CameraEvent implements Cloneable, Comparable {
     private long endTime;
     private String startTextTime;
     private String endTextTime;
+    protected int eventTypeNum;
+    public String prePicPath;//预览图
 
     //用于保存云存储告警信息文件下载信息
     private Object cloudPlayInfos;
@@ -24,6 +29,10 @@ public class  CameraEvent implements Cloneable, Comparable {
     }
     public Object getCloudPlayInfos(){
         return cloudPlayInfos;
+    }
+
+    public int getEventTypeNum() {
+        return eventTypeNum;
     }
 
 
@@ -46,6 +55,14 @@ public class  CameraEvent implements Cloneable, Comparable {
         this.isPlayed = isPlayed;
     }
 
+
+    private Object obj;
+    public void setObj(Object obj){
+        this.obj = obj;
+    }
+    public Object getObj(){
+        return obj;
+    }
 
     public CameraEvent() {
     }

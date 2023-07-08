@@ -19,20 +19,28 @@ import com.gocam.goscamdemopro.GApplication;
 import com.gocam.goscamdemopro.R;
 import com.gocam.goscamdemopro.base.BaseBindActivity;
 import com.gocam.goscamdemopro.cloud.data.GosCloud;
+import com.gocam.goscamdemopro.cloud.data.entity.AlarmVideoEvent;
 import com.gocam.goscamdemopro.cloud.data.entity.CameraEvent;
+import com.gocam.goscamdemopro.cloud.data.entity.CloudPlayInfo;
 import com.gocam.goscamdemopro.cloud.data.entity.DayTime;
 import com.gocam.goscamdemopro.cloud.data.result.GetCloudAlarmVideoListResult;
+import com.gocam.goscamdemopro.cloud.data.result.GetCloudPlayFileListResult;
 import com.gocam.goscamdemopro.databinding.ActivityCloudDayBinding;
 import com.gocam.goscamdemopro.entity.User;
+import com.gocam.goscamdemopro.utils.dbg;
 import com.gos.platform.api.contact.PlatCode;
 import com.gos.platform.api.inter.OnPlatformEventCallback;
 import com.gos.platform.api.result.PlatResult;
 
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class CloudDayFileActivity extends BaseBindActivity<ActivityCloudDayBinding> implements OnPlatformEventCallback {
+    private static final String TAG = "CloudDayFileActivity";
     TextView mTvTitle;
     String mDeviceId;
     long mStartTime;
@@ -40,6 +48,10 @@ public class CloudDayFileActivity extends BaseBindActivity<ActivityCloudDayBindi
     RecyclerView mRecycleView;
     CloudDayFileAdapter mCloudDayFileAdapter;
     ImageView ivBack;
+    int requestPage = 1;
+    final String SORT = "desc";
+    private boolean useRequestPage = false;
+    User user = GApplication.app.user;
     public static void startActivity(Activity activity, String deviceId, DayTime dayTime){
         Intent intent = new Intent(activity, CloudDayFileActivity.class);
         intent.putExtra("DEV_ID", deviceId);
@@ -67,10 +79,56 @@ public class CloudDayFileActivity extends BaseBindActivity<ActivityCloudDayBindi
             }else{
                 showToast("request failed, code="+platResult.getResponseCode());
             }
+        }else if (PlatResult.PlatCmd.getCloudStreamUrlList == platResult.getPlatCmd()){
+
+            if (PlatCode.SUCCESS == platResult.getRequestCode()){
+                //分页加载
+                GetCloudPlayFileListResult fileListResult = (GetCloudPlayFileListResult) platResult;
+                dbg.D(TAG,"getPlayFileListByPage, st=" + mStartTime + ",et=" + mEndTime + ",code="
+                        + fileListResult.getResponseCode() + ",requestPageNum=" + requestPage + "," + fileListResult.getData());
+                List<CloudPlayInfo> resultData = fileListResult.getData();
+                List<CameraEvent> cameraEvents = new ArrayList<>();
+
+                for(int i = 0; resultData != null && i < resultData.size(); i++){
+                    CloudPlayInfo cloudPlayInfo = resultData.get(i);
+                    AlarmVideoEvent event = new AlarmVideoEvent(cloudPlayInfo.getStartTime(), cloudPlayInfo.getEndTime(), cloudPlayInfo.getAlarmType());
+                    event.setObj(cloudPlayInfo);
+                    cameraEvents.add(event);
+                }
+                if (requestPage == 1){  //first load
+                    cameraEventList.clear();
+                }
+                Collections.sort(cameraEvents, new CloudComparator());
+                cameraEventList.addAll(cameraEvents);
+                Collections.sort(cameraEventList, new CloudComparator());
+
+                if (resultData == null || resultData.size() == 0){
+                    //get all data
+                    dismissLoading();
+                    mCloudDayFileAdapter.notifyDataSetChanged();
+                }else {
+                    requestPage ++;   // go on
+                    GosCloud.getCloud().getPlayFileListByPage(mDeviceId, mStartTime, mEndTime, user.getToken(), user.getUserName(), 300,requestPage,SORT);
+                }
+            }
         }
     }
 
     List<CameraEvent> cameraEventList = new ArrayList<>();
+
+    class CloudComparator implements Comparator<CameraEvent> {
+        @Override
+        public int compare(CameraEvent o1, CameraEvent o2) {
+            long start1 = o1.getStartTime();
+            long start2 = o2.getStartTime();
+            if (start1 < start2) {
+                return 1;
+            } else if (start1 > start2) {
+                return -1;
+            }
+            return 0;
+        }
+    }
 
     @Override
     public int getLayoutId() {
@@ -95,10 +153,17 @@ public class CloudDayFileActivity extends BaseBindActivity<ActivityCloudDayBindi
         mStartTime = getIntent().getLongExtra("START_TIME", 0);
         mEndTime = getIntent().getLongExtra("END_TIME", 0);
 
-        User user = GApplication.app.user;
+
         GosCloud.getCloud().addOnPlatformEventCallback(this);
         showLoading();
-        GosCloud.getCloud().getAllCloudAlarmVideoList(mDeviceId, mStartTime, mEndTime, user.getToken(), user.getUserName(), 0);
+
+        if (useRequestPage){
+            GosCloud.getCloud().getPlayFileListByPage(mDeviceId, mStartTime, mEndTime, user.getToken(), user.getUserName(), 300,requestPage,SORT);
+        }else {
+            GosCloud.getCloud().getAllCloudAlarmVideoList(mDeviceId, mStartTime, mEndTime, user.getToken(), user.getUserName(), 0);
+        }
+
+
     }
 
     class CloudDayFileAdapter extends RecyclerView.Adapter<CloudDayFileAdapter.Vh>{

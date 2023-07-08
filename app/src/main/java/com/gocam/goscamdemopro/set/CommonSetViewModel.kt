@@ -57,7 +57,7 @@ class CommonSetViewModel : BaseViewModel<BaseModel>() {
                 PirSetting,
                 DeviceSwitch,
                 NightSetting,
-                LedSwitch,
+                DoorbellLedSwitch,
                 MicSwitch,
                 deviceId = deviceId
             )

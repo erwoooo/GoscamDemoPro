@@ -2,6 +2,7 @@ package com.gocam.goscamdemopro
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -79,6 +80,9 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(),
         public fun setDevices(devices: ArrayList<Device>) {
             deviceList.clear()
             deviceList.addAll(devices)
+            for(device in devices){
+                Log.e("TAG", "setDevices: ${device.getVerifyTimezone()}", )
+            }
             notifyDataSetChanged()
         }
 

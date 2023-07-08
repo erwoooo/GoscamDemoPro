@@ -58,7 +58,7 @@ class DevSoftUpdateActivity : BaseActivity<ActivityDevSoftUpdateBinding, DevUpda
             val updateRestParam = GetUpgradeInfoRequestParam(
                 IOTYPE_USER_IPCAM_GET_UPGRADE_INFO_REQ,
                 0,
-                1,
+                0,
                 firmWareParam.Url,
                 firmWareParam.Version,
                 firmWareParam.MD5,

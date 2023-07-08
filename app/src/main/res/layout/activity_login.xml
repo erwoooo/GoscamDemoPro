@@ -21,7 +21,7 @@
             android:layout_marginBottom="30dp"
             android:digits="@string/account_input_format"
             android:ellipsize="end"
-            android:text="15989501457"
+            android:text="15599368709"
             android:hint="@string/sign_up_input_phone_number_or_email"
             android:maxLength="81"
             android:singleLine="false"
@@ -38,7 +38,7 @@
             android:hint="@string/input_password"
             android:inputType="textPassword"
             android:maxLength="16"
-            android:text="xiao123456"
+            android:text="yuanyi123456"
             android:singleLine="true"
             android:textAlignment="viewStart"
             android:textColor="@android:color/black" />

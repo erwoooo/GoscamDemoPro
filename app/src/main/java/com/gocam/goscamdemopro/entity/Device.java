@@ -58,6 +58,11 @@ public class Device {
     public int sdCardStatus;//-2卡异常，-1无卡， 0正常
     public boolean isSuport5G;//是否支持5G WIFI配网
     public boolean isSuport2p4G = true;//是否支持2.4G WIFI配网
+    public boolean isSuportCloud;//是否支持云储存
+    public int OSS_TYPE;
+    public static final int OSS_aliyun = 1;//阿里云存储
+    public static final int OSS_aws = 2;//亚马逊云存储
+    public static final int OSS_liantong = 3;//联通云存储
 
     public int subScreen;//判断是否是1对多摄像头，4代表一个设备对应4个摄像头
     public Device(String devName, String devId, boolean isOnline, int devType){
@@ -259,6 +264,14 @@ public class Device {
             devCap.isSupportCloud = cap.cap26 > 0; //是否支持云存储
 
 
+            //0 - 不支持
+            //1 - 支持阿里云
+            //2 - 支持亚马逊云
+            //3 - 支持联通云
+            isSuportCloud = cap.cap26 > 0;
+            if(isSuportCloud){
+                OSS_TYPE = cap.cap26;
+            }
             devCap.isSupportStreamPsw = cap.cap27 == 1;
 
             //TODO cap28
