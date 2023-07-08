@@ -10,6 +10,7 @@ import com.gocam.goscamdemopro.base.SingleLiveData
 import com.gocam.goscamdemopro.data.RemoteDataSource
 import com.gocam.goscamdemopro.entity.LoginBeanResult
 import com.gocam.goscamdemopro.utils.Util
+import com.gos.platform.api.ConfigManager
 import com.gos.platform.api.GosSession
 import kotlinx.coroutines.launch
 
@@ -28,9 +29,11 @@ class LoginViewModel : BaseViewModel<BaseModel>() {
     fun login(username: String, psw: String,uuid:String) {
         viewModelScope.launch {
             if(isGetSuc){
+                GosSession.getSession().appGetBSAddress(uuid,"")
                 val result = RemoteDataSource.login(username, psw)
                 loginResult.postValue(result)
             }else{
+
                 val bsResult = RemoteDataSource.appGetBSAddress(uuid,"")
                 Log.e(TAG, "login: $bsResult" )
                 isGetSuc = true

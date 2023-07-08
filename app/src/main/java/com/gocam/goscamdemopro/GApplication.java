@@ -14,6 +14,7 @@ import com.gos.platform.api.ConfigManager;
 import com.gos.platform.api.GosSession;
 import com.gos.platform.api.Goscam;
 import com.gos.platform.api.contact.PlatCode;
+import com.gos.platform.api.contact.ServerType;
 import com.gos.platform.api.domain.DeviceEntity;
 import com.gos.platform.api.inter.OnPlatformEventCallback;
 import com.gos.platform.api.result.GetDeviceListResult;

@@ -43,7 +43,8 @@ public class TfDayFileActivity extends BaseBindActivity<ActivityTfDayBinding> im
     Device mDevice;
     TfDayFileAdapter mTfDayFileAdapter;
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
+    private String dayTime;
+    private  int type = 0;
     public static void startActivity(Activity activity, String deviceId, String dayTime, int type){
         Intent intent = new Intent(activity, TfDayFileActivity.class);
         intent.putExtra("DEV_ID", deviceId);
@@ -70,26 +71,18 @@ public class TfDayFileActivity extends BaseBindActivity<ActivityTfDayBinding> im
             finish();
         });
         mDevId = getIntent().getStringExtra("DEV_ID");
-        String dayTime = getIntent().getStringExtra("DAY_TIME");
-        int type = getIntent().getIntExtra("TYPE", 0);
+         dayTime = getIntent().getStringExtra("DAY_TIME");
+        type = getIntent().getIntExtra("TYPE", 0);
         mTvTitle.setText(type == 0 ? R.string.record_file : R.string.alarm_file);
 
         mDevice = DeviceManager.getInstance().findDeviceById(mDevId);
         mDevice.getConnection().addOnEventCallbackListener(this);
+        showLoading();
+        mDevice.getConnection().connect(0);
 
-        try {
-            showLoading();
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
-            long startTime = dateFormat.parse(dayTime).getTime() / 1000;
-            long endTime = startTime + 24 * 3600;
-            if(type == 0){
-                mDevice.getConnection().getRecDayEventRefresh(0, (int) startTime, 0, 0);
-            }else{
-                mDevice.getConnection().getRecDayEventRefresh(0, (int) startTime, 1, 0);
-            }
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+
+
+
     }
 
     @Override
@@ -122,6 +115,22 @@ public class TfDayFileActivity extends BaseBindActivity<ActivityTfDayBinding> im
                 }else{
                     dismissLoading();
                     showToast("error code="+code);
+                }
+                break;
+            case connect:
+                dismissLoading();
+                try {
+                    showLoading();
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+                    long startTime = dateFormat.parse(dayTime).getTime() / 1000;
+                    long endTime = startTime + 24 * 3600;
+                    if(type == 0){
+                        mDevice.getConnection().getRecDayEventRefresh(0, (int) startTime, 0, 0);
+                    }else{
+                        mDevice.getConnection().getRecDayEventRefresh(0, (int) startTime, 1, 0);
+                    }
+                } catch (ParseException e) {
+                    e.printStackTrace();
                 }
                 break;
         }
