@@ -4,6 +4,11 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
+import android.os.Handler;
+import android.os.HandlerThread;
+import android.os.Looper;
+import android.os.Message;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,24 +21,40 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.FitCenter;
+import com.gocam.goscamdemopro.GApplication;
 import com.gocam.goscamdemopro.R;
 import com.gocam.goscamdemopro.base.BaseActivity;
 import com.gocam.goscamdemopro.base.BaseBindActivity;
+import com.gocam.goscamdemopro.cloud.data.entity.CameraEvent;
 import com.gocam.goscamdemopro.databinding.ActivityTfDayBinding;
 import com.gocam.goscamdemopro.entity.Device;
 import com.gocam.goscamdemopro.utils.DeviceManager;
+import com.gocam.goscamdemopro.utils.FileUtils;
+import com.gocam.goscamdemopro.utils.GlideRoundTransform;
+import com.gocam.goscamdemopro.utils.Packet;
 import com.gos.platform.api.contact.ResultCode;
+import com.gos.platform.device.domain.AvFrame;
 import com.gos.platform.device.domain.StRecordInfo;
+import com.gos.platform.device.inter.IVideoPlay;
 import com.gos.platform.device.inter.OnDevEventCallback;
 import com.gos.platform.device.result.DevResult;
 import com.gos.platform.device.result.GetRecDayEventRefreshResult;
 
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 public class TfDayFileActivity extends BaseBindActivity<ActivityTfDayBinding> implements OnDevEventCallback {
     TextView mTvTitle;
@@ -80,7 +101,11 @@ public class TfDayFileActivity extends BaseBindActivity<ActivityTfDayBinding> im
         showLoading();
         mDevice.getConnection().connect(0);
 
-
+        //获取预览图
+        mPreHandlerThread = new HandlerThread("Pre_Thread");
+        mPreHandlerThread.start();
+        mPreHandler = new PreHandler(mPreHandlerThread.getLooper());
+        openRecJpeg();
 
 
     }
@@ -88,6 +113,12 @@ public class TfDayFileActivity extends BaseBindActivity<ActivityTfDayBinding> im
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if (mPreHandler != null) {
+            mPreHandler.setWait(true);
+            mPreHandlerThread.quit();
+            mPreHandler.removeCallbacksAndMessages(null);
+        }
+        closeRecJpeg();
         mDevice.getConnection().removeOnEventCallbackListener(this);
     }
 
@@ -155,6 +186,21 @@ public class TfDayFileActivity extends BaseBindActivity<ActivityTfDayBinding> im
                     +",total="+(Integer.parseInt(stRecordInfo.endTimeStamp)-Integer.parseInt(stRecordInfo.startTimeStamp))+"\n"
                     +dateFormat.format(new Date(Integer.parseInt(stRecordInfo.startTimeStamp)*1000l))
                     +"-"+dateFormat.format(new Date(Integer.parseInt(stRecordInfo.endTimeStamp)*1000l)));
+
+            String filePath = FileUtils.getTfPreviewPicPath(GApplication.app.user.getUserName(), mDevice.devId)
+                    + File.separator + stRecordInfo.startTimeStamp + ".jpg";
+            File file = new File(filePath);
+            if (file.exists()) {
+                Glide.with(GApplication.app).load(filePath).override(400, 200)
+                        .placeholder(R.drawable.img_events_playback_default)
+                        .transform(new FitCenter(vh.ivThumb.getContext()),
+                                new GlideRoundTransform(vh.ivThumb.getContext(), 5))
+                        .error(R.drawable.img_events_playback_default)
+                        .into(vh.ivThumb);
+            } else {
+                vh.ivThumb.setImageResource(R.drawable.img_events_playback_default);
+                mPreHandler.sendGet(stRecordInfo);
+            }
             vh.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -170,10 +216,165 @@ public class TfDayFileActivity extends BaseBindActivity<ActivityTfDayBinding> im
 
         class Vh extends RecyclerView.ViewHolder {
             TextView tv;
+            ImageView ivThumb;
             public Vh(@NonNull View itemView) {
                 super(itemView);
                 tv = itemView.findViewById(R.id.tv);
+                ivThumb = itemView.findViewById(R.id.iv_thumb);
             }
         }
     }
+
+    private void openRecJpeg() {
+        int timestamp = (int) (System.currentTimeMillis() / 1000L);// IPC 为unsigned int, so +24, timezone > 0;
+        int timezone = mDevice.getVerifyTimezone();
+        mDevice.getConnection().openRecJpeg(0, mDevice.getStreamPsw(), timestamp, timezone, videoPlay);
+    }
+
+    private void closeRecJpeg() {
+        mDevice.getConnection().closeRecJpeg(0, videoPlay);
+    }
+
+    Map<Long, Long> waitGetPreMap = new HashMap<>();
+    HandlerThread mPreHandlerThread;
+    PreHandler mPreHandler;
+
+    class PreHandler extends Handler {
+        LinkedList<Long> queue;
+        List<Long> infos = new ArrayList<>();
+        boolean isWait = false;
+
+        public PreHandler(Looper looper) {
+            super(looper);
+            queue = new LinkedList<>();
+        }
+
+        public void sendGet(StRecordInfo event) {
+            synchronized (this) {
+                Long startTime = Long.parseLong(event.startTimeStamp);
+                if (queue.contains(startTime)) {
+                    queue.remove(startTime);
+                }
+                Long aLong = waitGetPreMap.get(startTime);
+                //已请求未超时
+                if (aLong != null && System.currentTimeMillis() - aLong < 7000) {
+                    return;
+                }
+                waitGetPreMap.put(startTime, System.currentTimeMillis());
+                queue.addFirst(startTime);
+            }
+            if (!isWait)
+                sendEmptyMessageDelayed(100, 100);
+        }
+
+        private int[] removeFirst() {
+            synchronized (this) {
+                infos.clear();
+                for (int i = 0; queue.size() > 0 && i < 10; i++) {
+                    Long time = queue.removeFirst();
+                    String deviceId = mDevice.devId;
+                    String filePath = FileUtils.getTfPreviewPicPath(GApplication.app.user.getUserName(), deviceId)
+                            + File.separator + time.longValue() + ".jpg";
+                    File file = new File(filePath);
+                    if (!file.exists()) {
+                        infos.add(time);
+                    } else {
+                        waitGetPreMap.remove(time);
+                    }
+                }
+                if (infos.size() == 0)
+                    return null;
+                int[] buf = new int[infos.size()];
+                for (int i = 0; i < infos.size(); i++) {
+                    buf[i] = (int) infos.get(i).longValue();
+                }
+                return buf;
+            }
+        }
+
+        public void setWait(boolean isWait) {
+            this.isWait = isWait;
+            if (!isWait)
+                sendEmptyMessage(100);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if (isFinishing()) {
+                return;
+            }
+            int[] buf;
+            while (!isWait && (buf = removeFirst()) != null) {
+                mDevice.getConnection().getRecJpeg(0, buf, buf.length);
+            }
+        }
+    }
+
+    IVideoPlay videoPlay = new IVideoPlay() {
+
+        @Override
+        public void onVideoStream(String s, AvFrame avFrame) {
+            //nFrameNo=1,nFrameType=102,nTimestamp=1592964007,nReserved=1,nDataSize=7035
+            int nFrameType = Packet.byteArrayToInt_Little(avFrame.data, 4);//对应这个帧类型102
+            final int nTimestamp = Packet.byteArrayToInt_Little(avFrame.data, 16);//对应视频时间戳
+            int nDataSize = Packet.byteArrayToInt_Little(avFrame.data, 28);//数据长度
+
+            if (nFrameType != 102) {
+                return;
+            }
+
+            String filePath = FileUtils.getTfPreviewPicPath(GApplication.app.user.getUserName(), mDevice.devId)
+                    + File.separator + nTimestamp + ".jpg";
+            File file = new File(filePath);
+            FileOutputStream fos = null;
+            try {
+                fos = new FileOutputStream(file);
+                fos.write(avFrame.data, 32, nDataSize);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                if (fos != null) {
+                    try {
+                        fos.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+            if (isFinishing()) {
+                return;
+            }
+
+            try {
+                synchronized (mPreHandler) {
+                    waitGetPreMap.remove(nTimestamp);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    if (isFinishing()) {
+                        return;
+                    }
+
+                    for (int i = 0; mEventList != null && i < mEventList.size(); i++) {
+                        StRecordInfo event = mEventList.get(i);
+                        if (TextUtils.equals(event.startTimeStamp , nTimestamp + "")) {
+                            //TODO 获取到缩略图
+                            if (mTfDayFileAdapter != null)
+                                mTfDayFileAdapter.notifyDataSetChanged();
+
+                            break;
+                        }
+                    }
+                }
+            });
+        }
+    };
+
 }
