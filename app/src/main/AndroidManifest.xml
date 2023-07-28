@@ -126,6 +126,7 @@
         <activity android:name=".cloud.CloudDayFileActivity"/>
         <activity android:name=".cloud.CloudFilePlayActivity"/>
         <activity android:name=".play.PlayActivity"/>
+        <activity android:name=".tf.TestThumbActivity"/>
     </application>
 
 </manifest>

@@ -9,6 +9,7 @@ import android.os.HandlerThread;
 import android.os.Looper;
 import android.os.Message;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -204,7 +205,9 @@ public class TfDayFileActivity extends BaseBindActivity<ActivityTfDayBinding> im
             vh.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    TfFilePlayActivity.startActivity(TfDayFileActivity.this, mDevId, stRecordInfo);
+//                    TfFilePlayActivity.startActivity(TfDayFileActivity.this, mDevId, stRecordInfo);
+                    TestThumbActivity.startActivity(TfDayFileActivity.this, mDevId,stRecordInfo.startTimeStamp);
+
                 }
             });
         }
@@ -319,7 +322,7 @@ public class TfDayFileActivity extends BaseBindActivity<ActivityTfDayBinding> im
             int nFrameType = Packet.byteArrayToInt_Little(avFrame.data, 4);//对应这个帧类型102
             final int nTimestamp = Packet.byteArrayToInt_Little(avFrame.data, 16);//对应视频时间戳
             int nDataSize = Packet.byteArrayToInt_Little(avFrame.data, 28);//数据长度
-
+            Log.e("videoPlay", "onVideoStream: nFrameType= " + nFrameType );
             if (nFrameType != 102) {
                 return;
             }

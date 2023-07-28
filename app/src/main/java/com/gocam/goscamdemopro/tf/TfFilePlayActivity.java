@@ -25,6 +25,7 @@ import com.gocam.goscamdemopro.base.BaseBindActivity;
 import com.gocam.goscamdemopro.databinding.ActivityTfFilePlayBinding;
 import com.gocam.goscamdemopro.entity.Device;
 import com.gocam.goscamdemopro.utils.DeviceManager;
+import com.gocam.goscamdemopro.utils.Packet;
 import com.gos.avplayer.GosMediaPlayer;
 import com.gos.avplayer.contact.BufferCacheType;
 import com.gos.avplayer.contact.DecType;
@@ -225,6 +226,10 @@ public class TfFilePlayActivity extends BaseBindActivity<ActivityTfFilePlayBindi
                 public void onVideoStream(String s, AvFrame avFrame) {
                     retVal = mMediaPlayer.putFrame(avFrame.data,avFrame.dataLen,1);
                     Log.d("onStreamCallback","retVal="+retVal);
+                    int nFrameType = Packet.byteArrayToInt_Little(avFrame.data, 4);//对应这个帧类型102
+                    final int nTimestamp = Packet.byteArrayToInt_Little(avFrame.data, 16);//对应视频时间戳
+                    int nDataSize = Packet.byteArrayToInt_Little(avFrame.data, 28);//数据长度
+                    Log.e("videoPlay", "onVideoStream: nFrameType= " + nFrameType );
                     if (retVal == -20) {
                         mDevice.getConnection().pasueRecvStream(0, true);
                     }
@@ -262,6 +267,10 @@ public class TfFilePlayActivity extends BaseBindActivity<ActivityTfFilePlayBindi
             iVideoPlay = new IVideoPlay() {
                 @Override
                 public void onVideoStream(String s, AvFrame avFrame) {
+                    int nFrameType = Packet.byteArrayToInt_Little(avFrame.data, 4);//对应这个帧类型102
+                    final int nTimestamp = Packet.byteArrayToInt_Little(avFrame.data, 16);//对应视频时间戳
+                    int nDataSize = Packet.byteArrayToInt_Little(avFrame.data, 28);//数据长度
+                    Log.e("videoPlay 273", "onVideoStream: nFrameType= " + nFrameType );
                     mMediaPlayer.putFrame(avFrame.data,avFrame.dataLen,1);
                 }
             };
