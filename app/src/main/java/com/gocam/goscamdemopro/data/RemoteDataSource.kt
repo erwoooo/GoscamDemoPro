@@ -5,6 +5,7 @@ import android.util.Log
 import com.gocam.goscamdemopro.GApplication
 import com.gocam.goscamdemopro.entity.*
 import com.gocam.goscamdemopro.net.RetrofitClient
+import com.gocam.goscamdemopro.ws.WsManager
 import com.golway.uilib.bean.BaseResponse
 import com.golway.uilib.utils.asyncTask
 import com.google.gson.Gson
@@ -84,7 +85,8 @@ object RemoteDataSource : DataSource {
             GApplication.app.user.token = result.Body!!.AccessToken
             gsoSession.accessToken = result.Body!!.AccessToken
             gsoSession.userName = result.Body!!.UserName
-
+            WsManager.getInstance().init()
+            WsManager.getInstance().updateToken(gsoSession.userName, gsoSession.accessToken)
             GosConnection.TransportProtype()
             result.Body
         } else {

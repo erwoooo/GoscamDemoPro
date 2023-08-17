@@ -102,6 +102,12 @@ class SettingActivity : BaseBindActivity<ActivitySettingBinding>() {
                 intent.putExtra("dev", mDevice.devId)
                 this@SettingActivity.startActivity(intent)
             }
+
+            btnDoorbellVolume.setOnClickListener {
+                val intent = Intent(this@SettingActivity,DoorbellVolumeActivity::class.java)
+                intent.putExtra("dev",mDevice.devId)
+                this@SettingActivity.startActivity(intent)
+            }
         }
     }
 }

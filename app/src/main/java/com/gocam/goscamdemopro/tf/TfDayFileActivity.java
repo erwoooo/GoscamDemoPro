@@ -205,8 +205,8 @@ public class TfDayFileActivity extends BaseBindActivity<ActivityTfDayBinding> im
             vh.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                    TfFilePlayActivity.startActivity(TfDayFileActivity.this, mDevId, stRecordInfo);
-                    TestThumbActivity.startActivity(TfDayFileActivity.this, mDevId,stRecordInfo.startTimeStamp);
+                    TfFilePlayActivity.startActivity(TfDayFileActivity.this, mDevId, stRecordInfo);
+//                    TestThumbActivity.startActivity(TfDayFileActivity.this, mDevId,stRecordInfo.startTimeStamp);
 
                 }
             });
