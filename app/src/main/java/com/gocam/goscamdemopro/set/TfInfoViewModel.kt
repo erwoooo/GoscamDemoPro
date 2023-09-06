@@ -24,7 +24,7 @@ class TfInfoViewModel : BaseViewModel<BaseModel>() {
 
     fun getTfInfo(deviceId: String) {
         viewModelScope.launch {
-            val tfDeviceParam = TfDeviceParam(IOTYPE_USER_IPCAM_GET_STORAGE_INFO_REQ, 0)
+            val tfDeviceParam = TfDeviceParam(IOTYPE_USER_IPCAM_GET_STORAGE_INFO_REQ, 1,0)
             val result = RemoteDataSource.getCmdParam(tfDeviceParam, deviceId = deviceId)
             result!!.let {
                 val response = Gson().fromJson(it.DeviceParam, TFInfoParam::class.java)
@@ -35,7 +35,7 @@ class TfInfoViewModel : BaseViewModel<BaseModel>() {
 
     fun formatSd(deviceId: String) {
         viewModelScope.launch {
-            val tfDeviceParam = TfDeviceParam(IOTYPE_USER_IPCAM_FORMAT_STORAGE_REQ, 0)
+            val tfDeviceParam = TfDeviceParam(IOTYPE_USER_IPCAM_FORMAT_STORAGE_REQ, 1,0)
             val result = RemoteDataSource.getCmdParam(tfDeviceParam, deviceId = deviceId)
             result!!.let {
                 val response = Gson().fromJson(it.DeviceParam, TFInfoParam::class.java)

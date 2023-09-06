@@ -22,6 +22,7 @@ import com.gocam.goscamdemopro.databinding.ActivityMainBinding
 import com.gocam.goscamdemopro.entity.Device
 import com.gocam.goscamdemopro.net.RetrofitClient
 import com.gocam.goscamdemopro.play.PlayActivity
+import com.gocam.goscamdemopro.play.PlayEchoActivity
 import com.gocam.goscamdemopro.play.PlayJavaActivity
 import com.gocam.goscamdemopro.set.SettingActivity
 import com.gocam.goscamdemopro.tf.TfDayActivity
@@ -112,7 +113,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(),
                     (vh as Vh).tv.text = it
                 }
                 vh.itemView.setOnClickListener(View.OnClickListener {
-                    PlayActivity.startActivity(
+                    PlayEchoActivity.startActivity(
                         vh.itemView.context,
                         device.devId
                     )

@@ -17,6 +17,7 @@ data class CmdBody(
 
 data class TfDeviceParam(
     val CMDType: Int,
+    val format:Int,
     val channel: Int
 ) : BaseDeviceParam()
 

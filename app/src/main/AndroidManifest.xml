@@ -65,7 +65,12 @@
     <uses-permission android:name="${applicationId}.permission.JPUSH_MESSAGE" />
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
-
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+    <uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
+    <!--设备硬件必须支持蓝牙-->
+    <uses-feature android:name="android.hardware.bluetooth" android:required="true"/>
     <!--小米推送-->
     <permission
         android:name="${applicationId}.permission.MIPUSH_RECEIVE"
@@ -128,6 +133,8 @@
         <activity android:name=".play.PlayActivity"/>
         <activity android:name=".tf.TestThumbActivity"/>
         <activity android:name=".set.DoorbellVolumeActivity"/>
+        <activity android:name=".play.PlayEchoActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

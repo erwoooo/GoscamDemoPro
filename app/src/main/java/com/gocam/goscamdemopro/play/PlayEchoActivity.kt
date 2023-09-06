@@ -1,20 +1,20 @@
 package com.gocam.goscamdemopro.play
 
-import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.media.*
 import android.os.*
 import android.text.TextUtils
-import android.widget.Button
+import com.icare.echo.EchoCancel
+import com.icare.echo.EchoUtil
+import com.gocam.goscamdemopro.GApplication
 
 import com.gocam.goscamdemopro.R
 import com.gocam.goscamdemopro.base.BaseActivity
-import com.gocam.goscamdemopro.base.BaseBindActivity
 import com.gocam.goscamdemopro.databinding.ActivityPlayVideoBinding
 import com.gocam.goscamdemopro.entity.Device
+import com.gocam.goscamdemopro.talk.StreamTalkPlay
 import com.gocam.goscamdemopro.utils.DeviceManager
 import com.gocam.goscamdemopro.utils.dbg
 import com.gos.avplayer.GosMediaPlayer
@@ -35,41 +35,34 @@ import com.gos.platform.device.inter.OnDevEventCallback
 import com.gos.platform.device.result.ConnectResult
 import com.gos.platform.device.result.DevResult
 import com.gos.platform.device.result.DevResult.DevCmd
-import java.io.FileNotFoundException
-import java.io.FileOutputStream
-import java.lang.Exception
+
 import java.nio.ByteBuffer
 import java.util.*
 
-class PlayActivity : BaseActivity<ActivityPlayVideoBinding,PlayViewModel>(), OnDevEventCallback,
+class PlayEchoActivity : BaseActivity<ActivityPlayVideoBinding,PlayViewModel>(), OnDevEventCallback,
     AvPlayerCodec.OnDecCallBack, AvPlayerCodec.OnRecCallBack, IVideoPlay {
     override fun getLayoutId(): Int = R.layout.activity_play_video
     var glFrameSurface: GLFrameSurface? = null
     var devId: String? = null
-
-    val FILE_TYPE = 10
     val STREAM_TYPE = 11
 
-    //    var talkType = FILE_TYPE
     var talkType = STREAM_TYPE;
-
-    //var talkType = STREAM_TYPE;
     var mDevice: Device? = null
     var mConnection: Connection? = null
     var mGlRenderer: GlRenderer? = null
     var mMediaPlayer: GosMediaPlayer? = null
-    var recordHandlerThread: HandlerThread? = null
+
     var audioHandlerThread: HandlerThread? = null
     var sAudioRecord: AudioRecord? = null
     var sAudioTrack: AudioTrack? = null
-    var sRecordHandler: RecordHandler? = null
+
 
     var sAudioHandler: AudioHandler? = null
-
+    var mTalkPlay: TalkPlay?=null
     companion object {
 
         fun startActivity(context: Context, devId: String) {
-            val intent = Intent(context, PlayActivity::class.java)
+            val intent = Intent(context, PlayEchoActivity::class.java)
             intent.putExtra("dev", devId)
             context.startActivity(intent)
         }
@@ -92,45 +85,7 @@ class PlayActivity : BaseActivity<ActivityPlayVideoBinding,PlayViewModel>(), OnD
         }
     }
 
-    inner class RecordHandler : Handler {
-        var isStartRecord: Boolean = false
 
-        constructor(looper: Looper) : super(looper)
-
-        override fun handleMessage(msg: Message) {
-            super.handleMessage(msg)
-            val audioData = ByteArray(640)
-            if (sAudioRecord!!.state == AudioRecord.STATE_INITIALIZED) {
-                sAudioRecord!!.startRecording()
-            }
-
-            var fileTalkDataPath: String? = null
-            var fos: FileOutputStream? = null
-            while (isStartRecord) {
-                val size = sAudioRecord!!.read(audioData, 0, audioData.size)
-                if (size == audioData.size) {
-                    val g711Buf = ByteArray(320)
-                    val len = GosMediaPlayer.nativeEncodePCMtoG711A(
-                        8000,
-                        1,
-                        audioData,
-                        audioData.size,
-                        g711Buf
-                    )
-                    if (len > 0) {
-                        if (STREAM_TYPE == talkType) {
-                            mConnection!!.sendTalkData(0, 53, 8000, 0, g711Buf, g711Buf.size)
-                        }
-                    }
-                }
-            }
-
-            if (STREAM_TYPE == talkType) {
-                mConnection!!.stopTalk(0)
-            }
-        }
-
-    }
 
     @SuppressLint("MissingPermission")
     override fun onCreateData(bundle: Bundle?) {
@@ -149,14 +104,24 @@ class PlayActivity : BaseActivity<ActivityPlayVideoBinding,PlayViewModel>(), OnD
             setEnableZoom(true)
         }
 
+
+        EchoUtil.isFullDuplex = true
+        EchoUtil.volumeLevel(true, mDevice!!.deviceSfwVer)
+        EchoCancel.setplayertospeaker(GApplication.app)
+        EchoUtil.init(GApplication.app, mDevice!!.deviceSfwVer)
+
+
         mMediaPlayer = GosMediaPlayer().apply {
             getPort()
             setDecodeType(DecType.YUV420)
             setBufferSize(BufferCacheType.StreamCache, 60, 200 * 1024)
             start(100)
-            setOnDecCallBack(this@PlayActivity)
-            setOnRecCallBack(this@PlayActivity)
+            setOnDecCallBack(this@PlayEchoActivity)
+            setOnRecCallBack(this@PlayEchoActivity)
         }
+
+
+
 
         val sampleRate = 8000
         val channelConfig = AudioFormat.CHANNEL_OUT_MONO
@@ -184,9 +149,13 @@ class PlayActivity : BaseActivity<ActivityPlayVideoBinding,PlayViewModel>(), OnD
         mConnection = mDevice?.connection
         mConnection?.addOnEventCallbackListener(this)
 
-        recordHandlerThread = HandlerThread("record")
-        recordHandlerThread!!.start()
-        sRecordHandler = RecordHandler(recordHandlerThread!!.looper)
+        mTalkPlay = object : StreamTalkPlay(0, mConnection, 1) {
+            override fun onStartTalk(DevResult: DevResult?) {
+
+            }
+        }
+        //已知设备类型
+        (mTalkPlay as StreamTalkPlay).intiParams(TalkPlay.AUDIO_G711A, 8000)
         audioHandlerThread = HandlerThread("audio")
         audioHandlerThread!!.start()
         sAudioHandler = AudioHandler(audioHandlerThread!!.looper)
@@ -218,7 +187,7 @@ class PlayActivity : BaseActivity<ActivityPlayVideoBinding,PlayViewModel>(), OnD
                                 mDevice?.streamPsw,
                                 timestamp,
                                 timezone,
-                                this@PlayActivity
+                                this@PlayEchoActivity
                             )
                         }
                     }
@@ -229,7 +198,8 @@ class PlayActivity : BaseActivity<ActivityPlayVideoBinding,PlayViewModel>(), OnD
                     setOnClickListener {
                         mConnection?.let {
                             if (it.isConnected) {
-                                it.startTalk(0, mDevice?.streamPsw)
+                                EchoUtil.start()
+                                (mTalkPlay as StreamTalkPlay).startTalk()
                                 mBinding?.btnStopTalk?.isEnabled = true
                             }
                         }
@@ -238,13 +208,15 @@ class PlayActivity : BaseActivity<ActivityPlayVideoBinding,PlayViewModel>(), OnD
 
                 mBinding?.btnStopTalk?.apply {
                     setOnClickListener {
-                        sRecordHandler!!.isStartRecord = false
+                        (mTalkPlay as StreamTalkPlay).stopTalk()
+
                     }
                 }
 
                 mBinding?.btnCloseStream.apply {
                     setOnClickListener {
-                        mConnection!!.stopVideo(0, this@PlayActivity)
+                        EchoUtil.destroy(this@PlayEchoActivity)
+                        mConnection!!.stopVideo(0, this@PlayEchoActivity)
                     }
                 }
                 mBinding?.btnStartRecord?.setOnClickListener {
@@ -319,8 +291,6 @@ class PlayActivity : BaseActivity<ActivityPlayVideoBinding,PlayViewModel>(), OnD
             DevCmd.stopVideo -> {
             }
             DevCmd.startTalk -> if (ResultCode.SUCCESS == code) {
-                sRecordHandler!!.isStartRecord = true
-                sRecordHandler!!.sendEmptyMessage(0)
                 showToast("start talk success")
             } else {
                 mConnection!!.stopTalk(0)
@@ -380,7 +350,6 @@ class PlayActivity : BaseActivity<ActivityPlayVideoBinding,PlayViewModel>(), OnD
         mMediaPlayer!!.setOnDecCallBack(this)
         mMediaPlayer!!.setOnRecCallBack(this)
 
-        recordHandlerThread!!.quitSafely()
         audioHandlerThread!!.quitSafely()
         sAudioHandler!!.removeCallbacksAndMessages(null)
         mConnection!!.stopTalk(0)
