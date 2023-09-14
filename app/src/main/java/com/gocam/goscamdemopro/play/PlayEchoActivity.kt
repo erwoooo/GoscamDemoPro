@@ -52,12 +52,11 @@ class PlayEchoActivity : BaseActivity<ActivityPlayVideoBinding,PlayViewModel>(),
     var mGlRenderer: GlRenderer? = null
     var mMediaPlayer: GosMediaPlayer? = null
 
-    var audioHandlerThread: HandlerThread? = null
+
     var sAudioRecord: AudioRecord? = null
-    var sAudioTrack: AudioTrack? = null
+    var sAudioTrack: GAudioTrack? = null
 
 
-    var sAudioHandler: AudioHandler? = null
     var mTalkPlay: TalkPlay?=null
     companion object {
 
@@ -69,21 +68,7 @@ class PlayEchoActivity : BaseActivity<ActivityPlayVideoBinding,PlayViewModel>(),
     }
 
     var playAudio = true;
-    inner class AudioHandler : Handler {
-        constructor(looper: Looper) : super(looper)
-        override fun handleMessage(msg: Message) {
-            super.handleMessage(msg)
-            if (!playAudio)
-                return
-            val data = msg.obj as ByteArray
-            sAudioTrack?.apply {
-                if (playState != AudioTrack.PLAYSTATE_PLAYING) {
-                    play()
-                }
-                write(data, 0, data.size)
-            }
-        }
-    }
+
 
 
 
@@ -136,19 +121,13 @@ class PlayEchoActivity : BaseActivity<ActivityPlayVideoBinding,PlayViewModel>(),
             audioFormat,
             mMinBuffSize
         )
-        sAudioTrack = AudioTrack(
-            AudioManager.STREAM_MUSIC,
-            sampleRate,
-            AudioFormat.CHANNEL_OUT_MONO,
-            AudioFormat.ENCODING_PCM_16BIT,
-            mMinBuffSize,
-            AudioTrack.MODE_STREAM,
-            sAudioRecord!!.audioSessionId
+        sAudioTrack = GAudioTrack(
+            8000, AudioFormat.CHANNEL_OUT_MONO, AudioFormat.ENCODING_PCM_16BIT
         )
+        sAudioTrack?.play()
 
         mConnection = mDevice?.connection
         mConnection?.addOnEventCallbackListener(this)
-
         mTalkPlay = object : StreamTalkPlay(0, mConnection, 1) {
             override fun onStartTalk(DevResult: DevResult?) {
 
@@ -156,9 +135,7 @@ class PlayEchoActivity : BaseActivity<ActivityPlayVideoBinding,PlayViewModel>(),
         }
         //已知设备类型
         (mTalkPlay as StreamTalkPlay).intiParams(TalkPlay.AUDIO_G711A, 8000)
-        audioHandlerThread = HandlerThread("audio")
-        audioHandlerThread!!.start()
-        sAudioHandler = AudioHandler(audioHandlerThread!!.looper)
+
 
         mBinding?.btnConnect?.apply {
             setOnClickListener {
@@ -319,9 +296,10 @@ class PlayEchoActivity : BaseActivity<ActivityPlayVideoBinding,PlayViewModel>(),
         } else if (DecType.AUDIO == type) {
             val t = ByteArray(dataSize)
             System.arraycopy(data, 0, t, 0, dataSize)
-            val obtain = Message.obtain()
-            obtain.obj = t
-            sAudioHandler?.sendMessage(obtain)
+            if (playAudio){
+                sAudioTrack?.write(t,t.size)
+            }
+
         }
     }
 
@@ -350,8 +328,6 @@ class PlayEchoActivity : BaseActivity<ActivityPlayVideoBinding,PlayViewModel>(),
         mMediaPlayer!!.setOnDecCallBack(this)
         mMediaPlayer!!.setOnRecCallBack(this)
 
-        audioHandlerThread!!.quitSafely()
-        sAudioHandler!!.removeCallbacksAndMessages(null)
         mConnection!!.stopTalk(0)
         mConnection!!.stopVideo(0, this)
 

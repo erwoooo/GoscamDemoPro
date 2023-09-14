@@ -21,7 +21,7 @@
             android:layout_marginBottom="30dp"
             android:digits="@string/account_input_format"
             android:ellipsize="end"
-            android:text="1265636714@qq.com"
+            android:text="653429798@qq.com"
             android:hint="@string/sign_up_input_phone_number_or_email"
             android:maxLength="81"
             android:singleLine="false"
@@ -38,7 +38,7 @@
             android:hint="@string/input_password"
             android:inputType="textPassword"
             android:maxLength="16"
-            android:text="g1234567"
+            android:text="qqq123456"
             android:singleLine="true"
             android:textAlignment="viewStart"
             android:textColor="@android:color/black" />

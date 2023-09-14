@@ -179,6 +179,9 @@ object RemoteDataSource : DataSource {
             val map = mapOf(
                 Pair("UserName", userName),
                 Pair("VerifyCode", code),
+                Pair("UserType", GApplication.app.userType),
+                Pair("SessionId", GApplication.app.user.sessionId),
+                Pair("AccessToken", gsoSession.accessToken),
                 Pair("NewPassword", gsoSession.encodeData(newPsw)),
             )
             val nMap = mapOf(
@@ -203,6 +206,9 @@ object RemoteDataSource : DataSource {
         val job = asyncTask {
             val map = mapOf(
                 Pair("UserName", userName),
+                Pair("UserType", GApplication.app.userType),
+                Pair("SessionId", GApplication.app.user.sessionId),
+                Pair("AccessToken", gsoSession.accessToken),
             )
             val nMap = mapOf(
                 Pair("Body", map),
@@ -229,7 +235,8 @@ object RemoteDataSource : DataSource {
                     deviceBody.Cap,
                     deviceBody.DeviceHdType,
                     deviceBody.DeviceSfwVer,
-                    deviceBody.DeviceHdwVer
+                    deviceBody.DeviceHdwVer,
+                    deviceBody.DeviceOwner == 1
                 )
 
                 deviceList.add(device)
@@ -247,6 +254,9 @@ object RemoteDataSource : DataSource {
             val map = mapOf(
                 Pair("UserName", userName),
                 Pair("DeviceId", null),
+                Pair("UserType", GApplication.app.userType),
+                Pair("SessionId", GApplication.app.user.sessionId),
+                Pair("AccessToken", gsoSession.accessToken),
             )
             val nMap = mapOf(
                 Pair("Body", map),
@@ -273,6 +283,9 @@ object RemoteDataSource : DataSource {
             val map = mapOf(
                 Pair("UserName", userName),
                 Pair("BindToken", bindToken),
+                Pair("UserType", GApplication.app.userType),
+                Pair("SessionId", GApplication.app.user.sessionId),
+                Pair("AccessToken", gsoSession.accessToken),
             )
             val nMap = mapOf(
                 Pair("Body", map),
@@ -303,6 +316,9 @@ object RemoteDataSource : DataSource {
                 Pair("DeviceName", deviceName),
                 Pair("StreamUser", streamUser),
                 Pair("StreamPassword", streamPsw),
+                Pair("UserType", GApplication.app.userType),
+                Pair("SessionId", GApplication.app.user.sessionId),
+                Pair("AccessToken", gsoSession.accessToken),
             )
             val nMap = mapOf(
                 Pair("Body", map),
@@ -344,6 +360,9 @@ object RemoteDataSource : DataSource {
                 Pair("StreamPassword", streamPsw),
                 Pair("AreaId", areaId),
                 Pair("AppMatchType", appMatchType),
+                Pair("UserType", GApplication.app.userType),
+                Pair("SessionId", GApplication.app.user.sessionId),
+                Pair("AccessToken", gsoSession.accessToken),
             )
             val nMap = mapOf(
                 Pair("Body", map),
@@ -367,6 +386,9 @@ object RemoteDataSource : DataSource {
         val job = asyncTask {
             val map = mapOf(
                 Pair("DeviceId", deviceId),
+                Pair("UserType", GApplication.app.userType),
+                Pair("SessionId", GApplication.app.user.sessionId),
+                Pair("AccessToken", gsoSession.accessToken),
             )
             val nMap = mapOf(
                 Pair("Body", map),
@@ -396,7 +418,9 @@ object RemoteDataSource : DataSource {
                 Pair("UserName", userName),
                 Pair("DeviceId", deviceId),
                 Pair("DeviceOwner", 0),
-
+                Pair("UserType", GApplication.app.userType),
+                Pair("SessionId", GApplication.app.user.sessionId),
+                Pair("AccessToken", gsoSession.accessToken),
                 )
             val nMap = mapOf(
                 Pair("Body", map),
@@ -426,6 +450,9 @@ object RemoteDataSource : DataSource {
                 Pair("UserName", userName),
                 Pair("DeviceId", deviceId),
                 Pair("DeviceOwner", deviceOwner),
+                Pair("UserType", GApplication.app.userType),
+                Pair("SessionId", GApplication.app.user.sessionId),
+                Pair("AccessToken", gsoSession.accessToken),
             )
             val nMap = mapOf(
                 Pair("Body", map),
@@ -546,6 +573,9 @@ object RemoteDataSource : DataSource {
         val job = asyncTask {
             val map = mapOf(
                 Pair("DeviceType", deviceType),
+                Pair("UserType", GApplication.app.userType),
+                Pair("SessionId", GApplication.app.user.sessionId),
+                Pair("AccessToken", gsoSession.accessToken),
             )
             val nMap = mapOf(
                 Pair("Body", map),
@@ -569,6 +599,9 @@ object RemoteDataSource : DataSource {
         val job = asyncTask {
             val map = mapOf(
                 Pair("DeviceId", deviceId),
+                Pair("UserType", GApplication.app.userType),
+                Pair("SessionId", GApplication.app.user.sessionId),
+                Pair("AccessToken", gsoSession.accessToken),
             )
             val nMap = mapOf(
                 Pair("Body", map),
@@ -593,6 +626,9 @@ object RemoteDataSource : DataSource {
         val job = asyncTask {
             val map = mapOf(
                 Pair("DeviceId", deviceId),
+                Pair("UserType", GApplication.app.userType),
+                Pair("SessionId", GApplication.app.user.sessionId),
+                Pair("AccessToken", gsoSession.accessToken),
             )
             val nMap = mapOf(
                 Pair("Body", map),

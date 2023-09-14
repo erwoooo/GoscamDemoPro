@@ -74,7 +74,7 @@ public class Device {
 
     /*streamUser streamPassword*/
     public Device(String devName, String devId, boolean isOnline, int devType, String streamUser, String streamPassword, GetDeviceListResponse.Cap cap,
-                  String deviceHdType, String deviceSfwVer, String deviceHdwVer) {
+                  String deviceHdType, String deviceSfwVer, String deviceHdwVer,boolean isOwn) {
         this.devName = devName;
         this.devId = devId;
         this.isOnline = isOnline;
@@ -84,6 +84,7 @@ public class Device {
         this.deviceHdType = deviceHdType;
         this.deviceSfwVer = deviceSfwVer;
         this.deviceHdwVer = deviceHdwVer;
+        this.isOwn = isOwn;
         parseDap(cap);
     }
 

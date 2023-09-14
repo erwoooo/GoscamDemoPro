@@ -14,7 +14,6 @@ import com.gos.platform.api.ConfigManager;
 import com.gos.platform.api.GosSession;
 import com.gos.platform.api.Goscam;
 import com.gos.platform.api.contact.PlatCode;
-import com.gos.platform.api.contact.ServerType;
 import com.gos.platform.api.domain.DeviceEntity;
 import com.gos.platform.api.inter.OnPlatformEventCallback;
 import com.gos.platform.api.result.GetDeviceListResult;
@@ -23,7 +22,6 @@ import com.gos.platform.api.result.PlatResult;
 import com.gos.platform.device.PlatformType;
 import com.gos.platform.device.base.Connection;
 import com.gos.platform.device.contact.TransportProType;
-
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,7 +57,7 @@ public class GApplication extends Application implements OnPlatformEventCallback
 
         Goscam.init(this, PlatformType.ULIFE, transportProType, 0, userType, true, 2, null);
         ConfigManager.IS_ENCRYPT = true;//采用加密
-        ConfigManager.serverType = ConfigManager.EN_SERVER;
+        ConfigManager.serverType = ConfigManager.CN_SERVER;
 
         GosSession.getSession().addOnPlatformEventCallback(this);
         user = new User();
@@ -98,7 +96,7 @@ public class GApplication extends Application implements OnPlatformEventCallback
                     for(int i = 0; deviceEntityList != null && i < deviceEntityList.size(); i++){
                         DeviceEntity deviceEntity = deviceEntityList.get(i);
                         Device device = new Device(deviceEntity.deviceName, deviceEntity.deviceId, deviceEntity.devStatus == 1, deviceEntity.deviceType,deviceEntity.streamUser,deviceEntity.streamPassword
-                        ,deviceEntity.cap,deviceEntity.deviceHdType,deviceEntity.deviceSfwVer,deviceEntity.deviceHdwVer);
+                        ,deviceEntity.cap,deviceEntity.deviceHdType,deviceEntity.deviceSfwVer,deviceEntity.deviceHdwVer,deviceEntity.deviceOwner == 1);
                         list.add(device);
                     }
                     List<Device> deviceList = DeviceManager.getInstance().saveDevice(list);
