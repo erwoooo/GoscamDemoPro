@@ -1,5 +1,13 @@
 package com.gocam.goscamdemopro.entity
 
-class BindStatusResult {
-    var ResultDescribe: String? = null
-}
+data class BindStatusResult(
+    val Body: Body,
+    val MessageType: String,
+    val ResultCode: Int
+)
+
+data class Body(
+    val CGSId: String,
+    val ResultDescribe: String,
+    val SessionId: String
+)

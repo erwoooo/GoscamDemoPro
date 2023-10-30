@@ -21,7 +21,7 @@ import kotlinx.coroutines.launch
 class QrCodeActivity : BaseBindActivity<ActivityQrcodeBinding>(), QRBitmapCreater.QRBitmapCallback {
     private lateinit var ssid: String
     private lateinit var psw: String
-
+    private lateinit var  token:String
     override fun getLayoutId(): Int {
         return R.layout.activity_qrcode
     }
@@ -37,7 +37,7 @@ class QrCodeActivity : BaseBindActivity<ActivityQrcodeBinding>(), QRBitmapCreate
         lifecycleScope.launch {
             val result = RemoteDataSource.getBindToken(GApplication.app.user.userName!!, "")
             result?.let {
-                val token = it.BindToken
+                token = it.BindToken.toString()
 
                 createQr(token!!)
 
@@ -48,6 +48,7 @@ class QrCodeActivity : BaseBindActivity<ActivityQrcodeBinding>(), QRBitmapCreate
         mBinding?.apply {
             btnNext.setOnClickListener {
                 val intent = Intent(this@QrCodeActivity, CheckBindStatusActivity::class.java)
+                intent.putExtra("token",token)
                 this@QrCodeActivity.startActivity(intent)
             }
         }
