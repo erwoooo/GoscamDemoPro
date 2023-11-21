@@ -3,7 +3,6 @@ package com.gocam.goscamdemopro.tf;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
@@ -18,7 +17,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -26,9 +24,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.FitCenter;
 import com.gocam.goscamdemopro.GApplication;
 import com.gocam.goscamdemopro.R;
-import com.gocam.goscamdemopro.base.BaseActivity;
 import com.gocam.goscamdemopro.base.BaseBindActivity;
-import com.gocam.goscamdemopro.cloud.data.entity.CameraEvent;
 import com.gocam.goscamdemopro.databinding.ActivityTfDayBinding;
 import com.gocam.goscamdemopro.entity.Device;
 import com.gocam.goscamdemopro.utils.DeviceManager;
@@ -42,7 +38,6 @@ import com.gos.platform.device.inter.IVideoPlay;
 import com.gos.platform.device.inter.OnDevEventCallback;
 import com.gos.platform.device.result.DevResult;
 import com.gos.platform.device.result.GetRecDayEventRefreshResult;
-
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -99,9 +94,25 @@ public class TfDayFileActivity extends BaseBindActivity<ActivityTfDayBinding> im
 
         mDevice = DeviceManager.getInstance().findDeviceById(mDevId);
         mDevice.getConnection().addOnEventCallbackListener(this);
-        showLoading();
-        mDevice.getConnection().connect(0);
-
+//        showLoading();
+//        mDevice.getConnection().connect(0);
+        if (mDevice.getConnection().isConnected()){
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+            long startTime = 0;
+            try {
+                startTime = dateFormat.parse(dayTime).getTime() / 1000;
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            long endTime = startTime + 24 * 3600;
+            if(type == 0){
+                mDevice.getConnection().getRecDayEventRefresh(0, (int) startTime, 0, 0);
+            }else{
+                mDevice.getConnection().getRecDayEventRefresh(0, (int) startTime, 1, 0);
+            }
+        }else {
+            mDevice.getConnection().connect(0);
+        }
         //获取预览图
         mPreHandlerThread = new HandlerThread("Pre_Thread");
         mPreHandlerThread.start();

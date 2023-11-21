@@ -11,7 +11,6 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
 import android.os.Message;
-
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -20,7 +19,6 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 
 import com.gocam.goscamdemopro.R;
-import com.gocam.goscamdemopro.base.BaseActivity;
 import com.gocam.goscamdemopro.base.BaseBindActivity;
 import com.gocam.goscamdemopro.databinding.ActivityTfFilePlayBinding;
 import com.gocam.goscamdemopro.entity.Device;
@@ -40,11 +38,9 @@ import com.gos.platform.device.inter.IVideoPlay;
 import com.gos.platform.device.inter.OnDevEventCallback;
 import com.gos.platform.device.result.DevResult;
 
-
 import java.nio.ByteBuffer;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.TimeZone;
 
 public class TfFilePlayActivity extends BaseBindActivity<ActivityTfFilePlayBinding> implements OnDevEventCallback, AvPlayerCodec.OnDecCallBack, AvPlayerCodec.OnRecCallBack {
     TextView mTvTitle;
@@ -175,11 +171,8 @@ public class TfFilePlayActivity extends BaseBindActivity<ActivityTfFilePlayBindi
         }
 
         int timestamp = (int) (System.currentTimeMillis() / 1000L);// IPC 为unsigned int, so +24, timezone > 0;
-        int timezone = (TimeZone.getDefault().getRawOffset() / 3600000) + 24;// on the IPC side, -24,
-        if(TimeZone.getDefault().inDaylightTime(new Date())){
-            timezone++;
-        }
-        mDevice.getConnection().startVideo(0, StreamType.STREAM_REC, "", timestamp, timezone, iVideoPlay);
+        int timezone = mDevice.getVerifyTimezone();
+        mDevice.getConnection().startVideo(0, StreamType.STREAM_REC, mDevice.getStreamPsw(), timestamp, timezone, iVideoPlay);
 
         int startTime = mStartTime;
         int dur = mEndTime - startTime;
@@ -238,11 +231,24 @@ public class TfFilePlayActivity extends BaseBindActivity<ActivityTfFilePlayBindi
         }
 
         int timestamp = (int) (System.currentTimeMillis() / 1000L);// IPC 为unsigned int, so +24, timezone > 0;
-        int timezone = (TimeZone.getDefault().getRawOffset() / 3600000) + 24;// on the IPC side, -24,
-        if(TimeZone.getDefault().inDaylightTime(new Date())){
-            timezone++;
-        }
-        mDevice.getConnection().startVideo(0, StreamType.STREAM_REC, "", timestamp, timezone, iVideoPlay);
+        /**
+         * The old open flow method
+         * Old time zone and no spread stream password
+         *    int timezone = (TimeZone.getDefault().getRawOffset() / 3600000) + 24;// on the IPC side, -24,
+         *         if(TimeZone.getDefault().inDaylightTime(new Date())){
+         *             timezone++;
+         *         }
+         *         mDevice.getConnection().startVideo(0, StreamType.STREAM_REC, "", timestamp, timezone, iVideoPlay);
+         */
+
+
+        /**
+         * New open flow method
+         * Use getVerifyTimezone() in Device.class to get the time zone offset and getStreamPsw() on stream password
+         */
+        int timezone = mDevice.getVerifyTimezone();
+        mDevice.getConnection().startVideo(0, StreamType.STREAM_REC, mDevice.getStreamPsw(), timestamp, timezone, iVideoPlay);
+
         mDevice.getConnection().setLocalStoreCfg(0, mStartTime, 1, 0, "");
     }
 
@@ -278,11 +284,8 @@ public class TfFilePlayActivity extends BaseBindActivity<ActivityTfFilePlayBindi
         mMediaPlayer.setFilePath(0, filePath, 0);
 
         int timestamp = (int) (System.currentTimeMillis() / 1000L);// IPC 为unsigned int, so +24, timezone > 0;
-        int timezone = (TimeZone.getDefault().getRawOffset() / 3600000) + 24;// on the IPC side, -24,
-        if(TimeZone.getDefault().inDaylightTime(new Date())){
-            timezone++;
-        }
-        mDevice.getConnection().startVideo(0, StreamType.STREAM_REC, "", timestamp, timezone, iVideoPlay);
+        int timezone = mDevice.getVerifyTimezone();
+        mDevice.getConnection().startVideo(0, StreamType.STREAM_REC, mDevice.getStreamPsw(), timestamp, timezone, iVideoPlay);
         mDevice.getConnection().setLocalStoreCfg(0, mStartTime, 0, 0, "");
     }
 

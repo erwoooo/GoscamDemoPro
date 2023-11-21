@@ -70,6 +70,7 @@ public class DeviceManager {
         for (Device device : deviceList) {
             Connection connection = device.getConnection();
             connection.setPlatDevOnline(device.isOnline);
+            connection.connect(0);
         }
         return deviceList;
     }
