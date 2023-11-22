@@ -39,7 +39,8 @@ import com.gos.platform.device.result.DevResult.DevCmd
 import java.nio.ByteBuffer
 import java.util.*
 
-class PlayEchoActivity : BaseActivity<ActivityPlayVideoBinding,PlayViewModel>(), OnDevEventCallback,
+class PlayEchoActivity : BaseActivity<ActivityPlayVideoBinding, PlayViewModel>(),
+    OnDevEventCallback,
     AvPlayerCodec.OnDecCallBack, AvPlayerCodec.OnRecCallBack, IVideoPlay {
     override fun getLayoutId(): Int = R.layout.activity_play_video
     var glFrameSurface: GLFrameSurface? = null
@@ -48,7 +49,7 @@ class PlayEchoActivity : BaseActivity<ActivityPlayVideoBinding,PlayViewModel>(),
 
     var talkType = STREAM_TYPE;
     var mDevice: Device? = null
-    var mConnection: Connection? = null
+
     var mGlRenderer: GlRenderer? = null
     var mMediaPlayer: GosMediaPlayer? = null
 
@@ -57,7 +58,8 @@ class PlayEchoActivity : BaseActivity<ActivityPlayVideoBinding,PlayViewModel>(),
     var sAudioTrack: GAudioTrack? = null
 
 
-    var mTalkPlay: TalkPlay?=null
+    var mTalkPlay: TalkPlay? = null
+
     companion object {
 
         fun startActivity(context: Context, devId: String) {
@@ -68,8 +70,6 @@ class PlayEchoActivity : BaseActivity<ActivityPlayVideoBinding,PlayViewModel>(),
     }
 
     var playAudio = true;
-
-
 
 
     @SuppressLint("MissingPermission")
@@ -106,13 +106,11 @@ class PlayEchoActivity : BaseActivity<ActivityPlayVideoBinding,PlayViewModel>(),
         }
 
 
-
-
         val sampleRate = 8000
         val channelConfig = AudioFormat.CHANNEL_OUT_MONO
         val channelRecordConfig = AudioFormat.CHANNEL_IN_MONO
         val audioFormat = AudioFormat.ENCODING_PCM_16BIT
-        val mMinBuffSize = AudioTrack.getMinBufferSize(sampleRate , channelConfig, audioFormat) * 4
+        val mMinBuffSize = AudioTrack.getMinBufferSize(sampleRate, channelConfig, audioFormat) * 4
 
         sAudioRecord = AudioRecord(
             MediaRecorder.AudioSource.VOICE_COMMUNICATION,
@@ -126,9 +124,9 @@ class PlayEchoActivity : BaseActivity<ActivityPlayVideoBinding,PlayViewModel>(),
         )
         sAudioTrack?.play()
 
-        mConnection = mDevice?.connection
-        mConnection?.addOnEventCallbackListener(this)
-        mTalkPlay = object : StreamTalkPlay(0, mConnection, 1) {
+
+        mDevice?.connection?.addOnEventCallbackListener(this)
+        mTalkPlay = object : StreamTalkPlay(0, mDevice?.connection, 1) {
             override fun onStartTalk(DevResult: DevResult?) {
 
             }
@@ -137,9 +135,21 @@ class PlayEchoActivity : BaseActivity<ActivityPlayVideoBinding,PlayViewModel>(),
         (mTalkPlay as StreamTalkPlay).intiParams(TalkPlay.AUDIO_G711A, 8000)
 
 
+        if (mDevice?.connection?.isConnected == true) {
+            mBinding?.apply {
+                btnOpenStream.isEnabled = true
+                btnStartTalk.isEnabled = true
+                btnStartRecord.isEnabled = true
+                btnCapture.isEnabled = true
+                btnAudio.isEnabled = true
+            }
+        } else {
+//            mDevice!!.doConnect()
+        }
+/*
         mBinding?.btnConnect?.apply {
             setOnClickListener {
-                mConnection?.let {
+                mDevice?.connection?.let {
                     if (it.isConnected) {
                         mBinding?.btnStartTalk?.isEnabled = true
                         mBinding?.btnStopTalk?.isEnabled = true
@@ -147,87 +157,88 @@ class PlayEchoActivity : BaseActivity<ActivityPlayVideoBinding,PlayViewModel>(),
                         it.connect(0)
                     }
                 }
+            }
+        }
+*/
 
-                mBinding?.btnOpenStream?.apply {
-                    setOnClickListener {
-                        if (mConnection?.isConnected == true) {
-                            mBinding?.btnStartRecord?.isEnabled = true
-                            mBinding?.btnCapture?.isEnabled = true
-                            val timestamp = (System.currentTimeMillis() / 1000L).toInt()
-                            var timezone = (TimeZone.getDefault().rawOffset / 3600000 + 24).toInt()
-                            if (TimeZone.getDefault().inDaylightTime(Date())) {
-                                timezone++
-                            }
-                            mConnection?.startVideo(
-                                0,
-                                StreamType.VIDEO_AUDIO,
-                                mDevice?.streamPsw,
-                                timestamp,
-                                timezone,
-                                this@PlayEchoActivity
-                            )
-                        }
+
+        mBinding?.btnOpenStream?.apply {
+            setOnClickListener {
+                if (mDevice?.connection?.isConnected == true) {
+                    mBinding?.btnStartRecord?.isEnabled = true
+                    mBinding?.btnCapture?.isEnabled = true
+                    val timestamp = (System.currentTimeMillis() / 1000L).toInt()
+                    var timezone = (TimeZone.getDefault().rawOffset / 3600000 + 24).toInt()
+                    if (TimeZone.getDefault().inDaylightTime(Date())) {
+                        timezone++
                     }
+                    mDevice?.connection?.startVideo(
+                        0,
+                        StreamType.VIDEO_AUDIO,
+                        mDevice?.streamPsw,
+                        timestamp,
+                        timezone,
+                        this@PlayEchoActivity
+                    )
                 }
+            }
+        }
 
 
-                mBinding?.btnStartTalk?.apply {
-                    setOnClickListener {
-                        mConnection?.let {
-                            if (it.isConnected) {
-                                EchoUtil.start()
-                                (mTalkPlay as StreamTalkPlay).startTalk()
-                                mBinding?.btnStopTalk?.isEnabled = true
-                            }
-                        }
-                    }
-                }
-
-                mBinding?.btnStopTalk?.apply {
-                    setOnClickListener {
-                        (mTalkPlay as StreamTalkPlay).stopTalk()
-
-                    }
-                }
-
-                mBinding?.btnCloseStream.apply {
-                    setOnClickListener {
-                        EchoUtil.destroy(this@PlayEchoActivity)
-                        mConnection!!.stopVideo(0, this@PlayEchoActivity)
-                    }
-                }
-                mBinding?.btnStartRecord?.setOnClickListener {
-                    mBinding?.btnStartRecord?.isEnabled = false
-                    mBinding?.btnStopRecord?.isEnabled = true
-
-                    val recordPath =
-                        Environment.getExternalStorageDirectory().absolutePath + "/" + System.currentTimeMillis() + ".mp4"
-                    mMediaPlayer!!.startRecord(recordPath, 0)
-                }
-
-                mBinding?.btnCapture?.setOnClickListener {
-                    val capturePath =
-                        Environment.getExternalStorageDirectory().absolutePath + "/" + System.currentTimeMillis() + ".jpg"
-                    mMediaPlayer!!.capture(capturePath)
-                    showLToast("pic save path : $capturePath")
-                    dbg.D("PlayActivity", capturePath)
-                }
-
-                mBinding?.btnAudio?.setOnClickListener {
-                    playAudio = !playAudio
-                    if(playAudio){
-                        mDevice?.connection?.startAudio(0)
-                    }else{
-                        mDevice?.connection?.stopAudio(0)
+        mBinding?.btnStartTalk?.apply {
+            setOnClickListener {
+                mDevice?.connection?.let {
+                    if (it.isConnected) {
+                        EchoUtil.start()
+                        (mTalkPlay as StreamTalkPlay).startTalk()
+                        mBinding?.btnStopTalk?.isEnabled = true
                     }
                 }
             }
-
         }
 
-        mViewModel?.mDeviceOnline?.observe(this){
-            mDevice?.setOnline(it)
-            mConnection?.setPlatDevOnline(it)
+        mBinding?.btnStopTalk?.apply {
+            setOnClickListener {
+                (mTalkPlay as StreamTalkPlay).stopTalk()
+
+            }
+        }
+
+        mBinding?.btnCloseStream?.apply {
+            setOnClickListener {
+                EchoUtil.destroy(this@PlayEchoActivity)
+                mDevice?.connection!!.stopVideo(0, this@PlayEchoActivity)
+            }
+        }
+        mBinding?.btnStartRecord?.setOnClickListener {
+            mBinding?.btnStartRecord?.isEnabled = false
+            mBinding?.btnStopRecord?.isEnabled = true
+
+            val recordPath =
+                Environment.getExternalStorageDirectory().absolutePath + "/" + System.currentTimeMillis() + ".mp4"
+            mMediaPlayer!!.startRecord(recordPath, 0)
+        }
+
+        mBinding?.btnCapture?.setOnClickListener {
+            val capturePath =
+                Environment.getExternalStorageDirectory().absolutePath + "/" + System.currentTimeMillis() + ".jpg"
+            mMediaPlayer!!.capture(capturePath)
+            showLToast("pic save path : $capturePath")
+            dbg.D("PlayActivity", capturePath)
+        }
+
+        mBinding?.btnAudio?.setOnClickListener {
+            playAudio = !playAudio
+            if (playAudio) {
+                mDevice?.connection?.startAudio(0)
+            } else {
+                mDevice?.connection?.stopAudio(0)
+            }
+        }
+
+        mViewModel?.mDeviceOnline?.observe(this) {
+            mDevice?.connection?.setPlatDevOnline(it)
+            mDevice?.doConnect()
         }
     }
 
@@ -270,9 +281,9 @@ class PlayEchoActivity : BaseActivity<ActivityPlayVideoBinding,PlayViewModel>(),
             DevCmd.startTalk -> if (ResultCode.SUCCESS == code) {
                 showToast("start talk success")
             } else {
-                mConnection!!.stopTalk(0)
+                mDevice?.connection!!.stopTalk(0)
             }
-            DevCmd.sendSpeakFile -> mConnection!!.stopTalk(0)
+            DevCmd.sendSpeakFile -> mDevice?.connection!!.stopTalk(0)
             DevCmd.stopTalk -> {
             }
         }
@@ -296,8 +307,8 @@ class PlayEchoActivity : BaseActivity<ActivityPlayVideoBinding,PlayViewModel>(),
         } else if (DecType.AUDIO == type) {
             val t = ByteArray(dataSize)
             System.arraycopy(data, 0, t, 0, dataSize)
-            if (playAudio){
-                sAudioTrack?.write(t,t.size)
+            if (playAudio) {
+                sAudioTrack?.write(t, t.size)
             }
 
         }
@@ -319,7 +330,7 @@ class PlayEchoActivity : BaseActivity<ActivityPlayVideoBinding,PlayViewModel>(),
 
     override fun onDestroy() {
         super.onDestroy()
-        mConnection!!.removeOnEventCallbackListener(this)
+        mDevice?.connection!!.removeOnEventCallbackListener(this)
         mGlRenderer!!.stopDisplay()
         mGlRenderer!!.release()
 
@@ -328,8 +339,8 @@ class PlayEchoActivity : BaseActivity<ActivityPlayVideoBinding,PlayViewModel>(),
         mMediaPlayer!!.setOnDecCallBack(this)
         mMediaPlayer!!.setOnRecCallBack(this)
 
-        mConnection!!.stopTalk(0)
-        mConnection!!.stopVideo(0, this)
+        mDevice?.connection!!.stopTalk(0)
+        mDevice?.connection!!.stopVideo(0, this)
 
         sAudioRecord!!.stop()
         sAudioRecord!!.release()

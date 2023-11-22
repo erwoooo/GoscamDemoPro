@@ -1,6 +1,7 @@
 package com.gocam.goscamdemopro
 
 import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.gocam.goscamdemopro.base.BaseModel
 import com.gocam.goscamdemopro.base.BaseViewModel
@@ -13,8 +14,8 @@ import com.gos.platform.api.GosSession
 import kotlinx.coroutines.launch
 
 class MainViewModel : BaseViewModel<BaseModel>() {
-    private val deviceResult = SingleLiveData<List<Device>>()
-    val mDeviceList: SingleLiveData<List<Device>>
+    private val deviceResult = MutableLiveData<List<Device>>()
+    val mDeviceList: MutableLiveData<List<Device>>
         get() = deviceResult
 
     override fun onCreate(owner: LifecycleOwner) {

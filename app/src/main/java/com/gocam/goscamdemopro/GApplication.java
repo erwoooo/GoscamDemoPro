@@ -5,25 +5,19 @@ import android.app.Application;
 import android.content.Context;
 import android.os.Process;
 
-import com.gocam.goscamdemopro.entity.Device;
 import com.gocam.goscamdemopro.entity.User;
-import com.gocam.goscamdemopro.utils.DeviceManager;
 import com.gocam.goscamdemopro.utils.dbg;
 import com.gos.avplayer.GosMediaPlayer;
 import com.gos.platform.api.ConfigManager;
 import com.gos.platform.api.GosSession;
 import com.gos.platform.api.Goscam;
 import com.gos.platform.api.contact.PlatCode;
-import com.gos.platform.api.domain.DeviceEntity;
 import com.gos.platform.api.inter.OnPlatformEventCallback;
-import com.gos.platform.api.result.GetDeviceListResult;
 import com.gos.platform.api.result.LoginResult;
 import com.gos.platform.api.result.PlatResult;
 import com.gos.platform.device.PlatformType;
-import com.gos.platform.device.base.Connection;
 import com.gos.platform.device.contact.TransportProType;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class GApplication extends Application implements OnPlatformEventCallback {
@@ -89,26 +83,26 @@ public class GApplication extends Application implements OnPlatformEventCallback
                 break;
             case getDeviceList:
             case getDeviceListEx:
-                if(code == PlatCode.SUCCESS){
-                    GetDeviceListResult getDeviceListResult = (GetDeviceListResult) platResult;
-                    List<DeviceEntity> deviceEntityList = getDeviceListResult.getDeviceEntityList();
-                    List<Device> list = new ArrayList<>();
-                    for(int i = 0; deviceEntityList != null && i < deviceEntityList.size(); i++){
-                        DeviceEntity deviceEntity = deviceEntityList.get(i);
-                        Device device = new Device(deviceEntity.deviceName, deviceEntity.deviceId, deviceEntity.devStatus == 1, deviceEntity.deviceType,deviceEntity.streamUser,deviceEntity.streamPassword
-                        ,deviceEntity.cap,deviceEntity.deviceHdType,deviceEntity.deviceSfwVer,deviceEntity.deviceHdwVer,deviceEntity.deviceOwner == 1);
-                        list.add(device);
-                    }
-                    List<Device> deviceList = DeviceManager.getInstance().saveDevice(list);
-                    for(int i = 0; deviceList != null && i < deviceList.size(); i++){
-                        Device device = deviceList.get(i);
-                        Connection connection = device.getConnection();
-                        connection.setPlatDevOnline(device.isOnline);
-                        if(device.isOnline){
-                            connection.connect(0);
-                        }
-                    }
-                }
+//                if(code == PlatCode.SUCCESS){
+//                    GetDeviceListResult getDeviceListResult = (GetDeviceListResult) platResult;
+//                    List<DeviceEntity> deviceEntityList = getDeviceListResult.getDeviceEntityList();
+//                    List<Device> list = new ArrayList<>();
+//                    for(int i = 0; deviceEntityList != null && i < deviceEntityList.size(); i++){
+//                        DeviceEntity deviceEntity = deviceEntityList.get(i);
+//                        Device device = new Device(deviceEntity.deviceName, deviceEntity.deviceId, deviceEntity.devStatus == 1, deviceEntity.deviceType,deviceEntity.streamUser,deviceEntity.streamPassword
+//                        ,deviceEntity.cap,deviceEntity.deviceHdType,deviceEntity.deviceSfwVer,deviceEntity.deviceHdwVer,deviceEntity.deviceOwner == 1);
+//                        list.add(device);
+//                    }
+//                    List<Device> deviceList = DeviceManager.getInstance().saveDevice(list);
+//                    for(int i = 0; deviceList != null && i < deviceList.size(); i++){
+//                        Device device = deviceList.get(i);
+//                        Connection connection = device.getConnection();
+//                        connection.setPlatDevOnline(device.isOnline);
+//                        if(device.isOnline){
+//                            connection.connect(0);
+//                        }
+//                    }
+//                }
                 break;
         }
     }

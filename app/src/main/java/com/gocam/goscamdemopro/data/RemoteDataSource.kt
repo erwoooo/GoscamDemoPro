@@ -17,6 +17,14 @@ import com.gos.platform.api.request.Request.MsgType.*
 import com.gos.platform.device.GosConnection
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.util.ArrayList
+import com.gos.platform.api.domain.DeviceStatus
+
+import com.gos.platform.api.contact.DeviceType
+
+import com.gos.platform.device.contact.ConnType
+
+
+
 
 
 @SuppressLint("StaticFieldLeak")
@@ -224,20 +232,36 @@ object RemoteDataSource : DataSource {
         val result = job.await()
         val deviceList = arrayListOf<Device>()
         result?.Body?.let {
-            for (deviceBody in it.DeviceList) {   //组装成device
+            for (entity in it.DeviceList) {   //组装成device
                 val device = Device(
-                    deviceBody.DeviceName,
-                    deviceBody.DeviceId,
-                    deviceBody.Status == 1,
-                    deviceBody.DeviceType,
-                    deviceBody.StreamUser,
-                    deviceBody.StreamPassword,
-                    deviceBody.Cap,
-                    deviceBody.DeviceHdType,
-                    deviceBody.DeviceSfwVer,
-                    deviceBody.DeviceHdwVer,
-                    deviceBody.DeviceOwner == 1
+                    entity.DeviceId,
+                    entity.DeviceCap,
+                    ConnType.parse(if (entity.Cap != null) entity.Cap!!.cap56 else entity.MediaTransportType),
+                    entity.Cap,
+                    entity.MatchType
                 )
+                device.devName = entity.DeviceName
+                device.isOwn = entity.DeviceOwner === 1 //0-分享、1-拥有
+
+                //device.isOwn = true; // TODO TEST
+                //device.isOwn = true; // TODO TEST
+                device.devType = entity.DeviceType //1-IPC, 2-NVR 3-VR
+
+                //device.deviceType = DeviceType.BLOCK;//TODO TEST
+
+                //device.deviceType = DeviceType.BLOCK;//TODO TEST
+                device.isPackageDevice = entity.DeviceType === DeviceType.NVR
+                device.deviceSfwVer = entity.DeviceSfwVer
+                device.deviceHdwVer = entity.DeviceHdwVer
+                device.deviceHdType = entity.DeviceHdType
+                device.streamUser = entity.StreamUser
+                device.streamPassword = entity.StreamPassword
+                device.deviceStatus =
+                    if (entity.DeviceType === DeviceType.BLOCK) DeviceStatus.ONLINE else entity.Status
+                device.accessoriesCategory = entity.AccessoriesCategory
+                device.accessoriesUrl = entity.AccessoriesUrl
+                device.isPlatDevOnline =
+                    device.deviceStatus === DeviceStatus.ONLINE || device.deviceStatus === DeviceStatus.SLEEP
 
                 deviceList.add(device)
             }
@@ -576,6 +600,7 @@ object RemoteDataSource : DataSource {
                 Pair("UserType", GApplication.app.userType),
                 Pair("SessionId", GApplication.app.user.sessionId),
                 Pair("AccessToken", gsoSession.accessToken),
+                Pair("UserName",   GApplication.app.user.userName!!),
             )
             val nMap = mapOf(
                 Pair("Body", map),
@@ -602,6 +627,7 @@ object RemoteDataSource : DataSource {
                 Pair("UserType", GApplication.app.userType),
                 Pair("SessionId", GApplication.app.user.sessionId),
                 Pair("AccessToken", gsoSession.accessToken),
+                Pair("UserName",   GApplication.app.user.userName!!),  /*Each request requires four fields: UserType, SessionId, AccessToken, UserName*/
             )
             val nMap = mapOf(
                 Pair("Body", map),
@@ -609,12 +635,12 @@ object RemoteDataSource : DataSource {
             )
             val json = Gson().toJson(nMap).toRequestBody()
             val response = RetrofitClient.apiService.wakeUpDevice(json)
-            Log.e(TAG, "wakeDevice: $response", )
+            Log.e(TAG, "wakeDevice: $response")
             return@asyncTask response.body()
         }
 
         val result = job.await()
-        Log.e(TAG, "wakeDevice: $result", )
+        Log.e(TAG, "wakeDevice: $result")
         return if(result is BaseResponse<WakeUpParam?>)
             result.Body
         else
@@ -629,6 +655,7 @@ object RemoteDataSource : DataSource {
                 Pair("UserType", GApplication.app.userType),
                 Pair("SessionId", GApplication.app.user.sessionId),
                 Pair("AccessToken", gsoSession.accessToken),
+                Pair("UserName",   GApplication.app.user.userName!!),
             )
             val nMap = mapOf(
                 Pair("Body", map),
@@ -636,7 +663,7 @@ object RemoteDataSource : DataSource {
             )
             val json = Gson().toJson(nMap).toRequestBody()
             val response = RetrofitClient.apiService.queryDeviceStatus(json)
-            Log.e(TAG, "wakeDevice: $response", )
+            Log.e(TAG, "wakeDevice: $response")
             return@asyncTask response.body()
         }
 

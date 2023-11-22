@@ -277,7 +277,6 @@ class PlayActivity : BaseActivity<ActivityPlayVideoBinding,PlayViewModel>(), OnD
         }
 
         mViewModel?.mDeviceOnline?.observe(this){
-            mDevice?.setOnline(it)
             mConnection?.setPlatDevOnline(it)
         }
     }

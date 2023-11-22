@@ -26,6 +26,7 @@ import com.gocam.goscamdemopro.play.PlayEchoActivity
 import com.gocam.goscamdemopro.play.PlayJavaActivity
 import com.gocam.goscamdemopro.set.SettingActivity
 import com.gocam.goscamdemopro.tf.TfDayActivity
+import com.gos.platform.api.domain.DeviceStatus
 import kotlinx.coroutines.NonCancellable.start
 
 class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(),
@@ -109,7 +110,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(),
                 ("DevName:" + device.devName
                     .toString() + "\nDevId:" + device.devId.toString() +
                         "\nDevType:" + device.devType.toString() +
-                        "\nStatus:" + if (device.isOnline) "Online" else "Offline").also {
+                        "\nStatus:" + if (device.deviceStatus != DeviceStatus.OFFLINE) "Online" else "Offline").also {
                     (vh as Vh).tv.text = it
                 }
                 vh.itemView.setOnClickListener(View.OnClickListener {
