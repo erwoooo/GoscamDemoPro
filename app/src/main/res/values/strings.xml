@@ -155,7 +155,7 @@
     <string name="retry_after">Try again later</string>
     <string name="bind_retry">Rebind</string>
     <string name="dev_already_bind">The device has been bound</string>
-
+    <string name="dev_already_bind_yourself">You have bound the device</string>
     <string name="dev_bind_by_other">该设备已经被%1$s绑定，\n请联系此用户解绑设备</string>
     <string name="hao_de">好的</string>
     <string name="token_invalid">token失效,请重新扫描二维码</string>
@@ -168,7 +168,7 @@
     <string name="open_door_bell">1. Long press the wifi station for 10 seconds, and you hear a "di" sound; 2. Long press the doorbell start button to turn on the doorbell; 3. Press the doorbell button three times.</string>
     <string name="bell_notice">1. Please power on the wifi station and wait for the green light to stay on (about 35s) 2. Press and hold the "SET" button until you hear a "di" sound.</string>
     <string name="hear_notice_voice">Hear the tone, next step</string>
-
+    <string name="scan_failed">Scan failed</string>
     <string name="bell_light_not_">The red light is not flashing</string>
     <string name="bell_light_notice">If the red indicator is not flashing after powering on for 2 minutes, please press the "SET" button for 5 second and try again</string>
     <string name="dev_add_i_know">I see</string>
@@ -229,4 +229,46 @@
     <string name="manual_record_not_space">Insufficient remaining capacity of the memory card</string>
     <string name="manual_record_recording">Recording</string>
     <string name="manual_record_frequently_opr">Continuous recording</string>
+    <string name="alarm_push">Alarm Push</string>
+    <string name="wake_plan">wake plan</string>
+    <string name="device_restart_plan">Device restart plan</string>
+    <string name="tf_card_manual_recording">TF card manual recording</string>
+    <string name="video_image_flip">video image flip</string>
+    <string name="status_indicator">Status indicator</string>
+    <string name="intercom_volume_setting">Intercom volume setting</string>
+    <string name="sound_detection">Sound Detection</string>
+    <string name="sound_and_light_linkage">Sound and light linkage</string>
+    <string name="object_tracking">Object Tracking</string>
+    <string name="reboot_the_device">Reboot the device</string>
+    <string name="reset_dev_confirm">Are you sure you want to restart the device?</string>
+    <string name="message_notification">Message notification</string>
+    <string name="message_interval">Message interval</string>
+    <string name="push_open_plan">Push open plan</string>
+    <string name="motion_detection_push">Motion detection push</string>
+    <string name="voice_detection_push">Sound detection push</string>
+    <string name="cry_detection_push">Cry detection push</string>
+    <string name="human_detection_push">Human detection push</string>
+    <string name="setting_cam_no_sleep">Device Wake Up</string>
+    <string name="camera_opening_plan">Camera opening plan</string>
+    <string name="not_turn_on">not turn on</string>
+    <string name="daytime">daytime(08:00-20:00)</string>
+    <string name="night">night(20:00-08:00)</string>
+    <string name="customize">customize</string>
+    <string name="normal">normal</string>
+    <string name="horizontal_flip">horizontal flip</string>
+    <string name="vertical_flip">vertical flip</string>
+    <string name="_180_flip">180° flip</string>
+    <string name="full_color_night_vision">Full color night vision</string>
+    <string name="black_and_white_night_vision">Black and white night vision</string>
+    <string name="smart_night_vision">Smart night vision</string>
+    <string name="sound_sensitivity">Sound sensitivity</string>
+    <string name="middle">Middle</string>
+    <string name="ptz_control">PTZ control</string>
+    <string name="back">Back</string>
+    <string name="scan_dev_info_title">Scan QR code</string>
+    <string name="please_reset_device">Please reset the device first</string>
+    <string name="bind_dev_success">Binding successful</string>
+    <string name="qr_notice_main">Please use your mobile phone to scan the barcode on your device</string>
+    <string name="qr_notice_sub">Please put the bar code into the scan box to scan automatically</string>
+    <string name="notice_4g">Turn on the power, the indicator light flashes quickly to enter the configuration mode, Check the QR code on the side of the camera and scan it</string>
 </resources>

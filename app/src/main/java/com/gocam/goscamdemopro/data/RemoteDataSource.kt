@@ -231,8 +231,8 @@ object RemoteDataSource : DataSource {
 
         val result = job.await()
         val deviceList = arrayListOf<Device>()
-        result?.Body?.let {
-            for (entity in it.DeviceList) {   //组装成device
+        result?.Body?.DeviceList?.let {
+            for (entity in it) {   //组装成device
                 val device = Device(
                     entity.DeviceId,
                     entity.DeviceCap,
@@ -277,7 +277,7 @@ object RemoteDataSource : DataSource {
         val job = asyncTask {
             val map = mapOf(
                 Pair("UserName", userName),
-                Pair("DeviceId", null),
+                Pair("DeviceId", deviceId),
                 Pair("UserType", GApplication.app.userType),
                 Pair("SessionId", GApplication.app.user.sessionId),
                 Pair("AccessToken", gsoSession.accessToken),
@@ -302,13 +302,12 @@ object RemoteDataSource : DataSource {
     override suspend fun queryUserBindResult(
         userName: String,
         bindToken: String
-    ): BindStatusResult? {
+    ): BaseResponse<BindStatusResult?>? {
         val job = asyncTask {
             val map = mapOf(
                 Pair("UserName", userName),
                 Pair("BindToken", bindToken),
                 Pair("UserType", GApplication.app.userType),
-                Pair("SessionId", GApplication.app.user.sessionId),
                 Pair("AccessToken", gsoSession.accessToken),
             )
             val nMap = mapOf(
@@ -316,14 +315,14 @@ object RemoteDataSource : DataSource {
                 Pair("MessageType", QueryUserBindResultRequest)
             )
             val json = Gson().toJson(nMap).toRequestBody()
-            val response = RetrofitClient.apiService.queryUserBindResult(body = json)
-
+            val response = RetrofitClient.apiService.queryUserBindResult(json)
+            Log.e(TAG, "queryUserBindResult: $response" )
             return@asyncTask response.body()
         }
 
         val result = job.await()
         return if (result is BaseResponse<BindStatusResult?>)
-            result.Body
+            result
         else
             null
     }
@@ -673,4 +672,59 @@ object RemoteDataSource : DataSource {
         else
             null
     }
+
+
+    override suspend fun setPzt(deviceId: String, baseDeviceParam: BaseDeviceParam,) {
+        val job = asyncTask {
+            val cmdBody = CmdBody(
+                GApplication.app.user.token!!,
+                deviceId,
+                baseDeviceParam,
+                GApplication.app.user.sessionId!!,
+                GApplication.app.user.userName!!,
+                GApplication.app.userType,
+            )
+
+            val cmdRequestParam = CmdRequestParam(
+                cmdBody,
+                BypassParamRequest
+            )
+
+            val json = Gson().toJson(cmdRequestParam).toRequestBody()
+            val response = RetrofitClient.apiService.getCMDParam(json)
+        }
+
+    }
+
+
+    override suspend fun checkBindStatus(deviceId: String): BindStatus? {
+        val job = asyncTask {
+            val map = mapOf(
+                Pair("DeviceId", deviceId),
+                Pair("UserType", GApplication.app.userType),
+                Pair("SessionId", GApplication.app.user.sessionId),
+                Pair("AccessToken", gsoSession.accessToken),
+                Pair("UserName",   GApplication.app.user.userName!!),
+            )
+            val nMap = mapOf(
+                Pair("Body", map),
+                Pair("MessageType", QueryDeviceBindRequest)
+            )
+            val json = Gson().toJson(nMap).toRequestBody()
+            val response = RetrofitClient.apiService.checkBindStatus(json)
+            Log.e(TAG, "checkBindStatus: $response")
+            return@asyncTask response.body()
+        }
+        val result = job.await()
+
+        return if (result is BaseResponse<BindStatus?>){
+            result.Body
+        }else{
+            null
+        }
+
+    }
+
+
+
 }

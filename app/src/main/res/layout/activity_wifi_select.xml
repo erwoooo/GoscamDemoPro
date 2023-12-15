@@ -58,8 +58,8 @@
             android:textColor="#fff" />
 
         <Button
-            android:visibility="invisible"
-            android:id="@+id/btn_doorbell"
+            android:visibility="visible"
+            android:id="@+id/btn_scan_qr"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
@@ -70,7 +70,7 @@
             android:gravity="center"
             android:padding="0dp"
             android:singleLine="true"
-            android:text="@string/add_doorbell"
+            android:text="@string/scan_dev_info_title"
             android:textColor="#fff" />
     </LinearLayout>
 </layout>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <include layout="@layout/layout_toolbar" android:id="@+id/title_bar"/>
+
+        <TextView
+            android:gravity="center_vertical"
+            android:text="@string/not_turn_on"
+            android:id="@+id/tv_close_reboot"
+            app:layout_constraintTop_toBottomOf="@id/title_bar"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"/>
+
+        <ImageView
+            android:id="@+id/iv_close_reboot"
+            app:layout_constraintBottom_toBottomOf="@id/tv_close_reboot"
+            app:layout_constraintTop_toTopOf="@id/tv_close_reboot"
+            app:layout_constraintEnd_toEndOf="@id/tv_close_reboot"
+            android:src="@mipmap/icon_add_mode_selected"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+
+        <TextView
+            android:gravity="center_vertical"
+            android:text="@string/customize"
+            android:id="@+id/tv_custom_reboot"
+            app:layout_constraintTop_toBottomOf="@id/tv_close_reboot"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

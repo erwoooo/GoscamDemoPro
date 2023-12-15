@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include layout="@layout/layout_toolbar" android:id="@+id/tool_bar" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <Button
+                    android:id="@+id/btn_alarm_push"
+                    style="@style/style_setting_item"
+                    android:text="@string/alarm_push"
+                    />
+
+                <Button
+                    android:id="@+id/btn_wake_plan"
+                    style="@style/style_setting_item"
+                    android:text="@string/wake_plan"
+                    />
+
+                <Button
+                    android:id="@+id/btn_restart_plan"
+                    style="@style/style_setting_item"
+                    android:text="@string/device_restart_plan"
+                    />
+
+                <Button
+                    android:id="@+id/btn_tf_record"
+                    style="@style/style_setting_item"
+                    android:text="@string/tf_card_manual_recording"
+                    />
+
+
+                <Button
+                    android:id="@+id/btn_video_rotate"
+                    style="@style/style_setting_item"
+                    android:text="@string/video_image_flip"
+                    />
+
+
+                <Button
+                    android:id="@+id/btn_light_status"
+                    style="@style/style_setting_item"
+                    android:text="@string/status_indicator"
+                    />
+
+                <Button
+                    android:id="@+id/btn_speak_volume"
+                    style="@style/style_setting_item"
+                    android:text="@string/intercom_volume_setting"
+                    />
+
+                <Button
+                    android:id="@+id/btn_night_vision"
+                    style="@style/style_setting_item"
+                    android:text="@string/smart_night_vision"
+                    />
+
+                <Button
+                    android:id="@+id/btn_move_motion"
+                    style="@style/style_setting_item"
+                    android:text="@string/move_motion"
+                    />
+
+                <Button
+                    android:id="@+id/btn_sound_detection"
+                    style="@style/style_setting_item"
+                    android:text="@string/sound_detection"
+                    />
+
+                <Button
+                    android:id="@+id/btn_sound_light"
+                    style="@style/style_setting_item"
+                    android:text="@string/sound_and_light_linkage"
+                    />
+
+                <Button
+                    android:id="@+id/btn_object_tracking"
+                    style="@style/style_setting_item"
+                    android:text="@string/object_tracking"
+                    />
+
+                <Button
+                    android:id="@+id/btn_time_verify"
+                    style="@style/style_setting_item"
+                    android:text="@string/time_j"
+                    />
+
+                <Button
+                    android:id="@+id/btn_reboot"
+                    style="@style/style_setting_item"
+                    android:text="@string/reboot_the_device"
+                    />
+
+            </LinearLayout>
+
+
+
+        </ScrollView>
+
+
+    </LinearLayout>
+</layout>

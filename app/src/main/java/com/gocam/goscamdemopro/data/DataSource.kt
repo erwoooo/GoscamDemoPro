@@ -30,7 +30,7 @@ interface DataSource {
     suspend fun getBindToken(userName: String,deviceId:String?): BindTokenResult?
 
     //check bind status
-    suspend fun queryUserBindResult(userName: String,bindToken:String):BindStatusResult?
+    suspend fun queryUserBindResult(userName: String,bindToken:String):BaseResponse<BindStatusResult?>?
 
     //modify device alias
     suspend fun modifyDeviceAttr(deviceId:String,deviceName:String,streamUser:String?,streamPsw:String?):ModifyNameResult?
@@ -62,4 +62,10 @@ interface DataSource {
     suspend fun wakeDevice(deviceId: String):WakeUpParam?
 
     suspend fun queryDeviceOnlineStatusSyn(deviceId: String):DevicePlatStatus?
+
+    suspend fun setPzt(deviceId: String, baseDeviceParam: BaseDeviceParam)
+
+    //check bind status
+    suspend fun checkBindStatus(deviceId: String):BindStatus?
+
 }

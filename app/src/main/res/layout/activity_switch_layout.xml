@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <include layout="@layout/layout_toolbar" android:id="@+id/title_bar"/>
+
+        <TextView
+            android:id="@+id/tv_tf_record"
+            android:gravity="center_vertical"
+            android:text="@string/tf_card_manual_recording"
+            app:layout_constraintTop_toBottomOf="@id/title_bar"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"/>
+
+        <Switch
+            app:layout_constraintEnd_toEndOf="@id/tv_tf_record"
+            app:layout_constraintBottom_toBottomOf="@id/tv_tf_record"
+            app:layout_constraintTop_toTopOf="@id/tv_tf_record"
+            android:id="@+id/sw_tf_record"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+
+        <TextView
+            android:id="@+id/tv_light_status"
+            android:gravity="center_vertical"
+            android:text="@string/status_indicator"
+            app:layout_constraintTop_toBottomOf="@id/tv_tf_record"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"/>
+
+        <Switch
+            app:layout_constraintEnd_toEndOf="@id/tv_light_status"
+            app:layout_constraintBottom_toBottomOf="@id/tv_light_status"
+            app:layout_constraintTop_toTopOf="@id/tv_light_status"
+            android:id="@+id/sw_light_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+
+        <TextView
+            android:id="@+id/tv_obj_track"
+            android:gravity="center_vertical"
+            android:text="@string/object_tracking"
+            app:layout_constraintTop_toBottomOf="@id/tv_light_status"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"/>
+
+        <Switch
+            app:layout_constraintEnd_toEndOf="@id/tv_obj_track"
+            app:layout_constraintBottom_toBottomOf="@id/tv_obj_track"
+            app:layout_constraintTop_toTopOf="@id/tv_obj_track"
+            android:id="@+id/sw_obj_track"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <include layout="@layout/layout_toolbar" android:id="@+id/title_bar"/>
+
+        <TextView
+            android:gravity="center_vertical"
+            android:text="@string/setting_cam_no_sleep"
+            android:id="@+id/tv_wake_up"
+            app:layout_constraintTop_toBottomOf="@id/title_bar"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"/>
+
+        <Switch
+            android:id="@+id/sw_wake_up"
+            app:layout_constraintBottom_toBottomOf="@id/tv_wake_up"
+            app:layout_constraintTop_toTopOf="@id/tv_wake_up"
+            app:layout_constraintEnd_toEndOf="@id/tv_wake_up"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:gravity="center_vertical"
+            android:text="@string/camera_opening_plan"
+            android:id="@+id/tv_wake_up_plan"
+            app:layout_constraintTop_toBottomOf="@id/tv_wake_up"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"/>
+
+        <TextView
+            android:layout_marginStart="30dp"
+            android:gravity="center_vertical"
+            android:text="@string/not_turn_on"
+            android:id="@+id/tv_close_plan"
+            app:layout_constraintTop_toBottomOf="@id/tv_wake_up_plan"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"/>
+
+        <ImageView
+            android:id="@+id/iv_close_plan"
+            app:layout_constraintBottom_toBottomOf="@id/tv_close_plan"
+            app:layout_constraintTop_toTopOf="@id/tv_close_plan"
+            app:layout_constraintEnd_toEndOf="@id/tv_close_plan"
+            android:src="@mipmap/icon_add_mode_selected"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:layout_marginStart="30dp"
+            android:gravity="center_vertical"
+            android:text="@string/daytime"
+            android:id="@+id/tv_day_plan"
+            app:layout_constraintTop_toBottomOf="@id/tv_close_plan"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"/>
+
+        <ImageView
+            android:id="@+id/iv_day_plan"
+            app:layout_constraintBottom_toBottomOf="@id/tv_day_plan"
+            app:layout_constraintTop_toTopOf="@id/tv_day_plan"
+            app:layout_constraintEnd_toEndOf="@id/tv_day_plan"
+            android:src="@mipmap/icon_add_mode_selected"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:layout_marginStart="30dp"
+            android:gravity="center_vertical"
+            android:text="@string/night"
+            android:id="@+id/tv_night_plan"
+            app:layout_constraintTop_toBottomOf="@id/tv_day_plan"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"/>
+
+        <ImageView
+            android:id="@+id/iv_night_plan"
+            app:layout_constraintBottom_toBottomOf="@id/tv_night_plan"
+            app:layout_constraintTop_toTopOf="@id/tv_night_plan"
+            app:layout_constraintEnd_toEndOf="@id/tv_night_plan"
+            android:src="@mipmap/icon_add_mode_selected"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+
+        <TextView
+            android:layout_marginStart="30dp"
+            android:gravity="center_vertical"
+            android:text="@string/customize"
+            android:id="@+id/tv_custom_plan"
+            app:layout_constraintTop_toBottomOf="@id/tv_night_plan"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -36,7 +36,7 @@ public class GApplication extends Application implements OnPlatformEventCallback
 
     public static GApplication app;
     public User user;
-    public int userType = 36;//APP定制类型
+    public int userType = 35;//APP定制类型
     @Override
     public void onCreate() {
         super.onCreate();

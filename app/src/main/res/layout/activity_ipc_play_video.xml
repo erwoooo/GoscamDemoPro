@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <include layout="@layout/layout_toolbar" android:id="@+id/tool_bar" />
+
+        <com.gos.avplayer.surface.GLFrameSurface
+            android:id="@+id/gl_surface"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"/>
+
+        <ScrollView
+            android:visibility="visible"
+            android:id="@+id/sv_menu"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+
+                <Button
+                    android:enabled="false"
+                    android:id="@+id/btn_OpenStream"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/start_video"
+                    android:textAllCaps="false"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:textColor="#fff"
+                    android:background="@drawable/main_button_selector"
+                    />
+
+                <Button
+                    android:enabled="false"
+                    android:id="@+id/btn_audio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/start_audio"
+                    android:textAllCaps="false"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:textColor="#fff"
+                    android:background="@drawable/main_button_selector"
+                    />
+
+                <Button
+                    android:enabled="false"
+                    android:id="@+id/btn_CloseStream"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/stop_video"
+                    android:textAllCaps="false"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:textColor="#fff"
+                    android:background="@drawable/main_button_selector"
+                    />
+                <Button
+                    android:enabled="false"
+                    android:id="@+id/btn_StartTalk"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/start_talk"
+                    android:textAllCaps="false"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:textColor="#fff"
+                    android:background="@drawable/main_button_selector"
+                    />
+                <Button
+                    android:enabled="false"
+                    android:id="@+id/btn_Stop_Talk"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/stop_talk"
+                    android:textAllCaps="false"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:textColor="#fff"
+                    android:background="@drawable/main_button_selector"
+                    />
+                <Button
+                    android:enabled="false"
+                    android:id="@+id/btn_Start_record"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/start_record"
+                    android:textAllCaps="false"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:textColor="#fff"
+                    android:background="@drawable/main_button_selector"
+                    />
+                <Button
+                    android:enabled="false"
+                    android:id="@+id/btn_Stop_record"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/stop_record"
+                    android:textAllCaps="false"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:textColor="#fff"
+                    android:background="@drawable/main_button_selector"
+                    />
+                <Button
+                    android:enabled="false"
+                    android:id="@+id/btn_capture"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/capture"
+                    android:textAllCaps="false"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:textColor="#fff"
+                    android:background="@drawable/main_button_selector"
+                    />
+
+                <Button
+                    android:visibility="visible"
+                    android:id="@+id/btn_pzt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/ptz_control"
+                    android:textAllCaps="false"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:textColor="#fff"
+                    android:background="@drawable/main_button_selector"
+                    />
+
+            </LinearLayout>
+        </ScrollView>
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constrain_pzt"
+            android:visibility="invisible"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="30dp"
+                android:text="@string/back"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:id="@+id/tv_black"
+                android:padding="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+
+
+            <ImageView
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:src="@drawable/ic_pzt_center"
+                android:id="@+id/iv_center"
+                android:layout_width="200px"
+                android:layout_height="200px"/>
+
+
+
+            <ImageView
+                app:layout_constraintEnd_toEndOf="@id/iv_center"
+                app:layout_constraintStart_toStartOf="@id/iv_center"
+                app:layout_constraintTop_toTopOf="@id/iv_center"
+                app:layout_constraintCircleRadius="100dp"
+                app:layout_constraintCircleAngle="0"
+                app:layout_constraintCircle="@id/iv_center"
+                android:src="@drawable/ic_pzt_up"
+                android:id="@+id/iv_pzt_up"
+                android:layout_width="100px"
+                android:layout_height="100px"/>
+
+
+            <ImageView
+                app:layout_constraintStart_toStartOf="@id/iv_center"
+                app:layout_constraintTop_toTopOf="@id/iv_center"
+                app:layout_constraintBottom_toBottomOf="@id/iv_center"
+                app:layout_constraintCircleRadius="100dp"
+                app:layout_constraintCircleAngle="270"
+                app:layout_constraintCircle="@id/iv_center"
+                android:src="@drawable/ic_pzt_left"
+                android:id="@+id/iv_pzt_left"
+                android:layout_width="100px"
+                android:layout_height="100px"/>
+
+
+            <ImageView
+                app:layout_constraintStart_toStartOf="@id/iv_center"
+                app:layout_constraintEnd_toEndOf="@id/iv_center"
+                app:layout_constraintBottom_toBottomOf="@id/iv_center"
+                app:layout_constraintCircleRadius="100dp"
+                app:layout_constraintCircleAngle="180"
+                app:layout_constraintCircle="@id/iv_center"
+                android:src="@drawable/ic_pzt_down"
+                android:id="@+id/iv_pzt_down"
+                android:layout_width="100px"
+                android:layout_height="100px"/>
+
+
+            <ImageView
+                app:layout_constraintTop_toTopOf="@id/iv_center"
+                app:layout_constraintEnd_toEndOf="@id/iv_center"
+                app:layout_constraintBottom_toBottomOf="@id/iv_center"
+                app:layout_constraintCircleRadius="100dp"
+                app:layout_constraintCircleAngle="90"
+                app:layout_constraintCircle="@id/iv_center"
+                android:src="@drawable/ic_pzt_right"
+                android:id="@+id/iv_pzt_right"
+                android:layout_width="100px"
+                android:layout_height="100px"/>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+</layout>

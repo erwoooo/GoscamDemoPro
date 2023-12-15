@@ -7,6 +7,7 @@ import com.gocam.goscamdemopro.base.BaseActivity
 import com.gocam.goscamdemopro.base.BaseBindActivity
 import com.gocam.goscamdemopro.base.BaseViewModel
 import com.gocam.goscamdemopro.databinding.ActivityWifiSelectBinding
+import com.gocam.goscamdemopro.utils.PermissionUtil
 
 class WifiSelectActivity : BaseBindActivity<ActivityWifiSelectBinding>() {
     override fun getLayoutId(): Int {
@@ -28,6 +29,14 @@ class WifiSelectActivity : BaseBindActivity<ActivityWifiSelectBinding>() {
                 intent.putExtra("psw",psw)
                 this@WifiSelectActivity.startActivity(intent)
             }
+
+
+            btnScanQr.setOnClickListener {
+
+              val intent = Intent(this@WifiSelectActivity,ScanQrCodeActivity::class.java)
+              this@WifiSelectActivity.startActivity(intent)
+            }
+
         }
     }
 }

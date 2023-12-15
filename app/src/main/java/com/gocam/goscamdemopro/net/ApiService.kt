@@ -72,4 +72,7 @@ interface ApiService {
 
     @POST(".")
     suspend fun queryDeviceStatus(@Body body: RequestBody):Response<BaseResponse<DevicePlatStatus?>>
+
+    @POST(".")
+    suspend fun checkBindStatus(@Body body: RequestBody):Response<BaseResponse<BindStatus?>>
 }

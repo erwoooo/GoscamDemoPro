@@ -14,4 +14,6 @@
 
     <color name="buttonNormalColor">#FFFFFF</color>
     <color name="buttonPressedColor">#fbfbf8</color>
+    <color name="color_ddcccccc">#DDCCCCCC</color>
+    <color name="scan_corner_color">#55AFFC</color>
 </resources>

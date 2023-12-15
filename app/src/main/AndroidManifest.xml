@@ -133,8 +133,14 @@
         <activity android:name=".play.PlayActivity"/>
         <activity android:name=".tf.TestThumbActivity"/>
         <activity android:name=".set.DoorbellVolumeActivity"/>
+        <activity android:name=".ipcset.IPCSetActivity"/>
+        <activity android:name=".ipcset.SwitchActivity"/>
         <activity android:name=".play.PlayEchoActivity"
             android:screenOrientation="portrait"/>
+        <activity android:name=".play.ipc.IpcPlayEchoActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".add.ScanQrCodeActivity"/>
+        <activity android:name=".add.ZxingCaptureKtActivity"/>
     </application>
 
 </manifest>

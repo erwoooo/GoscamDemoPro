@@ -8,11 +8,9 @@ import androidx.lifecycle.viewModelScope
 import com.gocam.goscamdemopro.base.BaseModel
 import com.gocam.goscamdemopro.base.BaseViewModel
 import com.gocam.goscamdemopro.data.RemoteDataSource
-import com.gocam.goscamdemopro.entity.DevicePlatStatus
-import com.gocam.goscamdemopro.entity.KeepLiveParam
-import com.gocam.goscamdemopro.entity.LowPowerParam
-import com.gocam.goscamdemopro.entity.WakeUpParam
+import com.gocam.goscamdemopro.entity.*
 import com.google.gson.Gson
+import com.gos.platform.api.UlifeResultParser
 import com.gos.platform.api.UlifeResultParser.EventType.IOTYPE_USER_IPCAM_KEEPALIVE_REQ
 import com.gos.platform.api.devparam.DevParam.DevParamCmdType.LowpowerModeSetting
 import com.gos.platform.api.domain.DeviceStatus
@@ -55,30 +53,48 @@ class PlayViewModel : BaseViewModel<BaseModel>() {
     fun handleDoorbellWakeup(deviceId: String) {
         viewModelScope.launch {
             val deviceStatus = queryDeviceOnlineStatusSyn(deviceId)
-            val lowPowerMode = checkLowPower(deviceId)
+//            val lowPowerMode = checkLowPower(deviceId)
+            if (deviceStatus.IsOnline == DeviceStatus.OFFLINE){
+                deviceOnline.postValue(true)
+            }else {
+                var offLine = deviceStatus.IsOnline == DeviceStatus.SLEEP
 
-            var offLine = deviceStatus.IsOnline == DeviceStatus.OFFLINE && lowPowerMode
+                val flowJob = flow<WakeUpParam?> {
+                    do {
+                        delay(2000)
+                        val wakeResult = RemoteDataSource.wakeDevice(deviceId)
+                        emit(wakeResult)
+                    } while (offLine)
 
-            val flowJob = flow<WakeUpParam?> {
-                do {
-                    delay(3000)
-                    val wakeResult = RemoteDataSource.wakeDevice(deviceId)
-                    emit(wakeResult)
-                } while (!offLine)
+                }.collect {
+                    Log.e(TAG, "handleDoorbellWakeup: $it")
+                    viewModelScope.launch {
+                        val deviceStatus = queryDeviceOnlineStatusSyn(deviceId)
+                        offLine = deviceStatus.IsOnline == DeviceStatus.ONLINE
+                        deviceOnline.postValue(offLine)
+                        Log.e(TAG, "handleDoorbellWakeup: $deviceStatus")
+                        do {
+                            val keepLiveParam = KeepLiveParam(IOTYPE_USER_IPCAM_KEEPALIVE_REQ, 0);
+                            val result = RemoteDataSource.getCmdParam(keepLiveParam, deviceId)
+                            delay(3000)
+                        } while (offLine)
+                    }
 
-            }.collect {
-                Log.e(TAG, "handleDoorbellWakeup: $it")
-                val deviceStatus = queryDeviceOnlineStatusSyn(deviceId)
-                offLine = deviceStatus.IsOnline == DeviceStatus.ONLINE
-                deviceOnline.postValue(offLine)
-                Log.e(TAG, "handleDoorbellWakeup: $deviceStatus")
-                do {
-                    val keepLiveParam = KeepLiveParam(IOTYPE_USER_IPCAM_KEEPALIVE_REQ, 0);
-                    val result = RemoteDataSource.getCmdParam(keepLiveParam, deviceId)
-                    SystemClock.sleep(5000)
-                } while (offLine)
+                }
+
             }
-
         }
     }
+
+
+    fun operatePzt(deviceId: String,direction:Int){
+        viewModelScope.launch {
+            val pztCmdParam = PztCmdParam(direction,
+                UlifeResultParser.EventType.IOTYPE_USER_IPCAM_PTZ_COMMAND,0)
+            RemoteDataSource.setPzt(deviceId,pztCmdParam)
+        }
+    }
+
+
+
 }

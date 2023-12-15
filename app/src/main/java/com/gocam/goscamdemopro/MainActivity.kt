@@ -20,12 +20,15 @@ import com.gocam.goscamdemopro.base.BaseActivity
 import com.gocam.goscamdemopro.cloud.CloudDayActivity
 import com.gocam.goscamdemopro.databinding.ActivityMainBinding
 import com.gocam.goscamdemopro.entity.Device
+import com.gocam.goscamdemopro.ipcset.IPCSetActivity
 import com.gocam.goscamdemopro.net.RetrofitClient
 import com.gocam.goscamdemopro.play.PlayActivity
 import com.gocam.goscamdemopro.play.PlayEchoActivity
 import com.gocam.goscamdemopro.play.PlayJavaActivity
+import com.gocam.goscamdemopro.play.ipc.IpcPlayEchoActivity
 import com.gocam.goscamdemopro.set.SettingActivity
 import com.gocam.goscamdemopro.tf.TfDayActivity
+import com.gos.platform.api.contact.DeviceType
 import com.gos.platform.api.domain.DeviceStatus
 import kotlinx.coroutines.NonCancellable.start
 
@@ -114,10 +117,21 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(),
                     (vh as Vh).tv.text = it
                 }
                 vh.itemView.setOnClickListener(View.OnClickListener {
-                    PlayEchoActivity.startActivity(
-                        vh.itemView.context,
-                        device.devId
-                    )
+                    when(device.devType){
+                        DeviceType.DOOR_BELL->{
+                            PlayEchoActivity.startActivity(
+                                vh.itemView.context,
+                                device.devId
+                            )
+                        }
+                        DeviceType.IPC->{
+                            IpcPlayEchoActivity.startActivity(
+                                vh.itemView.context,
+                                device.devId
+                            )
+                        }
+                    }
+
                 })
                 (vh as Vh).ibtnTf.setOnClickListener {
                     TfDayActivity.startActivity(
@@ -132,9 +146,18 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(),
                     )
                 }
                 (vh as Vh).ibtnSetting.setOnClickListener {
-                    val intent = Intent(vh.itemView.context, SettingActivity::class.java)
-                    intent.putExtra("dev", device.devId)
-                    vh.itemView.context.startActivity(intent)
+                    when(device.devType){
+                        DeviceType.DOOR_BELL->{
+                            val intent = Intent(vh.itemView.context, SettingActivity::class.java)
+                            intent.putExtra("dev", device.devId)
+                            vh.itemView.context.startActivity(intent)
+                        }
+                        DeviceType.IPC->{
+                            val intent = Intent(vh.itemView.context, IPCSetActivity::class.java)
+                            intent.putExtra("dev", device.devId)
+                            vh.itemView.context.startActivity(intent)
+                        }
+                    }
                 }
             }
         }

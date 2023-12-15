@@ -42,7 +42,7 @@ android {
 }
 
 dependencies {
-
+    implementation project(':loglib')
     implementation 'androidx.core:core-ktx:1.3.2'
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'com.google.android.material:material:1.3.0'
@@ -50,6 +50,7 @@ dependencies {
     implementation files('libs\\lib-dev-sdk.jar')
     implementation files('libs\\lib-player-sdk.jar')
     implementation files('libs\\voiceRecog.jar')
+    implementation project(path: ':libgoscam')
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
@@ -68,7 +69,6 @@ dependencies {
     api 'androidx.lifecycle:lifecycle-runtime-ktx:2.2.0-alpha01'
     implementation 'com.google.code.gson:gson:2.8.9'
     kapt "androidx.lifecycle:lifecycle-compiler:2.2.0"
-
     implementation 'com.aliyun.dpa:oss-android-sdk:2.4.2'
     implementation 'com.lzy.net:okgo:3.0.4'
     implementation 'io.reactivex.rxjava2:rxjava:2.1.0'

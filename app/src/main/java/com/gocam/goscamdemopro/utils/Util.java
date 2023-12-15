@@ -2,7 +2,7 @@ package com.gocam.goscamdemopro.utils;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.os.Build;
+import android.goscam.qrcode.QRCodec;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
@@ -160,5 +160,12 @@ public class Util {
     }
 
 
+    public static int checkDeviceQrCode(String code) {
+        dbg.E("check_code", "code=" + code);
+        QRCodec qrCodec = QRCodec.newRecognizedQRC(code);
+        dbg.E("check_code", "qrCodec=" + qrCodec);
+
+        return 0;
+    }
 
 }

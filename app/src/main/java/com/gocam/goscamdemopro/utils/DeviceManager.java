@@ -66,11 +66,10 @@ public class DeviceManager {
             }
         }
         deviceList.addAll(list);
-//        for (Device device : deviceList) {
-//            if (device.isPlatDevOnline())
-//                device.getConnection().setPlatDevOnline(true);
-//                device.doConnect();
-//        }
+        for (Device device : deviceList) {
+            device.getConnection().setPlatDevOnline(device.isPlatDevOnline());
+            device.getConnection().connect(0);
+        }
         return deviceList;
     }
 

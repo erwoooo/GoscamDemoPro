@@ -109,3 +109,14 @@ data class DevicePlatStatus(
     val IsOnline: Int,
     val SessionId: String
 )
+
+data class PztCmdParam(
+    val control:Int,
+    val CMDType: Int,
+    val channel:Int
+):BaseDeviceParam()
+
+data class BindStatus(
+    val deviceID:String,
+    val bindStatus:Int
+)

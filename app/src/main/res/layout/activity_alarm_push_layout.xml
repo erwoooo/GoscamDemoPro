@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <include layout="@layout/layout_toolbar" android:id="@+id/title_bar"/>
+        <TextView
+            android:gravity="center_vertical"
+            android:text="@string/message_notification"
+            android:id="@+id/tv_push"
+            app:layout_constraintTop_toBottomOf="@id/title_bar"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"/>
+
+        <Switch
+            android:id="@+id/sw_push"
+            app:layout_constraintBottom_toBottomOf="@id/tv_push"
+            app:layout_constraintTop_toTopOf="@id/tv_push"
+            app:layout_constraintEnd_toEndOf="@id/tv_push"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:gravity="center_vertical"
+            android:text="@string/message_interval"
+            android:id="@+id/tv_push_interval"
+            app:layout_constraintTop_toBottomOf="@id/tv_push"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"/>
+
+        <TextView
+            android:text="1min"
+            android:id="@+id/tv_push_interval_content"
+            app:layout_constraintBottom_toBottomOf="@id/tv_push_interval"
+            app:layout_constraintTop_toTopOf="@id/tv_push_interval"
+            app:layout_constraintEnd_toEndOf="@id/tv_push_interval"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:gravity="center_vertical"
+            android:text="@string/push_open_plan"
+            android:id="@+id/tv_push_plan"
+            app:layout_constraintTop_toBottomOf="@id/tv_push_interval"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"/>
+
+        <TextView
+            android:text="off"
+            android:id="@+id/tv_push_plan_content"
+            app:layout_constraintBottom_toBottomOf="@id/tv_push_plan"
+            app:layout_constraintTop_toTopOf="@id/tv_push_plan"
+            app:layout_constraintEnd_toEndOf="@id/tv_push_plan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:gravity="center_vertical"
+            android:text="@string/motion_detection_push"
+            android:id="@+id/tv_motion_push"
+            app:layout_constraintTop_toBottomOf="@id/tv_push_plan"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"/>
+
+        <Switch
+            android:id="@+id/sw_motion_push"
+            app:layout_constraintBottom_toBottomOf="@id/tv_motion_push"
+            app:layout_constraintTop_toTopOf="@id/tv_motion_push"
+            app:layout_constraintEnd_toEndOf="@id/tv_motion_push"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:gravity="center_vertical"
+            android:text="@string/voice_detection_push"
+            android:id="@+id/tv_sound_push"
+            app:layout_constraintTop_toBottomOf="@id/tv_motion_push"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"/>
+
+        <Switch
+            android:id="@+id/sw_sound_push"
+            app:layout_constraintBottom_toBottomOf="@id/tv_sound_push"
+            app:layout_constraintTop_toTopOf="@id/tv_sound_push"
+            app:layout_constraintEnd_toEndOf="@id/tv_sound_push"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+
+        <TextView
+            android:gravity="center_vertical"
+            android:text="@string/human_detection_push"
+            android:id="@+id/tv_human_push"
+            app:layout_constraintTop_toBottomOf="@id/tv_sound_push"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"/>
+
+        <Switch
+            android:id="@+id/sw_human_push"
+            app:layout_constraintBottom_toBottomOf="@id/tv_human_push"
+            app:layout_constraintTop_toTopOf="@id/tv_human_push"
+            app:layout_constraintEnd_toEndOf="@id/tv_human_push"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

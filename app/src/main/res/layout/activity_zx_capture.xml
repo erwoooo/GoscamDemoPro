@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <FrameLayout
+            android:id="@+id/fl_my_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="visible" />
+
+        <include
+            android:id="@+id/tool_bar"
+            layout="@layout/layout_toolbar" />
+
+        <View
+            android:layout_below="@id/tool_bar"
+            android:layout_width="match_parent"
+            android:visibility="gone"
+            android:layout_height="1px"
+            android:background="@color/white" />
+
+        <TextView
+            android:id="@+id/tv_notice_main"
+            android:layout_below="@id/tool_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="30px"
+            android:paddingEnd="30px"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:visibility="invisible"
+            android:text="@string/qr_notice_main" />
+
+        <TextView
+            android:id="@+id/tv_notice_sub"
+            android:layout_below="@id/tv_notice_main"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="5px"
+            android:paddingStart="30px"
+            android:paddingEnd="30px"
+            android:textColor="#C4C8C8"
+            android:textSize="14sp"
+            android:visibility="invisible"
+            android:text="@string/qr_notice_sub" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="150px">
+
+            <ImageView
+                android:id="@+id/iv_gallery"
+                android:layout_marginEnd="110px"
+                android:layout_width="80px"
+                android:layout_height="80px"
+                android:layout_gravity="center_vertical"
+                android:src="@mipmap/icon_picture" />
+
+            <ImageView
+                android:id="@+id/iv_led"
+                android:layout_marginStart="110px"
+                android:layout_width="40px"
+                android:layout_height="85px"
+                android:layout_gravity="center_vertical"
+                android:src="@mipmap/icon_light_1" />
+        </LinearLayout>
+    </RelativeLayout>
+</layout>

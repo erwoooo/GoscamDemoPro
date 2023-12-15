@@ -35,9 +35,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/iv_pic"
-                    android:textColor="#ff55affc"
                     android:layout_centerHorizontal="true"
-                    android:text="@string/add_connect" />
+                    android:text="@string/add_connect"
+                    android:textColor="#ff55affc" />
 
                 <TextView
                     android:id="@+id/tv_notice"
