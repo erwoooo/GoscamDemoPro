@@ -112,6 +112,246 @@
             android:layout_height="wrap_content"/>
 
 
+        <ScrollView
+            android:visibility="invisible"
+            android:id="@+id/scroll_push_plan"
+            app:layout_constraintTop_toBottomOf="@+id/sw_human_push"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:gravity="center"
+                    android:id="@+id/tv_push_title"
+                    android:layout_marginTop="20dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:text="@string/push_open_plan"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:layout_marginStart="30dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/not_turn_on"
+                    android:id="@+id/tv_close_plan"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_push_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"/>
+
+                <ImageView
+                    android:visibility="invisible"
+                    android:id="@+id/iv_close_plan"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_close_plan"
+                    app:layout_constraintTop_toTopOf="@id/tv_close_plan"
+                    app:layout_constraintEnd_toEndOf="@id/tv_close_plan"
+                    android:src="@mipmap/icon_add_mode_selected"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:layout_marginStart="30dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/daytime"
+                    android:id="@+id/tv_day_plan"
+                    app:layout_constraintTop_toBottomOf="@id/tv_close_plan"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"/>
+
+                <ImageView
+                    android:visibility="invisible"
+                    android:id="@+id/iv_day_plan"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_day_plan"
+                    app:layout_constraintTop_toTopOf="@id/tv_day_plan"
+                    app:layout_constraintEnd_toEndOf="@id/tv_day_plan"
+                    android:src="@mipmap/icon_add_mode_selected"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:layout_marginStart="30dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/night"
+                    android:id="@+id/tv_night_plan"
+                    app:layout_constraintTop_toBottomOf="@id/tv_day_plan"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"/>
+
+                <ImageView
+                    android:visibility="invisible"
+                    android:id="@+id/iv_night_plan"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_night_plan"
+                    app:layout_constraintTop_toTopOf="@id/tv_night_plan"
+                    app:layout_constraintEnd_toEndOf="@id/tv_night_plan"
+                    android:src="@mipmap/icon_add_mode_selected"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+
+                <TextView
+                    android:layout_marginStart="30dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/customize"
+                    android:id="@+id/tv_custom_plan"
+                    app:layout_constraintTop_toBottomOf="@id/tv_night_plan"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"/>
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constrain_custom"
+                    android:visibility="gone"
+                    android:layout_marginTop="20dp"
+                    app:layout_constraintTop_toBottomOf="@id/tv_custom_plan"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:inputType="number"
+                        android:id="@+id/et_start_h"
+                        android:text="0"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                    <TextView
+                        android:text=":"
+                        android:id="@+id/tv_h"
+                        app:layout_constraintStart_toEndOf="@id/et_start_h"
+                        app:layout_constraintBaseline_toBaselineOf="@id/et_start_h"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                    <EditText
+                        android:inputType="number"
+                        android:id="@+id/et_start_m"
+                        android:text="0"
+                        app:layout_constraintBaseline_toBaselineOf="@id/et_start_h"
+                        app:layout_constraintStart_toEndOf="@id/tv_h"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:layout_marginStart="20dp"
+                        android:text="~"
+                        app:layout_constraintStart_toEndOf="@id/et_start_m"
+                        app:layout_constraintBaseline_toBaselineOf="@id/et_start_h"
+                        android:id="@+id/tv_c"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <EditText
+                        android:layout_marginStart="20dp"
+                        android:text="0"
+                        app:layout_constraintStart_toEndOf="@id/tv_c"
+                        app:layout_constraintBaseline_toBaselineOf="@id/et_start_h"
+                        android:inputType="number"
+                        android:id="@+id/et_end_h"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                    <TextView
+                        android:text=":"
+                        android:id="@+id/tv_m"
+                        app:layout_constraintStart_toEndOf="@id/et_end_h"
+                        app:layout_constraintBaseline_toBaselineOf="@id/et_start_h"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                    <EditText
+                        android:text="0"
+                        app:layout_constraintStart_toEndOf="@id/tv_m"
+                        app:layout_constraintBaseline_toBaselineOf="@id/et_start_h"
+                        android:inputType="number"
+                        android:id="@+id/et_end_m"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:id="@+id/tv_repeat"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:text="repeat"
+                        android:layout_marginTop="10dp"
+                        app:layout_constraintTop_toBottomOf="@id/et_start_h"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <CheckBox
+                        android:text="@string/sun"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_repeat"
+                        android:id="@+id/checkbox_sun"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <CheckBox
+                        android:text="@string/mon"
+                        app:layout_constraintStart_toEndOf="@+id/checkbox_sun"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_repeat"
+                        android:id="@+id/checkbox_mon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <CheckBox
+                        android:text="@string/tue"
+                        app:layout_constraintStart_toEndOf="@+id/checkbox_mon"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_repeat"
+                        android:id="@+id/checkbox_tue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <CheckBox
+                        android:text="@string/wen"
+                        app:layout_constraintStart_toEndOf="@+id/checkbox_tue"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_repeat"
+                        android:id="@+id/checkbox_wed"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                    <CheckBox
+                        android:text="@string/thu"
+                        app:layout_constraintStart_toEndOf="@+id/checkbox_wed"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_repeat"
+                        android:id="@+id/checkbox_thu"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                    <CheckBox
+                        android:text="@string/fri"
+                        app:layout_constraintStart_toEndOf="@+id/checkbox_thu"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_repeat"
+                        android:id="@+id/checkbox_fri"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <CheckBox
+                        android:text="@string/sat"
+                        app:layout_constraintStart_toEndOf="@+id/checkbox_fri"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_repeat"
+                        android:id="@+id/checkbox_sat"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <Button
+                        android:text="@string/customize"
+                        android:id="@+id/btn_yes"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/checkbox_thu"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+        </ScrollView>
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

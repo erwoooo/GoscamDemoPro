@@ -11,60 +11,40 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <TextView
-            android:layout_marginTop="10dp"
-            android:gravity="center_vertical"
-            android:text="@string/full_color_night_vision"
-            android:id="@+id/tv_color"
-            app:layout_constraintStart_toStartOf="parent"
+
+
+        <RadioGroup
+            android:id="@+id/radio_night"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_width="match_parent"
-            android:layout_height="30dp"/>
+            android:layout_height="wrap_content">
 
-        <RadioButton
-            app:layout_constraintBottom_toBottomOf="@id/tv_color"
-            app:layout_constraintTop_toTopOf="@id/tv_color"
-            app:layout_constraintEnd_toEndOf="@id/tv_color"
-            android:id="@+id/radio_color"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            <RadioButton
+                android:text="@string/full_color_night_vision"
 
-        <TextView
-            android:layout_marginTop="10dp"
-            android:gravity="center_vertical"
-            android:text="@string/black_and_white_night_vision"
-            android:id="@+id/tv_black"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_color"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"/>
+                android:id="@+id/radio_color"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <RadioButton
+                android:text="@string/black_and_white_night_vision"
 
-        <RadioButton
-            app:layout_constraintBottom_toBottomOf="@id/tv_black"
-            app:layout_constraintTop_toTopOf="@id/tv_black"
-            app:layout_constraintEnd_toEndOf="@id/tv_black"
-            android:id="@+id/radio_black"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+                android:id="@+id/radio_black"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <RadioButton
+                android:text="@string/smart_night_vision"
+                android:id="@+id/radio_smart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </RadioGroup>
 
 
-        <TextView
-            android:layout_marginTop="10dp"
-            android:gravity="center_vertical"
-            android:text="@string/smart_night_vision"
-            android:id="@+id/tv_smart"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_black"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"/>
 
-        <RadioButton
-            app:layout_constraintBottom_toBottomOf="@id/tv_smart"
-            app:layout_constraintTop_toTopOf="@id/tv_smart"
-            app:layout_constraintEnd_toEndOf="@id/tv_smart"
-            android:id="@+id/radio_smart"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+
+
 
 
 

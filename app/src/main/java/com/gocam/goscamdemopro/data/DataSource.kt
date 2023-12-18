@@ -63,7 +63,7 @@ interface DataSource {
 
     suspend fun queryDeviceOnlineStatusSyn(deviceId: String):DevicePlatStatus?
 
-    suspend fun setPzt(deviceId: String, baseDeviceParam: BaseDeviceParam)
+    suspend fun setCmdReq(deviceId: String, baseDeviceParam: BaseDeviceParam)
 
     //check bind status
     suspend fun checkBindStatus(deviceId: String):BindStatus?

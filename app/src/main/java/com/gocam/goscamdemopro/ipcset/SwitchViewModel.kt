@@ -59,4 +59,10 @@ class SwitchViewModel: BaseViewModel<BaseModel>() {
 
         }
     }
+
+ fun setSwitchParam(baseParamArray: BaseParamArray,devId: String){
+     viewModelScope.launch {
+         RemoteDataSource.setDeviceParam(baseParamArray, deviceId = devId)
+     }
+ }
 }

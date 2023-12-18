@@ -16,4 +16,8 @@
     <color name="buttonPressedColor">#fbfbf8</color>
     <color name="color_ddcccccc">#DDCCCCCC</color>
     <color name="scan_corner_color">#55AFFC</color>
+    <color name="color_101010">#101010</color>
+    <color name="camera_plan_next_day">#D8F5EB</color>
+    <color name="color_ddeeeeee">#ddeeeeee</color>
+    <color name="color_1F1A17">#1F1A17</color>
 </resources>

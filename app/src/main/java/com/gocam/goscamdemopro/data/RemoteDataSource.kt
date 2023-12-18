@@ -675,7 +675,7 @@ object RemoteDataSource : DataSource {
     }
 
 
-    override suspend fun setPzt(deviceId: String, baseDeviceParam: BaseDeviceParam,) {
+    override suspend fun setCmdReq(deviceId: String, baseDeviceParam: BaseDeviceParam,) {
         val job = asyncTask {
             val cmdBody = CmdBody(
                 GApplication.app.user.token!!,

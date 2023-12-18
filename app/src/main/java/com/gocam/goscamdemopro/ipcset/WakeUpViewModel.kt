@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.gocam.goscamdemopro.base.BaseModel
 import com.gocam.goscamdemopro.base.BaseViewModel
 import com.gocam.goscamdemopro.data.RemoteDataSource
+import com.gocam.goscamdemopro.entity.BaseParamArray
 import com.gocam.goscamdemopro.entity.CameraPlanParam
 import com.gocam.goscamdemopro.entity.DevSwitchParam
 
@@ -51,9 +52,16 @@ class WakeUpViewModel: BaseViewModel<BaseModel>() {
                     }
                 }
             }
-
-
-
         }
     }
+
+
+
+    fun setSwitchParam(baseParamArray: BaseParamArray, devId: String){
+        viewModelScope.launch {
+            RemoteDataSource.setDeviceParam(baseParamArray, deviceId = devId)
+        }
+    }
+
+
 }

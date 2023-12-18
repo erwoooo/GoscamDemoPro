@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.gocam.goscamdemopro.base.BaseModel
 import com.gocam.goscamdemopro.base.BaseViewModel
 import com.gocam.goscamdemopro.data.RemoteDataSource
+import com.gocam.goscamdemopro.entity.BaseParamArray
 import com.gocam.goscamdemopro.entity.LowPowerParam
 import com.gocam.goscamdemopro.entity.MotionParam
 import com.gocam.goscamdemopro.entity.PushIntervalParam
@@ -37,6 +38,12 @@ class AlarmPushViewModel: BaseViewModel<BaseModel>() {
             }
 
 
+        }
+    }
+
+    fun setSwitchParam(baseParamArray: BaseParamArray, devId: String){
+        viewModelScope.launch {
+            RemoteDataSource.setDeviceParam(baseParamArray, deviceId = devId)
         }
     }
 }

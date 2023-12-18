@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/ll_WheelViewRooter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="bottom"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="30px"
+                android:paddingBottom="30px">
+
+                <TextView
+                    android:id="@+id/tv_cancel"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:maxLines="2"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:layout_marginStart="30px"
+                    android:text="@string/config_cancel"
+                    android:textSize="40px" />
+
+                <TextView
+                    
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:layout_gravity="center"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:maxLines="2"
+                    android:text="@string/custom_time_period"
+                    android:textSize="40px" />
+
+                <TextView
+                    android:id="@+id/tv_sure"
+                    
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:maxLines="2"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:layout_marginEnd="30px"
+                    android:text="@string/yes"
+                    android:textColor="#3CCF9B"
+                    android:textSize="40px" />
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30px"
+                android:layout_marginBottom="30px">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="30px"
+                    android:paddingEnd="30px"
+                    android:background="@color/white">
+
+                    <com.aigestudio.wheelpicker.WheelPicker
+                        android:id="@+id/wp_start_hh"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        app:wheel_atmospheric="true"
+                        app:wheel_curved="true"
+                        app:wheel_cyclic="true"
+                        app:wheel_indicator="true"
+                        app:wheel_indicator_color="@color/color_ddcccccc"
+                        app:wheel_indicator_size="2px"
+                        app:wheel_item_space="80px"
+                        app:wheel_item_text_size="20sp"
+                        app:wheel_selected_item_text_color="@color/color_101010"
+                        app:wheel_visible_item_count="5" />
+
+                    <com.aigestudio.wheelpicker.WheelPicker
+                        android:id="@+id/wp_start_mm"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        app:wheel_atmospheric="true"
+                        app:wheel_curved="true"
+                        app:wheel_cyclic="true"
+                        app:wheel_indicator="true"
+                        app:wheel_indicator_color="@color/color_ddcccccc"
+                        app:wheel_indicator_size="2px"
+                        app:wheel_item_space="40px"
+                        app:wheel_item_text_size="20sp"
+                        app:wheel_selected_item_text_color="@color/color_101010"
+                        app:wheel_visible_item_count="5" />
+
+                    <com.aigestudio.wheelpicker.WheelPicker
+                        android:id="@+id/wp_end_hh"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        app:wheel_atmospheric="true"
+                        app:wheel_curved="true"
+                        app:wheel_cyclic="true"
+                        app:wheel_indicator="true"
+                        app:wheel_indicator_color="@color/color_ddcccccc"
+                        app:wheel_indicator_size="2px"
+                        app:wheel_item_space="40px"
+                        app:wheel_item_text_size="20sp"
+                        app:wheel_selected_item_text_color="@color/color_101010"
+                        app:wheel_visible_item_count="5" />
+
+                    <com.aigestudio.wheelpicker.WheelPicker
+                        android:id="@+id/wp_end_mm"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        app:wheel_atmospheric="true"
+                        app:wheel_curved="true"
+                        app:wheel_cyclic="true"
+                        app:wheel_indicator="true"
+                        app:wheel_indicator_color="@color/color_ddcccccc"
+                        app:wheel_indicator_size="2px"
+                        app:wheel_item_space="40px"
+                        app:wheel_item_text_size="20sp"
+                        app:wheel_selected_item_text_color="@color/color_101010"
+                        app:wheel_visible_item_count="5" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_ci"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="200px"
+                    android:text="@string/next_day"
+                    android:background="@drawable/shape_coner_bg_a"
+                    android:textColor="@color/colorAccent"
+                    android:visibility="gone"
+                    android:layout_marginEnd="30px"
+                    android:textSize="12sp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:paddingBottom="10px"
+                        android:text=":"
+                        android:textSize="20sp"></TextView>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:paddingBottom="10px"
+                        android:text="~"
+                        android:textSize="20sp"></TextView>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:paddingBottom="10px"
+                        android:text=":"
+                        android:textSize="20sp"></TextView>
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="15px"
+                android:background="@color/color_ddeeeeee"/>
+
+            <LinearLayout
+                android:id="@+id/rl_repeat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30px"
+                    android:layout_marginTop="20px"
+                    android:layout_marginBottom="20px"
+                    android:text="@string/repeat"
+                    android:textColor="@color/color_1F1A17"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/tv_week_selected"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:layout_marginTop="20px"
+                    android:layout_marginEnd="30px"
+                    android:layout_marginBottom="20px"
+                    android:text="@string/execute_once" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/rl_day"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_weight="1">
+                    <TextView
+                        android:id="@+id/tv_sunday"
+                        android:layout_width="80px"
+                        android:layout_height="80px"
+                        android:textColor="@color/common_text_color_selector_1"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:padding="15px"
+                        android:background="@drawable/slt_w"
+                        android:autoSizeTextType="uniform"
+                        android:autoSizeMaxTextSize="12sp"
+                        android:autoSizeMinTextSize="0sp"
+                        android:autoSizeStepGranularity="1sp"
+                        android:text="@string/sun"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_weight="1">
+                    <TextView
+                        android:id="@+id/tv_monday"
+                        android:layout_width="80px"
+                        android:layout_height="80px"
+                        android:textColor="@color/common_text_color_selector_1"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:padding="15px"
+                        android:background="@drawable/slt_w"
+                        android:autoSizeTextType="uniform"
+                        android:autoSizeMaxTextSize="12sp"
+                        android:autoSizeMinTextSize="10sp"
+                        android:autoSizeStepGranularity="1sp"
+                        android:text="@string/mon"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_weight="1">
+                    <TextView
+                        android:id="@+id/tv_tuesday"
+                        android:layout_width="80px"
+                        android:layout_height="80px"
+                        android:textColor="@color/common_text_color_selector_1"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:padding="15px"
+                        android:background="@drawable/slt_w"
+                        android:autoSizeTextType="uniform"
+                        android:autoSizeMaxTextSize="12sp"
+                        android:autoSizeMinTextSize="10sp"
+                        android:autoSizeStepGranularity="1sp"
+                        android:text="@string/tue"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_weight="1">
+                    <TextView
+                        android:id="@+id/tv_wednesday"
+                        android:layout_width="80px"
+                        android:layout_height="80px"
+                        android:textColor="@color/common_text_color_selector_1"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:padding="15px"
+                        android:background="@drawable/slt_w"
+                        android:autoSizeTextType="uniform"
+                        android:autoSizeMaxTextSize="12sp"
+                        android:autoSizeMinTextSize="10sp"
+                        android:autoSizeStepGranularity="1sp"
+                        android:text="@string/wen"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_weight="1">
+                    <TextView
+                        android:id="@+id/tv_thursday"
+                        android:layout_width="80px"
+                        android:layout_height="80px"
+                        android:textColor="@color/common_text_color_selector_1"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:padding="15px"
+                        android:background="@drawable/slt_w"
+                        android:autoSizeTextType="uniform"
+                        android:autoSizeMaxTextSize="12sp"
+                        android:autoSizeMinTextSize="10sp"
+                        android:autoSizeStepGranularity="1sp"
+                        android:text="@string/thu"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_weight="1">
+                    <TextView
+                        android:id="@+id/tv_friday"
+                        android:layout_width="80px"
+                        android:layout_height="80px"
+                        android:textColor="@color/common_text_color_selector_1"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:padding="15px"
+                        android:background="@drawable/slt_w"
+                        android:autoSizeTextType="uniform"
+                        android:autoSizeMaxTextSize="12sp"
+                        android:autoSizeMinTextSize="10sp"
+                        android:autoSizeStepGranularity="1sp"
+                        android:text="@string/fri"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:layout_marginBottom="30px">
+                    <TextView
+                        android:id="@+id/tv_saturday"
+                        android:layout_width="80px"
+                        android:layout_height="80px"
+                        android:textColor="@color/common_text_color_selector_1"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:padding="15px"
+                        android:background="@drawable/slt_w"
+                        android:autoSizeTextType="uniform"
+                        android:autoSizeMaxTextSize="12sp"
+                        android:autoSizeMinTextSize="10sp"
+                        android:autoSizeStepGranularity="1sp"
+                        android:text="@string/sat"/>
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

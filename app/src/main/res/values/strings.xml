@@ -271,4 +271,20 @@
     <string name="qr_notice_main">Please use your mobile phone to scan the barcode on your device</string>
     <string name="qr_notice_sub">Please put the bar code into the scan box to scan automatically</string>
     <string name="notice_4g">Turn on the power, the indicator light flashes quickly to enter the configuration mode, Check the QR code on the side of the camera and scan it</string>
+    <string name="custom_time_period">custom time period</string>
+    <string name="next_day">next day</string>
+    <string name="repeat">repeat</string>
+    <string name="execute_once">execute once</string>
+    <string name="sun">sun</string>
+    <string name="mon">mon</string>
+    <string name="tue">tue</string>
+    <string name="wen">wed</string>
+    <string name="thu">thu</string>
+    <string name="fri">fri</string>
+    <string name="sat">sat</string>
+    <string name="_1min">1min</string>
+    <string name="_3min">3min</string>
+    <string name="_5min">5min</string>
+    <string name="_10min">10min</string>
+    <string name="_30min">30min</string>
 </resources>

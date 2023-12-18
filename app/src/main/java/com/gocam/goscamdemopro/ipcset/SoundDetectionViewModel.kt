@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.gocam.goscamdemopro.base.BaseModel
 import com.gocam.goscamdemopro.base.BaseViewModel
 import com.gocam.goscamdemopro.data.RemoteDataSource
+import com.gocam.goscamdemopro.entity.BaseParamArray
 import com.gocam.goscamdemopro.entity.PushIntervalParam
 import com.gocam.goscamdemopro.entity.SoundDetectionParam
 import com.google.gson.Gson
@@ -35,6 +36,12 @@ class SoundDetectionViewModel: BaseViewModel<BaseModel>() {
             }
 
 
+        }
+    }
+
+    fun setSwitchParam(baseParamArray: BaseParamArray, devId: String){
+        viewModelScope.launch {
+            RemoteDataSource.setDeviceParam(baseParamArray, deviceId = devId)
         }
     }
 

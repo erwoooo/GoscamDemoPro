@@ -36,9 +36,13 @@ data class CameraParam(
 ) : BaseDeviceParam()
 
 data class NightModeParam(
-    val un_auto: Int,
-    val un_day_night: Int
+    var un_auto: Int,
+    var un_day_night: Int
 ) : BaseDeviceParam()
+
+data class MirrorModeParam(
+    val mirror_mode:Int
+):BaseDeviceParam()
 
 data class LedSwitchParam(
     val device_led_switch: Int
@@ -70,22 +74,22 @@ data class MotionParam(
 ) : BaseDeviceParam()
 
 data class PushIntervalParam(
-    val interval:Int,
-    val motion_detection_switch:Int,
-    val sound_detection_switch:Int,
-    val cry_alarm_switch:Int,
-    val person_detection_switch:Int,
-    val temperature_alarm_switch:Int,
-    val pir_alarm_switch:Int,
-    val schedule:Schedule,
-    val cry_push_state:Int,
+    var interval:Int,
+    var motion_detection_switch:Int,
+    var sound_detection_switch:Int,
+    var cry_alarm_switch:Int,
+    var person_detection_switch:Int,
+    var temperature_alarm_switch:Int,
+    var pir_alarm_switch:Int,
+    var schedule:Schedule,
+    var cry_push_state:Int,
 ):BaseDeviceParam()
 
 data class Schedule(
-    val enable:Int,
-    val repeat:Int,
-    val start_time:Int,
-    val end_time:Int
+    var enable:Int,
+    var repeat:Int,
+    var start_time:Int,
+    var end_time:Int
 )
 
 data class ResetPlanParam(
@@ -172,3 +176,8 @@ data class BindStatus(
     val deviceID:String,
     val bindStatus:Int
 )
+
+data class RebootParam(
+    val CMDType: Int,
+    val channel:Int
+):BaseDeviceParam()

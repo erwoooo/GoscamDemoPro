@@ -91,7 +91,7 @@ class PlayViewModel : BaseViewModel<BaseModel>() {
         viewModelScope.launch {
             val pztCmdParam = PztCmdParam(direction,
                 UlifeResultParser.EventType.IOTYPE_USER_IPCAM_PTZ_COMMAND,0)
-            RemoteDataSource.setPzt(deviceId,pztCmdParam)
+            RemoteDataSource.setCmdReq(deviceId,pztCmdParam)
         }
     }
 
