@@ -1,6 +1,7 @@
 package com.gocam.goscamdemopro.base
 
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -30,6 +31,9 @@ abstract class BaseBindActivity<VB : ViewDataBinding> : AppCompatActivity() {
         mBinding?.unbind()
     }
 
+    fun backClick(v:View){
+        finish()
+    }
 
     open fun showLoading() {
         LoadingDialog.disDialog()

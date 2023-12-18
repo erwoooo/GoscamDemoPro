@@ -1,9 +1,11 @@
 package com.gocam.goscamdemopro.ipcset
 
 import android.os.Bundle
+import android.view.View
 import com.gocam.goscamdemopro.R
 import com.gocam.goscamdemopro.base.BaseActivity
 import com.gocam.goscamdemopro.databinding.ActivityRebootLayoutBinding
+import com.gos.platform.device.contact.OnOff
 
 /**
  * @Author cw
@@ -15,6 +17,18 @@ class RebootTimeActivity: BaseActivity<ActivityRebootLayoutBinding,RebootTimeVie
     }
 
     override fun onCreateData(bundle: Bundle?) {
-        TODO("Not yet implemented")
+        val devId = intent.getStringExtra("dev") as String
+
+        mViewModel.getDevResetData(devId)
+
+        mViewModel.apply {
+            mResetPlanParam.observe(this@RebootTimeActivity){
+                mBinding?.ivCloseReboot?.visibility = if (it.enable == OnOff.On){
+                    View.VISIBLE
+                }else{
+                    View.INVISIBLE
+                }
+            }
+        }
     }
 }

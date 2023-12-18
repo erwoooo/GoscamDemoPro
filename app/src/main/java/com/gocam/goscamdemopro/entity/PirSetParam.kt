@@ -69,7 +69,59 @@ data class MotionParam(
     val un_width: Int
 ) : BaseDeviceParam()
 
+data class PushIntervalParam(
+    val interval:Int,
+    val motion_detection_switch:Int,
+    val sound_detection_switch:Int,
+    val cry_alarm_switch:Int,
+    val person_detection_switch:Int,
+    val temperature_alarm_switch:Int,
+    val pir_alarm_switch:Int,
+    val schedule:Schedule,
+    val cry_push_state:Int,
+):BaseDeviceParam()
 
+data class Schedule(
+    val enable:Int,
+    val repeat:Int,
+    val start_time:Int,
+    val end_time:Int
+)
+
+data class ResetPlanParam(
+    val enable:Int,
+    val repeat:Int,
+    val start_time:Int,
+):BaseDeviceParam()
+
+data class DevSwitchParam(
+    val device_switch:Int
+):BaseDeviceParam()
+
+data class CameraPlanParam(
+    val enable:Int,
+    val repeat:Int,
+    val start_time:Int,
+    val end_time:Int,
+):BaseDeviceParam()
+
+data class TfRecordParam(
+    val manual_record_switch:Int
+):BaseDeviceParam()
+
+data class ObjTrackParam(
+    val un_switch: Int
+):BaseDeviceParam()
+
+
+data class SoundDetectionParam(
+    val un_switch:Int,
+    val un_sensitivity:Int
+):BaseDeviceParam()
+
+data class VolumeSetParam(
+    val volume:Int
+): BaseDeviceParam()
 data class FirmWareParam(
     val CGSId: String,
     val Desc: String,

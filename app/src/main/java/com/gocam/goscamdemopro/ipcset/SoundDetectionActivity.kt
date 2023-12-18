@@ -4,6 +4,8 @@ import android.os.Bundle
 import com.gocam.goscamdemopro.R
 import com.gocam.goscamdemopro.base.BaseActivity
 import com.gocam.goscamdemopro.databinding.ActivitySoundDetectionLayoutBinding
+import com.gos.platform.device.contact.AudioDetectLevel
+import com.gos.platform.device.contact.OnOff
 
 /**
  * @Author cw
@@ -15,6 +17,25 @@ class SoundDetectionActivity: BaseActivity<ActivitySoundDetectionLayoutBinding,S
     }
 
     override fun onCreateData(bundle: Bundle?) {
-        TODO("Not yet implemented")
+        val devId = intent.getStringExtra("dev") as String
+        mViewModel.getSoundDetectionData(devId)
+
+        mViewModel.apply {
+            mSoundDetectionParam.observe(this@SoundDetectionActivity){
+                mBinding?.swSound?.isChecked = it.un_switch == OnOff.On
+                when(it.un_sensitivity){
+                    AudioDetectLevel.LOW->{
+                        mBinding?.seekSoundSensor?.progress = 0
+                    }
+                    AudioDetectLevel.MIDDLE->{
+                        mBinding?.seekSoundSensor?.progress = 1
+                    }
+                    AudioDetectLevel.HEIGH->{
+                        mBinding?.seekSoundSensor?.progress = 2
+                    }
+                }
+
+            }
+        }
     }
 }

@@ -5,5 +5,6 @@ data class GetDeviceParam(
     val DeviceId: String,
     val SessionId: String,
     val UserName: String,
+    val AccessToken: String,
     val UserType: Int
 )

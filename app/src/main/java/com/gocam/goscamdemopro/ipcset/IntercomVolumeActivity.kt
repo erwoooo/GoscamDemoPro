@@ -16,6 +16,15 @@ class IntercomVolumeActivity: BaseActivity<ActivityIntercomLayoutBinding,Interco
     }
 
     override fun onCreateData(bundle: Bundle?) {
-        TODO("Not yet implemented")
+        val devId = intent.getStringExtra("dev") as String
+
+        mViewModel.getIntercomData(devId)
+
+        mViewModel.apply {
+            mVolumeSetParam.observe(this@IntercomVolumeActivity){
+                mBinding?.seekIpcVolume?.progress = it.volume
+                mBinding?.tvProgress?.text = "${it.volume}"
+            }
+        }
     }
 }

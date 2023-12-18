@@ -11,6 +11,7 @@
         android:layout_height="match_parent">
         <include layout="@layout/layout_toolbar" android:id="@+id/title_bar"/>
         <TextView
+            android:visibility="gone"
             android:gravity="center_vertical"
             android:text="@string/message_notification"
             android:id="@+id/tv_push"
@@ -19,6 +20,7 @@
             android:layout_height="80dp"/>
 
         <Switch
+            android:visibility="gone"
             android:id="@+id/sw_push"
             app:layout_constraintBottom_toBottomOf="@id/tv_push"
             app:layout_constraintTop_toTopOf="@id/tv_push"

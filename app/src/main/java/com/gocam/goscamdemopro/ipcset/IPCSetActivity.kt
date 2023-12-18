@@ -77,7 +77,9 @@ class IPCSetActivity: BaseActivity<ActivityIpcLayoutBinding,IPCViewModel>(),
             }
 
             btnAlarmPush.setOnClickListener {
-
+                val intent =Intent(this@IPCSetActivity,AlarmPushActivity::class.java)
+                intent.putExtra("dev",mDevice.devId)
+                this@IPCSetActivity.startActivity(intent)
             }
 
             btnVideoRotate.setOnClickListener {
@@ -86,6 +88,30 @@ class IPCSetActivity: BaseActivity<ActivityIpcLayoutBinding,IPCViewModel>(),
 
             btnNightVision.setOnClickListener {
                 smartNightVersionDialog()
+            }
+
+            btnSpeakVolume.setOnClickListener {
+                val intent =Intent(this@IPCSetActivity,IntercomVolumeActivity::class.java)
+                intent.putExtra("dev",mDevice.devId)
+                this@IPCSetActivity.startActivity(intent)
+            }
+
+            btnRestartPlan.setOnClickListener {
+                val intent =Intent(this@IPCSetActivity,RebootTimeActivity::class.java)
+                intent.putExtra("dev",mDevice.devId)
+                this@IPCSetActivity.startActivity(intent)
+            }
+
+            btnSoundDetection.setOnClickListener {
+                val intent =Intent(this@IPCSetActivity,SoundDetectionActivity::class.java)
+                intent.putExtra("dev",mDevice.devId)
+                this@IPCSetActivity.startActivity(intent)
+            }
+
+            btnWakePlan.setOnClickListener {
+                val intent =Intent(this@IPCSetActivity,WakeUpActivity::class.java)
+                intent.putExtra("dev",mDevice.devId)
+                this@IPCSetActivity.startActivity(intent)
             }
 
         }

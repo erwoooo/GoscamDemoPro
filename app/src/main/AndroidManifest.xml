@@ -135,6 +135,11 @@
         <activity android:name=".set.DoorbellVolumeActivity"/>
         <activity android:name=".ipcset.IPCSetActivity"/>
         <activity android:name=".ipcset.SwitchActivity"/>
+        <activity android:name=".ipcset.AlarmPushActivity"/>
+        <activity android:name=".ipcset.IntercomVolumeActivity"/>
+        <activity android:name=".ipcset.RebootTimeActivity"/>
+        <activity android:name=".ipcset.SoundDetectionActivity"/>
+        <activity android:name=".ipcset.WakeUpActivity"/>
         <activity android:name=".play.PlayEchoActivity"
             android:screenOrientation="portrait"/>
         <activity android:name=".play.ipc.IpcPlayEchoActivity"
