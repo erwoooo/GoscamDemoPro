@@ -206,3 +206,19 @@ data class Light(
     var un_switch: Int,
     var un_duration:Int,
 )
+
+data class SmartPersonParam(
+    var un_switch:Int,
+    var un_sensitivity:Int,
+    var permcnt:Int,
+    var perms:List<Perms>
+):BaseDeviceParam()
+
+data class Perms(
+    var pcnt:Int,
+    var rect:List<Rect>
+)
+data class Rect(
+    var x:Int,
+    var y:Int,
+)

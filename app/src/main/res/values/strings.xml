@@ -301,4 +301,5 @@
     <string name="_1_times">1 times</string>
     <string name="_3_times">3 times</string>
     <string name="_5_times">5 times</string>
+    <string name="humanoid_detection">Humanoid detection</string>
 </resources>

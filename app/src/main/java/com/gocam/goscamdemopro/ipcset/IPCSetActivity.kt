@@ -16,6 +16,7 @@ import com.gocam.goscamdemopro.base.BaseBindActivity
 import com.gocam.goscamdemopro.cloud.data.entity.EventType
 import com.gocam.goscamdemopro.databinding.ActivityIpcLayoutBinding
 import com.gocam.goscamdemopro.entity.*
+import com.gocam.goscamdemopro.set.MotionDetectionActivity
 import com.gocam.goscamdemopro.set.TimeVerifyActivity
 import com.gocam.goscamdemopro.utils.DeviceManager
 import com.gos.platform.api.UlifeResultParser.EventType.BYPASS_RESET_DEV_REQ
@@ -125,6 +126,17 @@ class IPCSetActivity: BaseActivity<ActivityIpcLayoutBinding,IPCViewModel>(),
 
             btnSoundLight.setOnClickListener {
                 val intent =Intent(this@IPCSetActivity,WarnSoundLightActivity::class.java)
+                intent.putExtra("dev",mDevice.devId)
+                this@IPCSetActivity.startActivity(intent)
+            }
+
+            btnMoveMotion.setOnClickListener {
+                val intent =Intent(this@IPCSetActivity,MotionDetectionActivity::class.java)
+                intent.putExtra("dev",mDevice.devId)
+                this@IPCSetActivity.startActivity(intent)
+            }
+            btnSmartPerson.setOnClickListener {
+                val intent =Intent(this@IPCSetActivity,SmartPersonActivity::class.java)
                 intent.putExtra("dev",mDevice.devId)
                 this@IPCSetActivity.startActivity(intent)
             }

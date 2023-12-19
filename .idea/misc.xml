@@ -50,10 +50,13 @@
         <entry key="..\:/AndroidDemo/GoscamDemoPro/app/src/main/res/layout/activity_ipc_layout.xml" value="0.3578125" />
         <entry key="..\:/AndroidDemo/GoscamDemoPro/app/src/main/res/layout/activity_ipc_play_video.xml" value="0.24739583333333334" />
         <entry key="..\:/AndroidDemo/GoscamDemoPro/app/src/main/res/layout/activity_login.xml" value="0.16304347826086957" />
+        <entry key="..\:/AndroidDemo/GoscamDemoPro/app/src/main/res/layout/activity_motion_detection.xml" value="0.21041666666666667" />
+        <entry key="..\:/AndroidDemo/GoscamDemoPro/app/src/main/res/layout/activity_motion_layout.xml" value="0.21041666666666667" />
         <entry key="..\:/AndroidDemo/GoscamDemoPro/app/src/main/res/layout/activity_play_video.xml" value="0.284375" />
         <entry key="..\:/AndroidDemo/GoscamDemoPro/app/src/main/res/layout/activity_reboot_layout.xml" value="0.3578125" />
         <entry key="..\:/AndroidDemo/GoscamDemoPro/app/src/main/res/layout/activity_scan_qr_layout.xml" value="0.3578125" />
         <entry key="..\:/AndroidDemo/GoscamDemoPro/app/src/main/res/layout/activity_setting.xml" value="0.3233695652173913" />
+        <entry key="..\:/AndroidDemo/GoscamDemoPro/app/src/main/res/layout/activity_smart_person_layout.xml" value="0.2864583333333333" />
         <entry key="..\:/AndroidDemo/GoscamDemoPro/app/src/main/res/layout/activity_sound_detection_layout.xml" value="0.24739583333333334" />
         <entry key="..\:/AndroidDemo/GoscamDemoPro/app/src/main/res/layout/activity_switch_layout.xml" value="0.3578125" />
         <entry key="..\:/AndroidDemo/GoscamDemoPro/app/src/main/res/layout/activity_thumb.xml" value="0.3078125" />

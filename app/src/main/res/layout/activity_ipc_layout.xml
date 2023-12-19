@@ -102,6 +102,12 @@
                     />
 
                 <Button
+                    android:id="@+id/btn_smart_person"
+                    style="@style/style_setting_item"
+                    android:text="@string/humanoid_detection"
+                    />
+
+                <Button
                     android:id="@+id/btn_reboot"
                     style="@style/style_setting_item"
                     android:text="@string/reboot_the_device"

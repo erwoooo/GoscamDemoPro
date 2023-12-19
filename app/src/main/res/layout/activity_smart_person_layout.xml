@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include layout="@layout/layout_toolbar" android:id="@+id/title_bar"/>
+
+        <TextView
+            android:text="@string/humanoid_detection"
+            android:gravity="center_vertical"
+            android:id="@+id/tv_person_det"
+            app:layout_constraintTop_toBottomOf="@id/title_bar"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"/>
+
+        <Switch
+            app:layout_constraintBottom_toBottomOf="@id/tv_person_det"
+            app:layout_constraintTop_toTopOf="@id/tv_person_det"
+            app:layout_constraintEnd_toEndOf="@id/tv_person_det"
+            android:id="@+id/sw_person_det"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <SeekBar
+            android:id="@+id/seek_person_level"
+            android:layout_marginEnd="30dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="20dp"
+            android:max="4"
+            app:layout_constraintTop_toBottomOf="@id/tv_person_det"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"/>
+        <TextView
+            android:gravity="center"
+            app:layout_constraintTop_toBottomOf="@id/seek_person_level"
+            android:id="@+id/tv_person_level"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
