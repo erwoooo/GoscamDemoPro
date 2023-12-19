@@ -123,6 +123,12 @@ class IPCSetActivity: BaseActivity<ActivityIpcLayoutBinding,IPCViewModel>(),
                 this@IPCSetActivity.startActivity(intent)
             }
 
+            btnSoundLight.setOnClickListener {
+                val intent =Intent(this@IPCSetActivity,WarnSoundLightActivity::class.java)
+                intent.putExtra("dev",mDevice.devId)
+                this@IPCSetActivity.startActivity(intent)
+            }
+
         }
 
 

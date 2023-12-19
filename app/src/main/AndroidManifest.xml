@@ -140,6 +140,7 @@
         <activity android:name=".ipcset.RebootTimeActivity"/>
         <activity android:name=".ipcset.SoundDetectionActivity"/>
         <activity android:name=".ipcset.WakeUpActivity"/>
+        <activity android:name=".ipcset.WarnSoundLightActivity"/>
         <activity android:name=".play.PlayEchoActivity"
             android:screenOrientation="portrait"/>
         <activity android:name=".play.ipc.IpcPlayEchoActivity"

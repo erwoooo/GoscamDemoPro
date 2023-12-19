@@ -181,3 +181,28 @@ data class RebootParam(
     val CMDType: Int,
     val channel:Int
 ):BaseDeviceParam()
+
+data class WarnSettingParam(
+    var un_switch:Int,
+    val schedule:WarnSchedule,
+    val audio:Audio,
+    val light: Light
+):BaseDeviceParam()
+
+data class WarnSchedule(
+    var un_switch: Int,
+    var un_repeat:Int,
+    var start_time:Int,
+    var end_time:Int,
+)
+data class Audio(
+    var un_switch: Int,
+    var un_times: Int,
+    var un_volume: Int,
+    val un_type: Int,
+    val url: String
+)
+data class Light(
+    var un_switch: Int,
+    var un_duration:Int,
+)

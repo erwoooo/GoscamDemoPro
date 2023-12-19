@@ -287,4 +287,18 @@
     <string name="_5min">5min</string>
     <string name="_10min">10min</string>
     <string name="_30min">30min</string>
+    <string name="alert_function">Alert function</string>
+    <string name="alert_time_period">Alert time period</string>
+    <string name="sound_alert">sound alert</string>
+    <string name="_times">times</string>
+    <string name="volume">volume</string>
+    <string name="play_content">Play content</string>
+    <string name="light_alert">light alert</string>
+    <string name="flash_duration">Flash duration</string>
+    <string name="_10s">10s</string>
+    <string name="_30s">30s</string>
+    <string name="_60s">60s</string>
+    <string name="_1_times">1 times</string>
+    <string name="_3_times">3 times</string>
+    <string name="_5_times">5 times</string>
 </resources>
