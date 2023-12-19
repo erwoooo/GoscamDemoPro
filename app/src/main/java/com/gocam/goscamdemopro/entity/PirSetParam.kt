@@ -199,8 +199,8 @@ data class Audio(
     var un_switch: Int,
     var un_times: Int,
     var un_volume: Int,
-    val un_type: Int,
-    val url: String
+    var un_type: Int,
+    var url: String
 )
 data class Light(
     var un_switch: Int,

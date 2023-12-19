@@ -727,5 +727,31 @@ object RemoteDataSource : DataSource {
     }
 
 
+    override suspend fun getVoicePlay(deviceId: String): VoicePlayParam? {
+        val job = asyncTask {
+            val map = mapOf(
+                Pair("DeviceId", deviceId),
+                Pair("UserType", GApplication.app.userType),
+                Pair("SessionId", GApplication.app.user.sessionId),
+                Pair("AccessToken", gsoSession.accessToken),
+                Pair("UserName",   GApplication.app.user.userName!!),
+            )
+            val nMap = mapOf(
+                Pair("Body", map),
+                Pair("MessageType", GetVoiceInfoListRequest)
+            )
+            val json = Gson().toJson(nMap).toRequestBody()
+            val response = RetrofitClient.apiService.getPlayVoice(json)
+            Log.e(TAG, "checkBindStatus: $response")
+            return@asyncTask response.body()
+        }
+        val result = job.await()
+
+        return if (result is BaseResponse<VoicePlayParam?>){
+            result.Body
+        }else{
+            null
+        }
+    }
 
 }

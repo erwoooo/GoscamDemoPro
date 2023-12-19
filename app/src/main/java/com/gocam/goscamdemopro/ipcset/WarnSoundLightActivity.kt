@@ -8,10 +8,14 @@ import android.view.ViewGroup
 import android.widget.CompoundButton
 import android.widget.RadioGroup
 import android.widget.SeekBar
+import android.widget.TextView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.gocam.goscamdemopro.R
 import com.gocam.goscamdemopro.base.BaseActivity
 import com.gocam.goscamdemopro.databinding.ActivityWarnSetLayoutBinding
 import com.gocam.goscamdemopro.entity.DevParamArray
+import com.gocam.goscamdemopro.entity.Param
 import com.gos.platform.api.devparam.DevParam
 import com.gos.platform.device.contact.OnOff
 
@@ -22,6 +26,7 @@ import com.gos.platform.device.contact.OnOff
 class WarnSoundLightActivity: BaseActivity<ActivityWarnSetLayoutBinding,WarnSoundLightViewModel>(),CompoundButton.OnCheckedChangeListener,
     SeekBar.OnSeekBarChangeListener,RadioGroup.OnCheckedChangeListener {
     lateinit var deviceId:String
+    val voicePlayList = arrayListOf<Param>()
     override fun getLayoutId(): Int {
         return R.layout.activity_warn_set_layout
     }
@@ -29,6 +34,7 @@ class WarnSoundLightActivity: BaseActivity<ActivityWarnSetLayoutBinding,WarnSoun
     override fun onCreateData(bundle: Bundle?) {
         deviceId = intent.getStringExtra("dev") as String
         mViewModel.getWarnData(deviceId)
+        mViewModel.getPlayContent(deviceId)
         mViewModel.apply {
             mWarnSettingParam.observe(this@WarnSoundLightActivity){
                 mBinding?.apply {
@@ -80,6 +86,7 @@ class WarnSoundLightActivity: BaseActivity<ActivityWarnSetLayoutBinding,WarnSoun
                         mBinding?.tvSoundWarnTimesContent?.text = "${audio.un_times}"
                         mBinding?.seekSoundWarn?.progress = audio.un_volume
                         mBinding?.tvSoundWarnVolumeValue?.text = "${audio.un_volume}"
+                        mBinding?.tvSoundWarnContentValue?.text = "${audio.un_type}"
                     }
 
                 }
@@ -91,9 +98,19 @@ class WarnSoundLightActivity: BaseActivity<ActivityWarnSetLayoutBinding,WarnSoun
                     }
                 }
             }
+
+            mVoicePlayParam.observe(this@WarnSoundLightActivity){
+                it.VoiceList?.let { it1 ->
+                    voicePlayList.clear()
+                    voicePlayList.addAll(it1) }
+            }
+
         }
 
         mBinding?.apply {
+            tvSoundWarnContent.setOnClickListener {
+                playContentDialog()
+            }
             seekSoundWarn.setOnSeekBarChangeListener(this@WarnSoundLightActivity)
             tvSoundWarnTimes.setOnClickListener {
                 soundAlarmDialog()
@@ -293,6 +310,94 @@ class WarnSoundLightActivity: BaseActivity<ActivityWarnSetLayoutBinding,WarnSoun
             mViewModel.setSwitchParam(devParamArray,deviceId)
         }
     }
+
+    var playContentDialog:Dialog?= null
+    private fun playContentDialog(){
+        if (playContentDialog == null){
+            playContentDialog = Dialog(this,R.style.DialogNoBackground)
+            val playContentView = LayoutInflater.from(this).inflate(R.layout.dialog_play_content_layout,null,false)
+            playContentDialog!!.setContentView(playContentView)
+            val rvPlayContent:RecyclerView = playContentView.findViewById(R.id.rv_play_content)
+            val playAdapter = PlayContentAdapter(mViewModel.mVoicePlayParam.value?.VoiceList!!)
+            playAdapter.setPlayListener(playContentListener)
+            rvPlayContent.apply {
+                layoutManager = LinearLayoutManager(this@WarnSoundLightActivity)
+                adapter = playAdapter
+            }
+            val param:ViewGroup.LayoutParams = playContentView.layoutParams
+            param.width = 1080
+
+        }
+        playContentDialog!!.show()
+
+    }
+
+    private val playContentListener = object :OnPlayContentListener{
+        override fun onItemClick(param: Param) {
+            mViewModel.mWarnSettingParam.value?.let {
+                it.audio.un_type = param.VoicePlayId
+                it.audio.url = param.VoiceUrl
+
+                val devParamArray = DevParamArray(
+                    DevParam.DevParamCmdType.WarnSetting,
+                    it
+                )
+                mViewModel.setSwitchParam(devParamArray,deviceId)
+
+            }
+            mBinding?.tvSoundWarnContentValue?.text = "${param.VoicePlayId}"
+            playContentDialog!!.dismiss()
+
+
+        }
+
+    }
+
+
+    inner class PlayContentAdapter(list: List<Param>):RecyclerView.Adapter<PlayViewHolder>(){
+        var onPlayContentListener:OnPlayContentListener?=null
+        val arrayParam = list
+
+        fun setPlayListener(onContentListener: OnPlayContentListener){
+            onPlayContentListener = onContentListener
+        }
+
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlayViewHolder {
+            val view:View = LayoutInflater.from(parent.context).inflate(R.layout.item_play_content_layout,null,false)
+            val playViewHolder = PlayViewHolder(view)
+             playViewHolder.tvContent.setOnClickListener {
+                onPlayContentListener?.onItemClick(playViewHolder.itemView.tag as Param)
+            }
+
+            return playViewHolder
+        }
+
+        override fun onBindViewHolder(holder: PlayViewHolder, position: Int) {
+            holder.tvContent.text = "id:${arrayParam[position].VoicePlayId}  des:${arrayParam[position].Describe}"
+            holder.itemView.tag = arrayParam[position]
+        }
+
+        override fun getItemCount(): Int {
+            return arrayParam.size
+        }
+
+    }
+
+    interface OnPlayContentListener{
+        fun onItemClick(param: Param)
+    }
+
+    inner class PlayViewHolder(view:View):RecyclerView.ViewHolder(view){
+        var tvContent:TextView
+        init {
+            tvContent = view.findViewById(R.id.tv_content)
+        }
+
+
+
+    }
+
+
 
     var soundAlarmDialog:Dialog?=null
     private fun soundAlarmDialog(){

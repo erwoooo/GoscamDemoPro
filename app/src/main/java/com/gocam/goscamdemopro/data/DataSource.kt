@@ -68,4 +68,5 @@ interface DataSource {
     //check bind status
     suspend fun checkBindStatus(deviceId: String):BindStatus?
 
+    suspend fun getVoicePlay(deviceId: String):VoicePlayParam?
 }

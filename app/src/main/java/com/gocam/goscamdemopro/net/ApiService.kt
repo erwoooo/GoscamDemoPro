@@ -75,4 +75,7 @@ interface ApiService {
 
     @POST(".")
     suspend fun checkBindStatus(@Body body: RequestBody):Response<BaseResponse<BindStatus?>>
+
+    @POST(".")
+    suspend fun getPlayVoice(@Body body: RequestBody):Response<BaseResponse<VoicePlayParam?>>
 }
