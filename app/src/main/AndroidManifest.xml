@@ -142,7 +142,8 @@
         <activity android:name=".ipcset.WakeUpActivity"/>
         <activity android:name=".ipcset.WarnSoundLightActivity"/>
         <activity android:name=".ipcset.SmartPersonActivity"/>
-
+        <activity android:name=".ble.BleScanActivity"/>
+        <activity android:name=".n12.N12SetActivity"/>
         <activity android:name=".play.PlayEchoActivity"
             android:screenOrientation="portrait"/>
         <activity android:name=".play.ipc.IpcPlayEchoActivity"

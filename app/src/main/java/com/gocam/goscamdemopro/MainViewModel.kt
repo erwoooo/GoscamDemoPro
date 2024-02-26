@@ -1,5 +1,6 @@
 package com.gocam.goscamdemopro
 
+import android.util.Log
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -27,8 +28,14 @@ class MainViewModel : BaseViewModel<BaseModel>() {
         viewModelScope.launch {
             val deviceEntity =
                 RemoteDataSource.getDeviceList(GApplication.app.user.userName!!)
+            Log.e(TAG, "getDeviceList: deviceEntity= $deviceEntity")
             DeviceManager.getInstance().saveDevice(deviceEntity)
-            deviceResult.postValue(deviceEntity)
+
+            deviceEntity?.let {
+                Log.e(TAG, "getDeviceList: $it")
+                deviceResult.postValue(it)
+            }
+
         }
     }
 

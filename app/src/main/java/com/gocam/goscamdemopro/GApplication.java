@@ -51,7 +51,7 @@ public class GApplication extends Application implements OnPlatformEventCallback
 
         Goscam.init(this, PlatformType.ULIFE, transportProType, 0, userType, true, 2, null);
         ConfigManager.IS_ENCRYPT = true;//采用加密
-        ConfigManager.serverType = ConfigManager.EN_SERVER;
+        ConfigManager.serverType = ConfigManager.CN_SERVER;
 
         GosSession.getSession().addOnPlatformEventCallback(this);
         user = new User();

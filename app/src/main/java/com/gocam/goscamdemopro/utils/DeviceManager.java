@@ -38,12 +38,13 @@ public class DeviceManager {
 
     public synchronized List<Device> saveDevice(List<Device> list) {
         //过滤出来已经存在的设备
+        List<Device> tempList = new ArrayList<>(list);
         Iterator<Device> iterator1 = deviceList.iterator();
         while (iterator1.hasNext()) {
             Device next = iterator1.next();
             boolean isExist = false;
             Device dev = null;
-            for (Device u : list) {
+            for (Device u : tempList) {
                 if (TextUtils.equals(u.devId, next.devId)) {//已经有了， 更新信息
                     next.devName = u.devName;
                     next.isOnline = u.isOnline;
@@ -62,10 +63,10 @@ public class DeviceManager {
                 next.release();
                 iterator1.remove();
             } else {//存在
-                list.remove(dev);
+                tempList.remove(dev);
             }
         }
-        deviceList.addAll(list);
+        deviceList.addAll(tempList);
         for (Device device : deviceList) {
             device.getConnection().setPlatDevOnline(device.isPlatDevOnline());
             device.getConnection().connect(0);

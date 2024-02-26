@@ -21,6 +21,7 @@ import com.gocam.goscamdemopro.cloud.CloudDayActivity
 import com.gocam.goscamdemopro.databinding.ActivityMainBinding
 import com.gocam.goscamdemopro.entity.Device
 import com.gocam.goscamdemopro.ipcset.IPCSetActivity
+import com.gocam.goscamdemopro.n12.N12SetActivity
 import com.gocam.goscamdemopro.net.RetrofitClient
 import com.gocam.goscamdemopro.play.PlayActivity
 import com.gocam.goscamdemopro.play.PlayEchoActivity
@@ -46,6 +47,8 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(),
         recycleDev.adapter = devAdapter
         mViewModel.apply {
             mDeviceList.observe(this@MainActivity) {
+                mBinding?.swipeRefresh?.isRefreshing = false
+                Log.e(TAG, "onCreateData: $it")
                 if (it != null) {
                     devAdapter?.setDevices(it as ArrayList<Device>)
                 }
@@ -124,8 +127,9 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(),
                                 device.devId
                             )
                         }
-                        DeviceType.IPC->{
-                            IpcPlayEchoActivity.startActivity(
+                        DeviceType.IPC,DeviceType.GLO_NIGHT->{
+
+                            N12SetActivity.startActivity(
                                 vh.itemView.context,
                                 device.devId
                             )
@@ -152,10 +156,13 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(),
                             intent.putExtra("dev", device.devId)
                             vh.itemView.context.startActivity(intent)
                         }
-                        DeviceType.IPC->{
-                            val intent = Intent(vh.itemView.context, IPCSetActivity::class.java)
+                        DeviceType.IPC,DeviceType.GLO_NIGHT->{
+                            val intent = Intent(vh.itemView.context, SettingActivity::class.java)
                             intent.putExtra("dev", device.devId)
                             vh.itemView.context.startActivity(intent)
+//                            val intent = Intent(vh.itemView.context, IPCSetActivity::class.java)
+//                            intent.putExtra("dev", device.devId)
+//                            vh.itemView.context.startActivity(intent)
                         }
                     }
                 }

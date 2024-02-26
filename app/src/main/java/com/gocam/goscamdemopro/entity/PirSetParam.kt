@@ -222,3 +222,44 @@ data class Rect(
     var x:Int,
     var y:Int,
 )
+
+data class NightStatusParma(
+    val comb_id:Int,
+    val schedule_id:Int,
+    val schedule_mode:Int,
+    val disconnect_mode:Int,
+    val music_effect:music_effect,
+    val volume:Int,
+    val led_color:led_color,
+    val mood_light:mood_light,
+    val led_effect:Int
+
+):BaseDeviceParam()
+
+data class music_effect(
+    val un_mode:Int,
+    val un_cycle:Int,
+    val un_class:Int,
+    val un_index:Int
+)
+
+data class led_color(
+    val un_ramdom:Int,
+    val un_color:Int,
+    val un_brightness:Int,
+    val un_effect:Int
+)
+data class mood_light(
+    val un_switch:Int,
+    val un_color:Int,
+    val un_effect:Int
+)
+
+
+data class NightStarParam(
+    var un_switch:Int
+):BaseDeviceParam()
+
+data class NightStarRotateParam(
+   var un_switch:Int
+):BaseDeviceParam()

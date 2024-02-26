@@ -223,9 +223,9 @@ object RemoteDataSource : DataSource {
                 Pair("MessageType", GetUserDeviceListRequest)
             )
             val json = Gson().toJson(nMap).toRequestBody()
-
+            Log.e(TAG, "getDeviceList: json= $json")
             val response = RetrofitClient.apiService.getDeviceList(json)
-
+            Log.e(TAG, "getDeviceList: response= $response")
             return@asyncTask response.body()
         }
 
@@ -266,6 +266,7 @@ object RemoteDataSource : DataSource {
                 deviceList.add(device)
             }
         }
+        Log.e(TAG, "getDeviceList: deviceList = $deviceList")
         return deviceList
     }
 

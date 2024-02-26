@@ -1,10 +1,13 @@
 package com.gocam.goscamdemopro.add
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
 import androidx.lifecycle.coroutineScope
+import com.github.penfeizhou.animation.apng.APNGDrawable
 import com.gocam.goscamdemopro.GApplication
+import com.gocam.goscamdemopro.MainActivity
 import com.gocam.goscamdemopro.R
 import com.gocam.goscamdemopro.base.BaseActivity
 import com.gocam.goscamdemopro.data.RemoteDataSource
@@ -25,6 +28,7 @@ class CheckBindStatusActivity :
     }
 
     override fun onCreateData(bundle: Bundle?) {
+
         val token  = intent.getStringExtra("token") as String
         lifecycle.coroutineScope.launch {
             //Obtain once per second
@@ -59,6 +63,9 @@ class CheckBindStatusActivity :
                             //Binding successful
                             mBinding?.tv?.text="success"
                             bindOver = true
+                            val intent = Intent(this@CheckBindStatusActivity, MainActivity::class.java)
+                            startActivity(intent)
+                            finish()
                         }
                         -10000->{
                             //Continue query

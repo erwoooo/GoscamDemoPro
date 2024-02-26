@@ -36,6 +36,30 @@
         <entry key="..\:/Android/project/GoscamDemoPro/app/src/main/res/layout/item_share.xml" value="0.3260416666666667" />
         <entry key="..\:/Android/project/GoscamDemoPro/app/src/main/res/layout/item_tv.xml" value="0.32916666666666666" />
         <entry key="..\:/Android/project/GoscamDemoPro/app/src/main/res/layout/layout_toolbar.xml" value="0.23854166666666668" />
+        <entry key="..\:/Android/project/GoscamDemoPro2222/app/src/main/res/drawable/bg_com_item.xml" value="0.3328125" />
+        <entry key="..\:/Android/project/GoscamDemoPro2222/app/src/main/res/drawable/bg_select.xml" value="0.26875" />
+        <entry key="..\:/Android/project/GoscamDemoPro2222/app/src/main/res/drawable/ic_launcher_background.xml" value="0.3328125" />
+        <entry key="..\:/Android/project/GoscamDemoPro2222/app/src/main/res/drawable/ic_pzt_center.xml" value="0.3328125" />
+        <entry key="..\:/Android/project/GoscamDemoPro2222/app/src/main/res/drawable/ic_pzt_down.xml" value="0.3328125" />
+        <entry key="..\:/Android/project/GoscamDemoPro2222/app/src/main/res/drawable/ic_pzt_left.xml" value="0.3328125" />
+        <entry key="..\:/Android/project/GoscamDemoPro2222/app/src/main/res/drawable/ic_pzt_right.xml" value="0.3328125" />
+        <entry key="..\:/Android/project/GoscamDemoPro2222/app/src/main/res/drawable/ic_pzt_up.xml" value="0.3328125" />
+        <entry key="..\:/Android/project/GoscamDemoPro2222/app/src/main/res/drawable/main_button_selector.xml" value="0.3328125" />
+        <entry key="..\:/Android/project/GoscamDemoPro2222/app/src/main/res/drawable/shape_1_cr.xml" value="0.3328125" />
+        <entry key="..\:/Android/project/GoscamDemoPro2222/app/src/main/res/drawable/shape_coner_bg_a.xml" value="0.3328125" />
+        <entry key="..\:/Android/project/GoscamDemoPro2222/app/src/main/res/layout/activity_alarm_push_layout.xml" value="0.33229166666666665" />
+        <entry key="..\:/Android/project/GoscamDemoPro2222/app/src/main/res/layout/activity_ble_scan_layout.xml" value="0.3619791666666667" />
+        <entry key="..\:/Android/project/GoscamDemoPro2222/app/src/main/res/layout/activity_ipc_layout.xml" value="0.33229166666666665" />
+        <entry key="..\:/Android/project/GoscamDemoPro2222/app/src/main/res/layout/activity_login.xml" value="0.3359375" />
+        <entry key="..\:/Android/project/GoscamDemoPro2222/app/src/main/res/layout/activity_n12_demo_layout.xml" value="0.3177083333333333" />
+        <entry key="..\:/Android/project/GoscamDemoPro2222/app/src/main/res/layout/activity_smart_person_layout.xml" value="0.33229166666666665" />
+        <entry key="..\:/Android/project/GoscamDemoPro2222/app/src/main/res/layout/activity_wake_up_layout.xml" value="0.33229166666666665" />
+        <entry key="..\:/Android/project/GoscamDemoPro2222/app/src/main/res/layout/activity_warn_set_layout.xml" value="0.33229166666666665" />
+        <entry key="..\:/Android/project/GoscamDemoPro2222/app/src/main/res/layout/activity_wifi_select.xml" value="0.3619791666666667" />
+        <entry key="..\:/Android/project/GoscamDemoPro2222/app/src/main/res/layout/dialog_rotate_layout.xml" value="0.33229166666666665" />
+        <entry key="..\:/Android/project/GoscamDemoPro2222/app/src/main/res/layout/item_ble_dev_layout.xml" value="0.3619791666666667" />
+        <entry key="..\:/Android/project/GoscamDemoPro2222/app/src/main/res/layout/item_common_layout.xml" value="0.3463541666666667" />
+        <entry key="..\:/Android/project/GoscamDemoPro2222/app/src/main/res/layout/layout_toolbar.xml" value="0.3463541666666667" />
         <entry key="..\:/AndroidDemo/GoscamDemoPro/app/src/main/res/drawable/ic_pzt_center.xml" value="0.2635416666666667" />
         <entry key="..\:/AndroidDemo/GoscamDemoPro/app/src/main/res/drawable/ic_pzt_down.xml" value="0.2635416666666667" />
         <entry key="..\:/AndroidDemo/GoscamDemoPro/app/src/main/res/drawable/ic_pzt_left.xml" value="0.2635416666666667" />

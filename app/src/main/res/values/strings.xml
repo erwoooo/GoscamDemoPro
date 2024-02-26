@@ -302,4 +302,8 @@
     <string name="_3_times">3 times</string>
     <string name="_5_times">5 times</string>
     <string name="humanoid_detection">Humanoid detection</string>
+    <string name="scan_ble">SCAN BLE</string>
+    <string name="connect_fail">connect fail</string>
+    <string name="active_disconnected">active disconnected</string>
+    <string name="disconnected">disconnected</string>
 </resources>

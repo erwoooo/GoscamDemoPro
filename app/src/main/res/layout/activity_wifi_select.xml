@@ -37,7 +37,7 @@
             android:layout_marginStart="30dp"
             android:layout_marginEnd="30dp"
             android:hint="@string/enter_wifi_psw"
-            android:maxLength="16"
+            android:maxLength="20"
             android:singleLine="true"
             android:textAlignment="viewStart"
             android:textColor="@android:color/black" />
@@ -72,5 +72,22 @@
             android:singleLine="true"
             android:text="@string/scan_dev_info_title"
             android:textColor="#fff" />
+
+        <Button
+            android:visibility="visible"
+            android:id="@+id/btn_scan_ble"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/main_button_selector"
+            android:gravity="center"
+            android:padding="0dp"
+            android:singleLine="true"
+            android:text="@string/scan_ble"
+            android:textColor="#fff" />
+
     </LinearLayout>
 </layout>
