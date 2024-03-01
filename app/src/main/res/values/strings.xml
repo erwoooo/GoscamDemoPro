@@ -306,4 +306,8 @@
     <string name="connect_fail">connect fail</string>
     <string name="active_disconnected">active disconnected</string>
     <string name="disconnected">disconnected</string>
+    <string name="btn_add_photo">Add VPhoto</string>
+
+    <string name="enter_link_code">Please enter the connection code</string>
+    <string name="enter_link_toast">Open the digital photo frame, click Settings, find the connection code of the device information in My Photo Frame and input or scan the QR code.</string>
 </resources>
