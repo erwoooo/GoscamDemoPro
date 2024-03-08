@@ -6,6 +6,7 @@ import android.content.Context;
 import android.os.Process;
 
 import com.gocam.goscamdemopro.entity.User;
+import com.gocam.goscamdemopro.entity.VPhotoUser;
 import com.gocam.goscamdemopro.utils.dbg;
 import com.gos.avplayer.GosMediaPlayer;
 import com.gos.platform.api.ConfigManager;
@@ -36,6 +37,7 @@ public class GApplication extends Application implements OnPlatformEventCallback
 
     public static GApplication app;
     public User user;
+    public VPhotoUser vPhotoUser;
     public int userType = 35;//APP定制类型
     @Override
     public void onCreate() {
@@ -55,6 +57,7 @@ public class GApplication extends Application implements OnPlatformEventCallback
 
         GosSession.getSession().addOnPlatformEventCallback(this);
         user = new User();
+        vPhotoUser = new VPhotoUser();
         //示例
         //String crtyKey = "PujvjKu/7Nzl1ojM+3ARg6ZgdDFiDKIapOYX1KEXE7R8ESB1Bc/uHCQfwYqbNasFv6rgQ02PtSKJCGJeeoi4PanQTtnKA+FG/FVbhb3EddUwtyu/R/5cuELorv23jtjS";
         //String pws = "qwer2222";

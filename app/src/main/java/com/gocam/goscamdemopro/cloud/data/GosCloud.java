@@ -24,6 +24,18 @@ import com.gocam.goscamdemopro.cloud.data.result.PaymentFreeResult;
 import com.gocam.goscamdemopro.cloud.data.result.PaypalServerPayResult;
 import com.gocam.goscamdemopro.cloud.data.result.QueryOrderResult;
 import com.gocam.goscamdemopro.cloud.data.result.VerifyAliOrderResult;
+import com.gocam.goscamdemopro.utils.Aes128;
+import com.gocam.goscamdemopro.utils.EncryptRSA;
+import com.gocam.goscamdemopro.utils.SharedPreferencesUtil;
+import com.gocam.goscamdemopro.vphoto.data.BindByDeviceResult;
+import com.gocam.goscamdemopro.vphoto.data.BindByDeviceStatusResult;
+import com.gocam.goscamdemopro.vphoto.data.DeleteDeviceResult;
+import com.gocam.goscamdemopro.vphoto.data.DeviceCamResult;
+import com.gocam.goscamdemopro.vphoto.data.SelectDeviceResult;
+import com.gocam.goscamdemopro.vphoto.data.SigninByUuidResult;
+import com.gocam.goscamdemopro.vphoto.data.UploadFileResult;
+import com.gocam.goscamdemopro.vphoto.data.UploadUrlZipResult;
+import com.gocam.goscamdemopro.vphoto.data.UserRegisterResult;
 import com.gos.platform.api.ConfigManager;
 import com.gos.platform.api.contact.PlatCode;
 import com.gos.platform.api.contact.ServerType;
@@ -31,6 +43,7 @@ import com.gos.platform.api.inter.OnPlatformEventCallback;
 import com.gos.platform.api.result.PlatResult;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.HttpHeaders;
 import com.lzy.okgo.model.HttpParams;
 import com.lzy.okgo.model.Response;
 import com.lzy.okgo.request.base.Request;
@@ -39,11 +52,14 @@ import com.lzy.okgo.request.base.Request;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Locale;
+import java.util.TreeMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 
 
@@ -82,6 +98,18 @@ public class GosCloud {
     private static String CREATE_STORE_WEIXIN_ORDER;
     private static String GET_STORE_ALIORDER;
     private static String VERIFY_STORE_ALIORDER;
+
+    // 相框
+    public static String PHOTO_URL_HEAD; //域名
+    public static String PHOTO_URL_LOGIN; //登录
+    public static String PHOTO_URL_REGISTER; //注册
+    public static String PHOTO_URL_BIND; //绑定设备
+    public static String PHOTO_URL_BIND_STATUS; //查询设备状态
+    public static String PHOTO_URL_DELETE; //解除绑定
+    public static String PHOTO_URL_SELECT; //查询已绑定设备
+    public static String PHOTO_URL_UPLOAD_ZIP; //上传相片zip文件
+    public static String PHOTO_URL_UPLOAD_VIDEO; //上传相片zip文件
+    public static String PHOTO_URL_DEVICE_CAM; //更新用户信息
 
     private ConcurrentLinkedQueue<OnPlatformEventCallback> eventCallbacks = new ConcurrentLinkedQueue();
     private static volatile GosCloud mGosCloud;
@@ -124,7 +152,7 @@ public class GosCloud {
 
             Log.e("ipAddress", "checkServerType: ipAddress "+ ipAddress );
             URL_HEAD = "https://" + ipAddress + "/api";
-
+            PHOTO_URL_HEAD = "https://vphoto.waophoto.com";
 
             GET_ClOUD_SET_MENU_INFO_URL = URL_HEAD + "/cloudstore/cloudstore-service/service/data-valid";
             GET_OSS_INFO_URL = URL_HEAD + "/cloudstore/cloudstore-service/sts/check-token";
@@ -164,6 +192,16 @@ public class GosCloud {
 //            CREATE_STORE_WEIXIN_ORDER = "http://192.168.1.104:9201/dashboard-store/pay/wechat/beforehand";//TODO Test
             GET_STORE_ALIORDER = "http://119.23.124.137:9201/dashboard-store/pay/alipay/order/sign";
             VERIFY_STORE_ALIORDER = "http://119.23.124.137:9201/dashboard-store/pay/alipay/payment/check";
+
+            PHOTO_URL_LOGIN = PHOTO_URL_HEAD + "/apiv3/user/signinByUuid";
+            PHOTO_URL_REGISTER = PHOTO_URL_HEAD + "/apiv3/user/userRegisterByUuid";
+            PHOTO_URL_BIND = PHOTO_URL_HEAD + "/apiv3/user/bindByDeviceConnectionCode";
+            PHOTO_URL_BIND_STATUS = PHOTO_URL_HEAD + "/apiv3/user/bindstatus";
+            PHOTO_URL_DELETE = PHOTO_URL_HEAD + "/apiv3/user/status";
+            PHOTO_URL_SELECT = PHOTO_URL_HEAD + "/apiv3/user/user_device";
+            PHOTO_URL_UPLOAD_ZIP = PHOTO_URL_HEAD + "/apiv3/upload/presignedUrlZipS3";
+            PHOTO_URL_UPLOAD_VIDEO = PHOTO_URL_HEAD + "/apiv3/upload/presignedUrlVideoS3";
+            PHOTO_URL_DEVICE_CAM = PHOTO_URL_HEAD + "/apiv3/user/devicecam";
         }
     }
 
@@ -1209,6 +1247,389 @@ public class GosCloud {
         for (OnPlatformEventCallback callback : eventCallbacks) {
             callback.OnPlatformEvent(result);
         }
+    }
+
+    /**
+     * User registration
+     *
+     * @param username user name
+     * @return
+     */
+    public Boolean userRegisterByUuid(String username) {
+        TreeMap<String, String> params = new TreeMap<>();
+        String uuid = EncryptRSA.encrypt32(username);
+        String rsaUuid = EncryptRSA.encryptRsa(uuid);
+        String timestamp = String.valueOf(System.currentTimeMillis());
+        params.put("user_secret", rsaUuid);
+        params.put("company_name", "VPhoto");
+        params.put("nickname", "goscam");
+        params.put("timestamp", timestamp);
+        params.put("profile_image", "");
+        String sign = EncryptRSA.paramSign(params, rsaUuid);
+        HttpHeaders headers = new HttpHeaders();
+        headers.put("timestamp", timestamp);
+        headers.put("sign", sign);
+        OkGo.<String>post(PHOTO_URL_REGISTER).tag(this).params(params).headers(headers).execute(new StringCallback() {
+            @Override
+            public void onSuccess(Response<String> response) {
+                String body = response.body();
+                post(new UserRegisterResult(200, body));
+            }
+
+            @Override
+            public void onError(Response<String> response) {
+                super.onError(response);
+                post(new UserRegisterResult(-1, null));
+            }
+        });
+        return true;
+    }
+
+    /**
+     * User login
+     *
+     * @param username user name
+     * @return
+     */
+    public Boolean signinByUuid(String username) {
+        TreeMap<String, String> params = new TreeMap<>();
+        String uuid = EncryptRSA.encrypt32(username);
+        String rsaUuid = EncryptRSA.encryptRsa(uuid);
+        String timestamp = String.valueOf(System.currentTimeMillis());
+        params.put("company_name", "VPhoto");
+        params.put("user_fcm_token", "");
+        params.put("user_platform", "1");
+        params.put("user_secret", rsaUuid);
+        params.put("timestamp", timestamp);
+        String sign = EncryptRSA.paramSign(params, rsaUuid);
+        HttpHeaders headers = new HttpHeaders();
+        headers.put("sign", sign);
+        headers.put("timestamp", timestamp);
+        OkGo.<String>post(PHOTO_URL_LOGIN).tag(this).params(params).headers(headers).execute(new StringCallback() {
+            @Override
+            public void onSuccess(Response<String> response) {
+                String body = response.body();
+                post(new SigninByUuidResult(200, body));
+            }
+
+            @Override
+            public void onError(Response<String> response) {
+                super.onError(response);
+                post(new SigninByUuidResult(-1, null));
+            }
+        });
+        return true;
+    }
+
+    /**
+     * Bind device
+     *
+     * @param deviceCode link code
+     * @param accessToken vphoto token
+     * @param userId vphoto user id
+     * @return
+     */
+    public Boolean bindByDevice(String deviceCode, String accessToken, int userId) {
+        TreeMap<String, String> params = new TreeMap<>();
+        String timestamp = String.valueOf(System.currentTimeMillis());
+        params.put("device_connection_code", deviceCode);
+        params.put("company_name", "VPhoto");
+        params.put("deviceUserName", "");
+        params.put("timestamp", timestamp);
+        params.put("user_id", String.valueOf(userId));
+        String sign = EncryptRSA.paramSign(params, accessToken);
+        HttpHeaders headers = new HttpHeaders();
+        headers.put("user_id", String.valueOf(userId));
+        headers.put("timestamp", timestamp);
+        headers.put("sign", sign);
+        OkGo.<String>post(PHOTO_URL_BIND).tag(this).params(params).headers(headers).execute(new StringCallback() {
+            @Override
+            public void onSuccess(Response<String> response) {
+                String body = response.body();
+                post(new BindByDeviceResult(200, body));
+            }
+
+            @Override
+            public void onError(Response<String> response) {
+                super.onError(response);
+                post(new BindByDeviceResult(-1, null));
+            }
+        });
+        return true;
+    }
+
+    /**
+     * Device binding state
+     *
+     * @param deviceCode link code
+     * @param accessToken vphoto token
+     * @param userId vphoto user id
+     * @return
+     */
+    public Boolean bindByDeviceStatus(String deviceCode, String accessToken, int userId) {
+        TreeMap<String, String> params = new TreeMap<>();
+        String timestamp = String.valueOf(System.currentTimeMillis());
+        params.put("device_connection_code", deviceCode);
+        params.put("timestamp", timestamp);
+        params.put("user_id", String.valueOf(userId));
+        String sign = EncryptRSA.paramSign(params, accessToken);
+        HttpHeaders headers = new HttpHeaders();
+        headers.put("user_id", String.valueOf(userId));
+        headers.put("timestamp", timestamp);
+        headers.put("sign", sign);
+        OkGo.<String>post(PHOTO_URL_BIND_STATUS).tag(this).params(params).headers(headers).execute(new StringCallback() {
+            @Override
+            public void onSuccess(Response<String> response) {
+                String body = response.body();
+                post(new BindByDeviceStatusResult(200, body));
+            }
+
+            @Override
+            public void onError(Response<String> response) {
+                super.onError(response);
+                post(new BindByDeviceStatusResult(-1, null));
+            }
+        });
+        return true;
+    }
+
+    /**
+     * delete device
+     *
+     * @param deviceId vphoto deviceId
+     * @param accessToken vphoto token
+     * @param userId vphoto userId
+     * @return
+     */
+    public Boolean deleteByDevice(String deviceId, String accessToken, int userId) {
+        TreeMap<String, String> params = new TreeMap<>();
+        String timestamp = String.valueOf(System.currentTimeMillis());
+        params.put("user_id", String.valueOf(userId));
+        params.put("device_id", deviceId);
+        params.put("status", "unbind");
+        params.put("timestamp", timestamp);
+        String sign = EncryptRSA.paramSign(params, accessToken);
+        HttpHeaders headers = new HttpHeaders();
+        headers.put("user_id", String.valueOf(userId));
+        headers.put("timestamp", timestamp);
+        headers.put("sign", sign);
+        OkGo.<String>post(PHOTO_URL_DELETE).tag(this).params(params).headers(headers).execute(new StringCallback() {
+            @Override
+            public void onSuccess(Response<String> response) {
+                String body = response.body();
+                post(new DeleteDeviceResult(200, body));
+            }
+
+            @Override
+            public void onError(Response<String> response) {
+                super.onError(response);
+                post(new DeleteDeviceResult(-1, null));
+            }
+        });
+        return true;
+    }
+
+    /**
+     * Get the bound device
+     *
+     * @param userSystemToken vphoto system token
+     * @param accessToken vphoto token
+     * @param userId vphoto userId
+     * @return
+     */
+    public Boolean selectByDevice(String userSystemToken, String accessToken, int userId) {
+        TreeMap<String, String> params = new TreeMap<>();
+        String timestamp = String.valueOf(System.currentTimeMillis());
+        params.put("user_id", String.valueOf(userId));
+        params.put("user_token", userSystemToken);
+        params.put("timestamp", timestamp);
+        String sign = EncryptRSA.paramSign(params, accessToken);
+        HttpHeaders headers = new HttpHeaders();
+        headers.put("user_id", String.valueOf(userId));
+        headers.put("timestamp", timestamp);
+        headers.put("sign", sign);
+        OkGo.<String>post(PHOTO_URL_SELECT).tag(this).params(params).headers(headers).execute(new StringCallback() {
+            @Override
+            public void onSuccess(Response<String> response) {
+                String body = response.body();
+                post(new SelectDeviceResult(200, body));
+            }
+
+            @Override
+            public void onError(Response<String> response) {
+                super.onError(response);
+                post(new SelectDeviceResult(-1, null));
+            }
+        });
+        return true;
+    }
+
+    /**
+     * upload img
+     *
+     * @param desc Picture description {"12345678.jpeg":{"desc":"Picture description"}, "9876542.jpeg":{"desc":"Picture description"}}
+     * @param data Picture phone local address  ["1.jpeg", "2.jpeg", "3.jpeg"]
+     * @param deviceId {"device_id":[1,2,3]}
+     * @param accessToken vphoto token
+     * @param username vphoto user name
+     * @param userId vphoto userId
+     * @return
+     */
+    public Boolean uploadUrlZip(String desc, String data, String deviceId, String accessToken, String username, int userId) {
+        TreeMap<String, String> params = new TreeMap<>();
+        String uuid = EncryptRSA.encrypt32(username);
+        String timestamp = String.valueOf(System.currentTimeMillis());
+        params.put("user_id", String.valueOf(userId));
+        params.put("user_imei", uuid);
+        params.put("image_data", deviceId);
+        params.put("desc", desc);
+        params.put("data", data);
+        params.put("timestamp", timestamp);
+        String sign = EncryptRSA.paramSign(params, accessToken);
+        HttpHeaders headers = new HttpHeaders();
+        headers.put("user_id", String.valueOf(userId));
+        headers.put("timestamp", timestamp);
+        headers.put("sign", sign);
+        OkGo.<String>post(PHOTO_URL_UPLOAD_ZIP).tag(this).params(params).headers(headers).execute(new StringCallback() {
+            @Override
+            public void onSuccess(Response<String> response) {
+                String body = response.body();
+                post(new UploadUrlZipResult(200, body));
+            }
+
+            @Override
+            public void onError(Response<String> response) {
+                super.onError(response);
+                post(new UploadUrlZipResult(-1, null));
+            }
+        });
+        return true;
+    }
+
+    /**
+     * upload video
+     *
+     * @param suffix Video file suffix mp4 or mov
+     * @param desc Video description {
+     * "/file/1.mp4":{"desc":"Video description"},
+     * "file/2.mp4":{"desc":"Video description"}
+     * }
+     * @param data Video phone local address   ["1.mp4", "2.mp4", "3.mp4"]
+     * @param deviceId {"device_id":[1,2,3]}
+     * @param accessToken vphoto token
+     * @param username vphoto user name
+     * @param userId vphoto userId
+     * @return
+     */
+    public Boolean uploadUrlVideo(String suffix, String desc, String data, String deviceId, String accessToken, String username, int userId) {
+        TreeMap<String, String> params = new TreeMap<>();
+        String uuid = EncryptRSA.encrypt32(username);
+        String timestamp = String.valueOf(System.currentTimeMillis());
+        params.put("user_id", String.valueOf(userId));
+        params.put("user_imei", uuid);
+        params.put("video_data", deviceId);
+        params.put("suffix", suffix);
+        params.put("desc", desc);
+        params.put("data", data);
+        params.put("timestamp", timestamp);
+        String sign = EncryptRSA.paramSign(params, accessToken);
+        HttpHeaders headers = new HttpHeaders();
+        headers.put("user_id", String.valueOf(userId));
+        headers.put("timestamp", timestamp);
+        headers.put("sign", sign);
+        OkGo.<String>post(PHOTO_URL_UPLOAD_VIDEO).tag(this).params(params).headers(headers).execute(new StringCallback() {
+            @Override
+            public void onSuccess(Response<String> response) {
+                String body = response.body();
+                post(new UploadUrlZipResult(200, body));
+            }
+
+            @Override
+            public void onError(Response<String> response) {
+                super.onError(response);
+                post(new UploadUrlZipResult(-1, null));
+            }
+        });
+        return true;
+    }
+
+    /**
+     * upload file
+     *
+     * @param url url
+     * @param pathName path
+     * @param suffix file suffix
+     * @return
+     */
+    public Boolean uploadFile(String url, String pathName, String suffix) {
+        File file = new File(pathName);
+        MediaType mediaType = MediaType.parse("application/zip");
+        HttpHeaders headers = new HttpHeaders();
+        if ("zip".equals(suffix)) {
+            headers.put("Content-Type", "application/zip");
+            mediaType = MediaType.parse("application/zip");
+        } else if ("mp4".equals(suffix)) {
+            headers.put("Content-Type", "video/mp4");
+            mediaType = MediaType.parse("video/mp4");
+        } else {
+            headers.put("Content-Type", "video/quicktime");
+            mediaType = MediaType.parse("video/quicktime");
+        }
+
+        OkGo.<String>put(url).tag(this).upFile(file, mediaType).execute(new StringCallback(){
+            @Override
+            public void onSuccess(Response<String> response) {
+                post(new UploadFileResult(200, response.getRawResponse()));
+            }
+
+            @Override
+            public void onError(Response<String> response) {
+                super.onError(response);
+                post(new UploadFileResult(-1, null));
+            }
+        });
+        return true;
+    }
+
+    /**
+     * update user
+     *
+     * @param accessToken vphoto token
+     * @param userId vphoto userId
+     * @return
+     */
+    public Boolean updateDeviceCam(String accessToken, int userId) {
+        String userName = SharedPreferencesUtil.getString(SharedPreferencesUtil.SpreContant.SP_USER_NAME, "");
+        String password = SharedPreferencesUtil.getString(SharedPreferencesUtil.SpreContant.SP_SAVE_PSW_N, "");
+        String saveTime = SharedPreferencesUtil.getString(SharedPreferencesUtil.SpreContant.SP_SAVE_TIME, "");
+        String key = Aes128.getKey(Long.parseLong(saveTime));
+        String trueName = Aes128.decrypt(userName, key);
+        String photoName = Aes128.encrypt(trueName);
+        TreeMap<String, String> params = new TreeMap<>();
+        String timestamp = String.valueOf(System.currentTimeMillis());
+        params.put("user_id", String.valueOf(userId));
+        params.put("device_user_name", photoName);
+        params.put("device_password", password);
+        params.put("timestamp", timestamp);
+        String sign = EncryptRSA.paramSign(params, accessToken);
+        HttpHeaders headers = new HttpHeaders();
+        headers.put("user_id", String.valueOf(userId));
+        headers.put("timestamp", timestamp);
+        headers.put("sign", sign);
+        OkGo.<String>post(PHOTO_URL_DEVICE_CAM).params(params).headers(headers).execute(new StringCallback() {
+            @Override
+            public void onSuccess(Response<String> response) {
+                String body = response.body();
+                post(new DeviceCamResult(200, body));
+            }
+
+            @Override
+            public void onError(Response<String> response) {
+                super.onError(response);
+                post(new DeviceCamResult(-1, null));
+            }
+        });
+        return true;
     }
 
 }

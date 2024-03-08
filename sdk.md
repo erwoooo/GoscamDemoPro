@@ -1552,6 +1552,169 @@ String dayTime=getIntent().getStringExtra("DAY_TIME");
 | end_time         | Integer | end time                 |
 | type | Integer | 0- normal 1- alarm                       |
 
+# VPhoto HTTP API
+
+HTTP Request Template
+
+```kotlin
+val baseUrl="https://vphoto.waophoto.com/apiv3/"
+```
+
+## Register By Uuid
+
+```java
+● URL：/apiv3/user/userRegisterByUuid
+● Method：POST
+```
+
+| Field name        | Type   | Describe                                                     |
+| ----------------- | ------ | ------------------------------------------------------------ |
+| user_secret       | String | user_secret=base64Encode(rsa(user_uuid))                     |
+| company_name      | String | VPhoto                                                       |
+| nickname          | String | user name                                                    |
+| profile_image     | String | User profile picture address (can be passed blank)           |
+| timestamp         | String | let timestamp = Date.currentTimeStamp                        |
+| sign<header>      | String | md5 value after parameters are arranged in ascending order and concatenated with user_secret |
+| timestamp<header> | String | let timestamp = Date.currentTimeStamp                        |
+
+## Signin By Uuid
+
+```
+● URL：/apiv3/user/signinByUuid
+● Method：POST
+```
+
+| Field name     | Type   | Describe                                                     |
+| -------------- | ------ | ------------------------------------------------------------ |
+| company_name   | String | VPhoto                                                       |
+| user_fcm_token | String | Can pass ""                                                  |
+| user_platform  | String | 1                                                            |
+| user_secret    | String | uuid converts rsa encryption to base64                       |
+| sign<header>   | String | md5 value after parameters are arranged in ascending order and concatenated with user_secret |
+| timestamp      | String | let timestamp = Date.currentTimeStamp                        |
+
+## Bind By Device
+
+```
+● URL：/apiv3/user/bindByDeviceConnectionCode
+● Method：POST
+```
+
+| Field name             | Type   | Describe                                                     |
+| ---------------------- | ------ | ------------------------------------------------------------ |
+| device_connection_code | String | Link code                                                    |
+| company_name           | String | VPhoto                                                       |
+| deviceUserName         | String | Can pass ""                                                  |
+| sign<header>           | String | md5 value after parameters are arranged in ascending order and concatenated with user_secret |
+| timestamp<header>      | String | let timestamp = Date.currentTimeStamp                        |
+
+## Bind status
+
+```java
+● URL：/apiv3/user/bindstatus
+● Method：POST
+```
+
+| Field name             | Type   | Describe                                                     |
+| ---------------------- | ------ | ------------------------------------------------------------ |
+| device_connection_code | String | Link code                                                    |
+| user_id<header>        | String | user id                                                      |
+| sign<header>           | String | md5 value after parameters are arranged in ascending order and concatenated with user_secret |
+| timestamp<header>      | String | let timestamp = Date.currentTimeStamp                        |
+
+## Update account password
+
+```
+● URL：/apiv3/user/devicecam
+● Method：POST
+```
+
+| Field name        | Type   | Describe                                                     |
+| ----------------- | ------ | ------------------------------------------------------------ |
+| device_password   | String | Password, required if it is new, update optional             |
+| device_user_name  | String | Account, if it is new, you must fill in, update optional     |
+| user_id<header>   | String | user id                                                      |
+| sign<header>      | String | md5 value after parameters are arranged in ascending order and concatenated with user_secret |
+| timestamp<header> | String | let timestamp = Date.currentTimeStamp                        |
+
+## untie device
+
+```
+● URL： /apiv3/user/status
+● Method：POST
+```
+
+| Field name        | Type   | Describe                                                     |
+| ----------------- | ------ | ------------------------------------------------------------ |
+| user_id           | String | user id                                                      |
+| device_id         | String | device id                                                    |
+| status            | String | status                                                       |
+| sign<header>      | String | md5 value after parameters are arranged in ascending order and concatenated with user_secret |
+| timestamp<header> | String | let timestamp = Date.currentTimeStamp                        |
+
+## Bound device
+
+```
+● URL：/apiv3/user/user_device
+● Method：POST
+```
+
+| Field name        | Type   | Describe                                                     |
+| ----------------- | ------ | ------------------------------------------------------------ |
+| user_id           | String | user id                                                      |
+| user_token        | String | signinByUuid Specifies the user_system_token field returned by the interface |
+| sign<header>      | String | md5 value after parameters are arranged in ascending order and concatenated with user_secret |
+| timestamp<header> | String | let timestamp = Date.currentTimeStamp                        |
+
+## presigned Url Zip
+
+```
+● URL：/apiv3/upload/presignedUrlZipS3
+● Method：POST
+```
+
+| Field name        | Type   | Describe                                                     |
+| ----------------- | ------ | ------------------------------------------------------------ |
+| user_id           | String | user id                                                      |
+| user_imei         | String | user uuid                                                    |
+| image_data        | String | In parentheses is an array of device_id, where device_id is the id of the picture frame to send :{"device_id":[1,2,3]} |
+| desc              | String | Can pass ""                                                  |
+| data              | String | Can pass ""                                                  |
+| file_size         | String | Can pass ""                                                  |
+| sign<header>      | String | md5 value after parameters are arranged in ascending order and concatenated with user_secret |
+| timestamp<header> | String | let timestamp = Date.currentTimeStamp                        |
+
+## presigned Url Video
+
+```
+● URL：/apiv3/upload/presignedUrlVideoS3
+● Method：POST
+```
+
+| Field name        | Type   | Describe                                                     |
+| ----------------- | ------ | ------------------------------------------------------------ |
+| user_id           | String | user id                                                      |
+| user_imei         | String | user uuid                                                    |
+| video_data        | String | In parentheses is an array of device_id, where device_id is the id of the picture frame to send :{"device_id":[1,2,3]} |
+| suffix            | String | Video file suffix, only support mp4 and mov two              |
+| desc              | String | Can pass ""                                                  |
+| data              | String | Can pass ""                                                  |
+| file_size         | String | Can pass ""                                                  |
+| sign<header>      | String | md5 value after parameters are arranged in ascending order and concatenated with user_secret |
+| timestamp<header> | String | let timestamp = Date.currentTimeStamp                        |
+
+## Upload File
+
+```
+● URL：presignedUrlVideoS3 or presignedUrlZipS3 returns the preSignedUrl field
+● Method：put
+```
+
+| Field name           | Type   | Describe                                        |
+| -------------------- | ------ | ----------------------------------------------- |
+| file                 | File   | file path                                       |
+| Content-Type<header> | String | application/zip or video/mp4 or video/quicktime |
+
 # HTTP API
 
 * HTTP Request Template
@@ -1776,6 +1939,8 @@ val map = mapOf(
   Pair("DeviceName", deviceName),
   Pair("StreamUser", streamUser),
   Pair("StreamPassword", streamPsw),
+  Pair("LinkDevice", linkDevice),
+  Pair("UserName", userName),
 )
 val nMap = mapOf(
   Pair("Body", map),
@@ -1792,6 +1957,8 @@ val json = Gson().toJson(nMap).toRequestBody()
 | DeviceId                 | String  |    deviceID       |
 | StreamUser                 | String  |    Can pass ""       |
 | StreamPassword                 | String  |    Can pass ""        |
+| LinkDevice | String | VPhoto association id |
+| UserName | String | userName |
 
 ## Share Device
 
@@ -1827,6 +1994,62 @@ val json = Gson().toJson(nMap).toRequestBody()
 | StreamPassword                 | String  |    Can pass ""        |
 | AreaId                 | String  |    Can pass ""        |
 | AppMatchType                 | Integer  |    1 -current platform , 0-old platform     |
+
+## Bind Device
+
+```kotlin
+val map = mapOf(
+  Pair("UserName", userName),
+  Pair("DeviceId", deviceId),
+  Pair("DeviceOwner", isOwner),
+  Pair("DeviceName", deviceName),
+  Pair("DeviceType", deviceType),
+  Pair("StreamUser", streamUser),
+  Pair("StreamPassword", streamPsw),
+  Pair("AreaId", areaId),
+  Pair("AppMatchType", appMatchType),
+  Pair("LinkDevice", linkDevice),
+)
+val nMap = mapOf(
+  Pair("Body", map),
+  Pair("MessageType", BindSmartDeviceRequest)
+)
+val json = Gson().toJson(nMap).toRequestBody()
+```
+
+| Field name     | Type    | Describe                                                     |
+| -------------- | ------- | ------------------------------------------------------------ |
+| MessageType    | String  | BindSmartDeviceRequest --- messageType is the signaling for each request |
+| Body           | Body    | requestBody                                                  |
+| UserName       | String  | share to user name                                           |
+| DeviceId       | String  | deviceID                                                     |
+| DeviceOwner    | Integer | 0-share 1-own                                                |
+| DeviceName     | String  | device name                                                  |
+| DeviceType     | Integer | deviceID                                                     |
+| StreamUser     | String  | Can pass ""                                                  |
+| StreamPassword | String  | Can pass ""                                                  |
+| AreaId         | String  | Can pass ""                                                  |
+| AppMatchType   | Integer | 1 -current platform , 0-old platform                         |
+| LinkDevice     | String  | VPhoto association id                                        |
+
+## Force Delete Device
+
+```kotlin
+val map = mapOf(
+  Pair("DeviceId", deviceId),
+)
+val nMap = mapOf(
+  Pair("Body", map),
+  Pair("MessageType", ForceUnbindDeviceRequest)
+)
+val json = Gson().toJson(nMap).toRequestBody()
+```
+
+| Field name  | Type   | Describe                                                     |
+| ----------- | ------ | ------------------------------------------------------------ |
+| MessageType | String | GetShareUserListRequest --- messageType is the signaling for each request |
+| Body        | Body   | requestBody                                                  |
+| DeviceId    | String | deviceID                                                     |
 
 ## Obtain a list of shared users
 

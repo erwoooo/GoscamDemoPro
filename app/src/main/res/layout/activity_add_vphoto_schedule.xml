@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/tool_bar"
+            layout="@layout/layout_toolbar" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="22dp"
+                android:text="@string/dev_add_ing"
+                android:textColor="@color/text2"
+                android:textSize="22sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="22sp"
+                android:gravity="center"
+                android:text="@string/vphoto_add_notice_lamp"
+                android:textColor="@color/text2"
+                android:textSize="12sp" />
+
+            <com.gocam.goscamdemopro.utils.SpreadView
+                android:id="@+id/vphoto_spread_view"
+                android:layout_width="320dp"
+                android:layout_height="320dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="28dp"
+                app:spread_delay_milliseconds="35"
+                app:spread_distance="5dp"
+                app:spread_max_radius="70dp"
+                app:spread_radius="50dp"
+                app:spread_text_size="30sp" />
+
+        </LinearLayout>
+    </LinearLayout>
+</layout>

@@ -29,6 +29,8 @@ import com.gocam.goscamdemopro.play.PlayJavaActivity
 import com.gocam.goscamdemopro.play.ipc.IpcPlayEchoActivity
 import com.gocam.goscamdemopro.set.SettingActivity
 import com.gocam.goscamdemopro.tf.TfDayActivity
+import com.gocam.goscamdemopro.utils.DeviceManager
+import com.gocam.goscamdemopro.vphoto.UploadFileActivity
 import com.gos.platform.api.contact.DeviceType
 import com.gos.platform.api.domain.DeviceStatus
 import kotlinx.coroutines.NonCancellable.start
@@ -113,10 +115,14 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(),
         override fun onBindViewHolder(@NonNull vh: RecyclerView.ViewHolder, i: Int) {
             if (vh is Vh) {
                 val device: Device = deviceList.get(i)
+                var isOnline = false
+                if (device.devType == DeviceType.V_PHOTO) {
+                    isOnline = DeviceManager.getInstance().isOnline(device.devId)
+                }
                 ("DevName:" + device.devName
                     .toString() + "\nDevId:" + device.devId.toString() +
                         "\nDevType:" + device.devType.toString() +
-                        "\nStatus:" + if (device.deviceStatus != DeviceStatus.OFFLINE) "Online" else "Offline").also {
+                        "\nStatus:" + if (device.deviceStatus != DeviceStatus.OFFLINE || isOnline) "Online" else "Offline").also {
                     (vh as Vh).tv.text = it
                 }
                 vh.itemView.setOnClickListener(View.OnClickListener {
@@ -130,6 +136,12 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(),
                         DeviceType.IPC,DeviceType.GLO_NIGHT->{
 
                             N12SetActivity.startActivity(
+                                vh.itemView.context,
+                                device.devId
+                            )
+                        }
+                        DeviceType.V_PHOTO -> {
+                            UploadFileActivity.startActivity(
                                 vh.itemView.context,
                                 device.devId
                             )
@@ -163,6 +175,11 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(),
 //                            val intent = Intent(vh.itemView.context, IPCSetActivity::class.java)
 //                            intent.putExtra("dev", device.devId)
 //                            vh.itemView.context.startActivity(intent)
+                        }
+                        else -> {
+                            val intent = Intent(vh.itemView.context, SettingActivity::class.java)
+                            intent.putExtra("dev", device.devId)
+                            vh.itemView.context.startActivity(intent)
                         }
                     }
                 }

@@ -8,10 +8,12 @@ import androidx.lifecycle.coroutineScope
 import com.gocam.goscamdemopro.GApplication
 import com.gocam.goscamdemopro.R
 import com.gocam.goscamdemopro.base.BaseBindActivity
+import com.gocam.goscamdemopro.cloud.data.GosCloud
 import com.gocam.goscamdemopro.data.RemoteDataSource
 import com.gocam.goscamdemopro.databinding.ActivitySettingBinding
 import com.gocam.goscamdemopro.entity.Device
 import com.gocam.goscamdemopro.utils.DeviceManager
+import com.gos.platform.api.contact.DeviceType
 import kotlinx.coroutines.launch
 
 class SettingActivity : BaseBindActivity<ActivitySettingBinding>() {
@@ -69,6 +71,9 @@ class SettingActivity : BaseBindActivity<ActivitySettingBinding>() {
                             mDevice.devId,
                             isOwner
                         )
+                        if (mDevice.devType == DeviceType.V_PHOTO) {
+                            GosCloud.getCloud().deleteByDevice(mDevice.devId, GApplication.app.vPhotoUser.vphotoAccessToken, GApplication.app.vPhotoUser.vphotUserId)
+                        }
                         checkNotNull(result) {
                             finish()
                         }

@@ -19,15 +19,25 @@ class ZxingCaptureKtActivity: BaseActivity<ActivityZxCaptureBinding,ZxingCapture
     lateinit var mCaptureFragment:CaptureFragment
     lateinit var devId:String
     val TAG = "ZxingCaptureKtActivity"
+    lateinit var resultCode: String
     override fun getLayoutId(): Int {
         return R.layout.activity_zx_capture
     }
 
     override fun onCreateData(bundle: Bundle?) {
+        resultCode = intent.getStringExtra("COME_FROM") as String
         mCaptureFragment = CaptureFragment()
         CodeUtils.setFragmentArgs(mCaptureFragment,R.layout.zxing_camera)
         mCaptureFragment.analyzeCallback = object :CodeUtils.AnalyzeCallback{
             override fun onAnalyzeSuccess(mBitmap: Bitmap?, result: String?) {
+                if ("ISFROM_ADD_VPHOTO" == resultCode) {
+                    val intent = Intent().apply {
+                        putExtra("PHOTO_LINK_CODE", result)
+                    }
+                    setResult(1001, intent)
+                    finish()
+                    return
+                }
                 mCaptureFragment.analyzeCallback = null
                 Log.e(TAG, "onAnalyzeSuccess: result = $result")
                 devId = result!!;

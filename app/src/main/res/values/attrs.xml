@@ -1,0 +1,205 @@
+<resources>
+    <declare-styleable name="ShadeView">
+        <attr name="icon" format="reference" />
+        <attr name="select_icon" format="reference" />
+        <attr name="color" format="color" />
+        <attr name="text_icon_margin" format="dimension" />
+        <attr name="text" format="string" />
+        <attr name="text_size" format="dimension" />
+    </declare-styleable>
+    <declare-styleable name="SettingItemView">
+        <attr name="type" format="enum">
+            <enum name="arrow" value="1"/>
+            <enum name="switch_button" value="2"/>
+            <enum name="normal_button" value="3"/>
+            <enum name="switch_button_no_pic" value="4"/>
+            <enum name="arrow_no_pic" value="5"/>
+            <enum name="check_box" value="6"/>
+            <enum name="text_no_pic" value="7"/>
+            <enum name="iot_type" value="8"/>
+        </attr>
+        <attr name="left_image" format="reference"/>
+        <attr name="left_image_width" format="dimension"/>
+        <attr name="left_image_height" format="dimension"/>
+        <attr name="right_image" format="reference"/>
+        <attr name="left_text" format="string"/>
+        <attr name="right_text" format="string"/>
+        <attr name="middle_text" format="string"/>
+        <attr name="middle_text_color" format="reference"/>
+        <attr name="bottom_line_visible" format="boolean"/>
+        <attr name="top_line_visible" format="boolean"/>
+        <attr name="text_size1" format="dimension"/>
+        <attr name="text_color" format="reference"/>
+    </declare-styleable>
+
+    <declare-styleable name="MotionLevelView">
+        <attr name="motion_left_text" format="string"/>
+        <attr name="motion_middle_text" format="string"/>
+        <attr name="motion_right_text" format="string"/>
+        <attr name="motion_bottom_line_visible" format="boolean"/>
+        <attr name="motion_top_line_visible" format="boolean"/>
+    </declare-styleable>
+
+    <declare-styleable name="ItemView">
+        <attr name="i_left_image" format="reference"/>
+        <attr name="i_left_image_show" format="boolean"/>
+        <attr name="i_left_txt" format="string"/>
+        <attr name="i_left_txt_size" format="dimension"/>
+        <attr name="i_left_txt_show" format="boolean"/>
+        <attr name="i_right_txt" format="string"/>
+        <attr name="i_right_txt_show" format="boolean"/>
+        <attr name="i_right_image" format="reference"/>
+        <attr name="i_right_image_show" format="boolean"/>
+        <attr name="i_switch_btn_show" format="boolean"/>
+        <attr name="i_top_line" format="boolean"/>
+        <attr name="i_bottom_line" format="boolean"/>
+    </declare-styleable>
+    <declare-styleable name="DirectionControlView">
+        <attr name="background" format="reference"/>
+    </declare-styleable>
+
+
+
+  <!--wh start-->
+    <attr name="firstCircleColor" format="color" />
+    <attr name="secondCircleColor" format="color" />
+    <attr name="thirdCircleColor" format="color" />
+    <attr name="minRadius" format="dimension" />
+    <attr name="midRadius" format="dimension"/>
+    <attr name="maxRadius" format="dimension"/>
+    <declare-styleable name="CheckVeiw">
+        <attr name="firstCircleColor"/>
+        <attr name="secondCircleColor"/>
+        <attr name="thirdCircleColor"/>
+        <attr name="minRadius"/>
+        <attr name="midRadius"/>
+        <attr name="maxRadius"/>
+    </declare-styleable>
+
+    <declare-styleable name="NetCheckStatusView">
+        <attr name="address" format="string"/>
+        <attr name="txt_color" format="reference"/>
+        <attr name="pb_color" format="reference"/>
+    </declare-styleable>
+
+    <declare-styleable name="BindStatusView">
+        <attr name="txt" format="string"/>
+    </declare-styleable>
+
+    <declare-styleable name="WheelView">
+        <attr name="bg_type" format="integer"/>
+    </declare-styleable>
+
+
+    <declare-styleable name="RoundImageView">
+        <attr name="roundWidth" format="dimension" />
+        <attr name="roundHeight" format="dimension" />
+    </declare-styleable>
+    <!--wh end-->
+
+
+    <declare-styleable name="GuideView">
+        <attr name="layout_mode" format="enum">
+            <enum name="auto_layout" value="1"/>
+            <enum name="manual_layout" value="2"/>
+        </attr>
+        <attr name="lower_layout_view_id" format="string"/>
+        <attr name="gravity">
+            <!-- Push object to the top of its container, not changing its size. -->
+            <flag name="top" value="0x30"/>
+            <!-- Push object to the bottom of its container, not changing its size. -->
+            <flag name="bottom" value="0x50"/>
+            <!-- Push object to the left of its container, not changing its size. -->
+            <flag name="left" value="0x03"/>
+            <!-- Push object to the right of its container, not changing its size. -->
+            <flag name="right" value="0x05"/>
+            <!-- Place object in the vertical center of its container, not changing its size. -->
+            <flag name="center_vertical" value="0x10"/>
+            <!-- Grow the vertical size of the object if needed so it completely fills its container. -->
+            <flag name="fill_vertical" value="0x70"/>
+            <!-- Place object in the horizontal center of its container, not changing its size. -->
+            <flag name="center_horizontal" value="0x01"/>
+            <!-- Grow the horizontal size of the object if needed so it completely fills its container. -->
+            <flag name="fill_horizontal" value="0x07"/>
+            <!-- Place the object in the center of its container in both the vertical and horizontal axis, not changing its size. -->
+            <flag name="center" value="0x11"/>
+            <!-- Grow the horizontal and vertical size of the object if needed so it completely fills its container. -->
+            <flag name="fill" value="0x77"/>
+            <!-- Additional option that can be set to have the top and/or bottom edges of
+                 the child clipped to its container's bounds.
+                 The clip will be based on the vertical gravity: a top gravity will clip the bottom
+                 edge, a bottom gravity will clip the top edge, and neither will clip both edges. -->
+            <flag name="clip_vertical" value="0x80"/>
+            <!-- Additional option that can be set to have the left and/or right edges of
+                 the child clipped to its container's bounds.
+                 The clip will be based on the horizontal gravity: a left gravity will clip the right
+                 edge, a right gravity will clip the left edge, and neither will clip both edges. -->
+            <flag name="clip_horizontal" value="0x08"/>
+            <!-- Push object to the beginning of its container, not changing its size. -->
+            <flag name="start" value="0x00800003"/>
+            <!-- Push object to the end of its container, not changing its size. -->
+            <flag name="end" value="0x00800005"/>
+        </attr>
+        <attr name="margin_left" format="dimension"/>
+        <attr name="margin_right" format="dimension"/>
+        <attr name="margin_top" format="dimension"/>
+        <attr name="margin_bottom" format="dimension"/>
+        <attr name="preference_key" format="string"/>
+        <attr name="guide_image" format="integer"/>
+    </declare-styleable>
+
+    <declare-styleable name="RoundProgressBar">
+        <attr name="progress_Color" format="color"/>
+        <attr name="ring_Color" format="color"/>
+    </declare-styleable>
+
+    <declare-styleable name="LineView">
+        <attr name="dot_num" format="integer"></attr>
+    </declare-styleable>
+
+    <declare-styleable name="bubble">
+        <attr name="shadowColor" format="color" />
+        <attr name="padding" format="dimension" />
+        <attr name="bubble_strokeWidth" format="float" />
+        <attr name="bubble_cornerRadius" format="float" />
+        <attr name="halfBaseOfLeg" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="ShadowLayout">
+        <attr name="sl_cornerRadius" format="dimension" />
+        <attr name="sl_shadowRadius" format="dimension" />
+        <attr name="sl_shadowColor" format="color" />
+        <attr name="sl_dx" format="dimension" />
+        <attr name="sl_dy" format="dimension" />
+    </declare-styleable>
+    <declare-styleable name="GosMagnifierLayout">
+        <attr name="btWidth" format="dimension"/>
+        <attr name="btHeight" format="dimension"/>
+        <attr name="btMarginTop" format="dimension"/>
+        <attr name="btMarginLeft" format="dimension"/>
+        <attr name="gosCircleRadius" format="dimension"/>
+        <attr name="GosConner" format="dimension"/>
+    </declare-styleable>
+    <declare-styleable name="PtzCheckSelectView">
+        <attr name="cycRadius" format="dimension"/>
+
+    </declare-styleable>
+    <declare-styleable name="SpreadView">
+        <!--中心圆颜色-->
+        <attr name="spread_center_color" format="color" />
+        <!--中心圆文字颜色-->
+        <attr name="spread_text_color" format="color" />
+        <!--中心圆半径-->
+        <attr name="spread_radius" format="dimension" />
+        <!--扩散圆颜色-->
+        <attr name="spread_spread_color" format="color" />
+        <!--扩散间距-->
+        <attr name="spread_distance" format="dimension" />
+        <!--扩散最大半径-->
+        <attr name="spread_max_radius" format="dimension" />
+        <!--文字大小-->
+        <attr name="spread_text_size" format="dimension" />
+        <!--扩散延迟间隔-->
+        <attr name="spread_delay_milliseconds" format="integer" />
+    </declare-styleable>
+</resources>

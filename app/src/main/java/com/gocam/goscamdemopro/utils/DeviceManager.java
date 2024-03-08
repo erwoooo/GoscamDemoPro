@@ -3,6 +3,7 @@ package com.gocam.goscamdemopro.utils;
 import android.text.TextUtils;
 
 import com.gocam.goscamdemopro.entity.Device;
+import com.gocam.goscamdemopro.vphoto.data.SelectDeviceResult;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,6 +16,8 @@ import java.util.List;
 public class DeviceManager {
     private static DeviceManager MANAGER = new DeviceManager();
     private List<Device> deviceList = Collections.synchronizedList(new ArrayList<Device>());
+
+    private List<SelectDeviceResult.Data> photoDeviceList = Collections.synchronizedList(new ArrayList<SelectDeviceResult.Data>());
 
     private DeviceManager() {
     }
@@ -30,6 +33,19 @@ public class DeviceManager {
             }
         }
         return null;
+    }
+
+    public void setPhotoDeviceList(List<SelectDeviceResult.Data> photoDeviceList) {
+        this.photoDeviceList = photoDeviceList;
+    }
+
+    public boolean isOnline(String deviceId) {
+        for (SelectDeviceResult.Data data : photoDeviceList) {
+            if (deviceId.equals(data.getDevice_id())) {
+                return data.getOnline() == 1;
+            }
+        }
+        return false;
     }
 
     public synchronized List<Device> getDeviceList() {

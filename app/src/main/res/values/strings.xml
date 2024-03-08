@@ -310,4 +310,24 @@
 
     <string name="enter_link_code">Please enter the connection code</string>
     <string name="enter_link_toast">Open the digital photo frame, click Settings, find the connection code of the device information in My Photo Frame and input or scan the QR code.</string>
+    <string name="dev_add_ing">Adding device&#8230;</string>
+    <string name="vphoto_add_notice_lamp">Please make sure during the connection:\nPlease ensure during the connection: the device is powered on; the WiFi connection is successful; the mobile phone is close to the device;</string>
+    <string name="add_sensor_success">Add successful</string>
+    <string name="add_1_add_fail">Add failed</string>
+    <string name="edit_dev_name">Please enter the device name</string>
+    <string name="failed_notice">1. Please make sure that the network is 2.4G and the communication is normal;\n2. Make sure that the WiFi name and password are correct, and the router DHCP is turned on;\n3. Long press the "SET" button to reset the factory settings and add again;\n4. Try Other ways to add</string>
+    <string name="done">Complete</string>
+    <string name="add_con">Keep adding</string>
+    <string name="add_fail_1">failed to add Device,</string>
+    <string name="add_fail_2">please diagnose </string>
+    <string name="add_retry">Re-add</string>
+    <string name="message_exit_edit">drop out</string>
+    <string name="add_way_2">Current adding method:</string>
+    <string name="dev_add_qr">Scan code for paring</string>
+    <string name="enter_upload_picture">upload image</string>
+    <string name="enter_upload_video">upload video</string>
+    <string name="enter_upload_record">upload record</string>
+    <string name="string_upload_bottom">upload</string>
+    <string name="string_upload_failed">upload failed</string>
+    <string name="string_upload_success">uploaded successfully</string>
 </resources>

@@ -40,10 +40,16 @@ interface ApiService {
     suspend fun queryUserBindResult(@Body body: RequestBody):Response<BaseResponse<BindStatusResult?>>
 
     @POST(".")
-    suspend fun modifyDeviceAttr(@Body body: RequestBody):Response<BaseResponse<ModifyNameResult?>>
+    suspend fun modifyDeviceAttr(@Body body: RequestBody):Response<BaseResponse<PlatResult?>>
 
     @POST(".")
     suspend fun shareSmartDevice(@Body body: RequestBody):Response<BaseResponse<ShareDeviceResult?>>
+
+    @POST(".")
+    suspend fun bindSmartDevice(@Body body: RequestBody):Response<BaseResponse<PlatResult?>>
+
+    @POST(".")
+    suspend fun forceUnbindDevice(@Body body: RequestBody):Response<BaseResponse<PlatResult?>>
 
     @POST(".")
     suspend fun getShareUserList(@Body body: RequestBody):Response<BaseResponse<ShareUserList?>>

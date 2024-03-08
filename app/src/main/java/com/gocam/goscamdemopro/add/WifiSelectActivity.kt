@@ -2,6 +2,7 @@ package com.gocam.goscamdemopro.add
 
 import android.content.Intent
 import android.os.Bundle
+import com.gocam.goscamdemopro.GApplication
 import com.gocam.goscamdemopro.R
 import com.gocam.goscamdemopro.base.BaseActivity
 import com.gocam.goscamdemopro.base.BaseBindActivity
@@ -23,6 +24,7 @@ class WifiSelectActivity : BaseBindActivity<ActivityWifiSelectBinding>() {
         mBinding?.apply {
 
             btnIpc.setOnClickListener {
+                GApplication.app.vPhotoUser.isVPhotoPackage = false
                 val ssid = etSsid.text.toString()
                 val psw = etPassword.text.toString()
                 if (psw.isEmpty() || ssid.isEmpty())
@@ -48,6 +50,20 @@ class WifiSelectActivity : BaseBindActivity<ActivityWifiSelectBinding>() {
 
               val intent = Intent(this@WifiSelectActivity,ScanQrCodeActivity::class.java)
               this@WifiSelectActivity.startActivity(intent)
+            }
+
+            btnAddPhoto.setOnClickListener {
+                val ssid = etSsid.text.toString()
+                val psw = etPassword.text.toString()
+                if (psw.isEmpty() || ssid.isEmpty())
+                    return@setOnClickListener
+                GApplication.app.vPhotoUser.isVPhotoPackage = true
+                GApplication.app.vPhotoUser.indexVPhoto = 0
+                GApplication.app.vPhotoUser.totalVPhoto = 1
+                val intent = Intent(this@WifiSelectActivity, AddVPhotoActivity::class.java)
+                intent.putExtra("ssid",ssid)
+                intent.putExtra("psw",psw)
+                this@WifiSelectActivity.startActivity(intent)
             }
 
         }

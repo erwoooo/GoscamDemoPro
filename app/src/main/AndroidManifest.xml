@@ -109,13 +109,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" />
+        <activity android:name=".MainActivity"
+            android:launchMode="singleTask"/>
         <activity android:name=".login.RegisterActivity" />
         <activity android:name=".login.ForgetPswActivity" />
         <activity android:name=".login.ModifyPswActivity" />
         <activity android:name=".add.WifiSelectActivity" />
         <activity android:name=".add.QrCodeActivity" />
         <activity android:name=".add.CheckBindStatusActivity" />
+        <activity android:name=".add.AddVPhotoActivity" />
+        <activity android:name=".vphoto.AddVPhotoScheduleActivity" />
+        <activity android:name=".vphoto.VPhotoAddDevResultActivity" />
+        <activity android:name=".vphoto.UploadFileActivity" />
         <activity android:name=".set.SettingActivity"/>
         <activity android:name=".play.PlayJavaActivity"/>
         <activity android:name=".set.CommonSetActivity"/>

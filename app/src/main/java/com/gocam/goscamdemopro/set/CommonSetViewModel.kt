@@ -39,7 +39,7 @@ class CommonSetViewModel : BaseViewModel<BaseModel>() {
 
     fun modifyName(userName: String, deviceId: String) {
         viewModelScope.launch {
-            val result = RemoteDataSource.modifyDeviceAttr(deviceId, userName, "", "")
+            val result = RemoteDataSource.modifyDeviceAttr(deviceId, userName, "", "", "")
             Log.e(TAG, "modifyName: $result")
         }
     }

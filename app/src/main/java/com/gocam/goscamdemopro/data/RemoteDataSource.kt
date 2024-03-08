@@ -9,14 +9,11 @@ import com.gocam.goscamdemopro.ws.WsManager
 import com.golway.uilib.bean.BaseResponse
 import com.golway.uilib.utils.asyncTask
 import com.google.gson.Gson
-import com.gos.platform.api.ConfigManager
 import com.gos.platform.api.GosSession
-import com.gos.platform.api.devparam.DevParam.DevParamCmdType
 
 import com.gos.platform.api.request.Request.MsgType.*
 import com.gos.platform.device.GosConnection
 import okhttp3.RequestBody.Companion.toRequestBody
-import java.util.ArrayList
 import com.gos.platform.api.domain.DeviceStatus
 
 import com.gos.platform.api.contact.DeviceType
@@ -332,14 +329,17 @@ object RemoteDataSource : DataSource {
         deviceId: String,
         deviceName: String,
         streamUser: String?,
-        streamPsw: String?
-    ): ModifyNameResult? {
+        streamPsw: String?,
+        linkDevice: String?
+    ): PlatResult? {
         val job = asyncTask {
             val map = mapOf(
                 Pair("DeviceId", deviceId),
                 Pair("DeviceName", deviceName),
                 Pair("StreamUser", streamUser),
                 Pair("StreamPassword", streamPsw),
+                Pair("LinkDevice", linkDevice),
+                Pair("UserName", GApplication.app.user.userName),
                 Pair("UserType", GApplication.app.userType),
                 Pair("SessionId", GApplication.app.user.sessionId),
                 Pair("AccessToken", gsoSession.accessToken),
@@ -355,8 +355,7 @@ object RemoteDataSource : DataSource {
         }
 
         val result = job.await()
-
-        return if (result is BaseResponse<ModifyNameResult?>)
+        return if (result is BaseResponse<PlatResult?>)
             result.Body
         else
             null
@@ -401,6 +400,71 @@ object RemoteDataSource : DataSource {
         val result = job.await()
 
         return if (result is BaseResponse<ShareDeviceResult?>)
+            result.Body
+        else
+            null
+    }
+
+    override suspend fun bindSmartDevice(
+        userName: String?,
+        deviceId: String?,
+        isOwner: Boolean,
+        deviceName: String,
+        deviceType: Int,
+        streamUser: String?,
+        streamPsw: String?,
+        areaId: String?,
+        appMatchType: Int,
+        linkDevice: String
+    ): PlatResult? {
+        val job = asyncTask {
+            val map = mapOf(
+                Pair("UserName", userName),
+                Pair("DeviceId", deviceId),
+                Pair("DeviceOwner", isOwner),
+                Pair("DeviceName", deviceName),
+                Pair("DeviceType", deviceType),
+                Pair("StreamUser", streamUser),
+                Pair("StreamPassword", streamPsw),
+                Pair("AreaId", areaId),
+                Pair("AppMatchType", appMatchType),
+                Pair("LinkDevice", linkDevice),
+                Pair("UserType", GApplication.app.userType),
+                Pair("SessionId", GApplication.app.user.sessionId),
+                Pair("AccessToken", gsoSession.accessToken),
+            )
+
+            val nMap = mapOf(
+                Pair("Body", map),
+                Pair("MessageType", BindSmartDeviceRequest)
+            )
+            val json = Gson().toJson(nMap).toRequestBody()
+            val response = RetrofitClient.apiService.bindSmartDevice(json)
+            return@asyncTask response.body()
+        }
+        val result = job.await()
+        return if (result is BaseResponse<PlatResult?>)
+            result.Body
+        else
+            null
+    }
+
+    override suspend fun forceUnbindDevice(deviceId: String): PlatResult? {
+        val job = asyncTask {
+            val map = mapOf(
+                Pair("DeviceId", deviceId)
+            )
+
+            val nMap = mapOf(
+                Pair("Body", map),
+                Pair("MessageType", ForceUnbindDeviceRequest)
+            )
+            val json = Gson().toJson(nMap).toRequestBody()
+            val response = RetrofitClient.apiService.forceUnbindDevice(json)
+            return@asyncTask response.body()
+        }
+        val result = job.await()
+        return if (result is BaseResponse<PlatResult?>)
             result.Body
         else
             null

@@ -2,7 +2,6 @@ package com.gocam.goscamdemopro.data
 
 import com.gocam.goscamdemopro.entity.*
 import com.golway.uilib.bean.BaseResponse
-import com.gos.platform.api.result.LoginResult
 
 interface DataSource {
 
@@ -33,11 +32,14 @@ interface DataSource {
     suspend fun queryUserBindResult(userName: String,bindToken:String):BaseResponse<BindStatusResult?>?
 
     //modify device alias
-    suspend fun modifyDeviceAttr(deviceId:String,deviceName:String,streamUser:String?,streamPsw:String?):ModifyNameResult?
+    suspend fun modifyDeviceAttr(deviceId:String,deviceName:String,streamUser:String?,streamPsw:String?,linkDevice:String?):PlatResult?
 
     // share device
     suspend fun shareSmartDevice(userName: String,deviceId:String,isOwner:Int,deviceName:String,deviceType:Int,streamUser:String?,streamPsw:String?,areaId:String?,appMatchType:Int):ShareDeviceResult?
 
+    suspend fun bindSmartDevice(userName: String?,deviceId:String?,isOwner:Boolean,deviceName:String,deviceType:Int,streamUser:String?,streamPsw:String?,areaId:String?,appMatchType:Int, linkDevice:String):PlatResult?
+
+    suspend fun forceUnbindDevice(deviceId:String):PlatResult?
     // get a list of user you've shared
     suspend fun getShareUserList(deviceId:String):ShareUserList?
 

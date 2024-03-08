@@ -466,4 +466,29 @@ public class FileUtils {
         mkdirs(path);
         return path;
     }
+
+    /**
+     * 创建根缓存目录
+     *
+     * @param context 上下文
+     * @return 文件路径
+     */
+    public static String createRootPath(Context context) {
+        String cacheRootPath = "";
+        if (isSdCardAvailable()) {
+            cacheRootPath = context.getExternalCacheDir().getPath();
+        } else {
+            cacheRootPath = context.getCacheDir().getPath();
+        }
+        return cacheRootPath;
+    }
+
+    /**
+     * 当前sdCard是否挂载
+     *
+     * @return true or false
+     */
+    private static boolean isSdCardAvailable() {
+        return Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
+    }
 }
