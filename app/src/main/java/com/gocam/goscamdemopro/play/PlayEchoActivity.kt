@@ -237,9 +237,12 @@ class PlayEchoActivity : BaseActivity<ActivityPlayVideoBinding, PlayViewModel>()
         }
 
         mViewModel?.mDeviceOnline?.observe(this) {
-            mDevice?.connection?.setPlatDevOnline(it)
+            mDevice?.connection?.setPlatDevOnline(!it)
             mDevice?.doConnect()
         }
+
+
+
     }
 
     override fun onResume() {

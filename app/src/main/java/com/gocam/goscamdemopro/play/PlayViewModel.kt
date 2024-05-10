@@ -27,6 +27,8 @@ class PlayViewModel : BaseViewModel<BaseModel>() {
     val mDeviceOnline: MutableLiveData<Boolean>
         get() = deviceOnline
 
+
+
     override fun onCreate(owner: LifecycleOwner) {
         super.onCreate(owner)
     }
@@ -58,11 +60,11 @@ class PlayViewModel : BaseViewModel<BaseModel>() {
                 deviceOnline.postValue(true)
             }else {
                 var offLine = deviceStatus.IsOnline == DeviceStatus.SLEEP
-
+                var wakeResult:WakeUpParam?=null
                 val flowJob = flow<WakeUpParam?> {
                     do {
                         delay(2000)
-                        val wakeResult = RemoteDataSource.wakeDevice(deviceId)
+                        wakeResult = RemoteDataSource.wakeDevice(deviceId)
                         emit(wakeResult)
                     } while (offLine)
 
@@ -70,14 +72,14 @@ class PlayViewModel : BaseViewModel<BaseModel>() {
                     Log.e(TAG, "handleDoorbellWakeup: $it")
                     viewModelScope.launch {
                         val deviceStatus = queryDeviceOnlineStatusSyn(deviceId)
-                        offLine = deviceStatus.IsOnline == DeviceStatus.ONLINE
+                        offLine = deviceStatus.IsOnline == DeviceStatus.SLEEP
                         deviceOnline.postValue(offLine)
                         Log.e(TAG, "handleDoorbellWakeup: $deviceStatus")
                         do {
                             val keepLiveParam = KeepLiveParam(IOTYPE_USER_IPCAM_KEEPALIVE_REQ, 0);
                             val result = RemoteDataSource.getCmdParam(keepLiveParam, deviceId)
                             delay(3000)
-                        } while (offLine)
+                        } while (!offLine)
                     }
 
                 }

@@ -84,8 +84,11 @@ public class DeviceManager {
         }
         deviceList.addAll(tempList);
         for (Device device : deviceList) {
-            device.getConnection().setPlatDevOnline(device.isPlatDevOnline());
-            device.getConnection().connect(0);
+            if (device.isPlatDevOnline()){
+                device.doConnect();
+            }
+//            device.getConnection().setPlatDevOnline(device.isPlatDevOnline());
+//            device.getConnection().connect(0);
         }
         return deviceList;
     }

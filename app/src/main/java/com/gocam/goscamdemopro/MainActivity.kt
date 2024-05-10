@@ -146,6 +146,13 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(),
                                 device.devId
                             )
                         }
+
+                        else->{
+                            PlayEchoActivity.startActivity(
+                                vh.itemView.context,
+                                device.devId
+                            )
+                        }
                     }
 
                 })
