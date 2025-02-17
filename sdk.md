@@ -3300,3 +3300,71 @@ public class Ptz {
 
 
 
+
+
+# GetVoiceInfoListRequest
+
+Get voice alarm resource file
+
+```kotlin
+data class Param(
+    val VoicePlayId:Int,
+    val VoiceUrl:String,
+    val PlayLanguage:String,
+    val Describe:String,
+)
+```
+
+| Field        | type   | Describe                                                     |
+| ------------ | ------ | ------------------------------------------------------------ |
+| VoicePlayId  | Int    | Serial number of audio files for linkage sound broadcasting  (cap40  :: un_type) |
+| VoiceUrl     | String | Linkage sound broadcasting audio file download link; Audio requires single channel 8K sampling rate in g711A format, with G711A file header removed (cap40 :: url) |
+| PlayLanguage | String |                                                              |
+| Describe     | String | Alarm audio file description                                 |
+
+```json
+cap40
+{
+	...,
+  "audio": {
+    "un_switch": 0,
+    "un_times": 1,
+    "un_volume": 80,
+    "un_type": 0,
+    "url": "https://xxxx"
+  },
+...
+}
+```
+
+
+
+# getFileForMonth
+
+Get if there is an alarm within a month
+
+```kotlin
+mDevice.getConnection().getFileForMonth(0, 0)
+```
+
+```java
+    public void onDevEvent(String s, DevResult devResult) {
+        if(devResult.getDevCmd() == DevResult.DevCmd.getFileForMonth){
+            dismissLoading();
+            if(ResultCode.SUCCESS == devResult.getResponseCode()){
+                GetFileForMonthResult result = (GetFileForMonthResult) devResult;
+                forMonthList = result.fileForMoth.mothFile;
+                mTfDayAdapter.notifyDataSetChanged();
+            }
+        }
+    }
+```
+
+GetFileForMonthResult
+
+Gets the collection of FileForMonth, and if a video exists that day, the date will be in the collection
+
+```
+FileForMonth [fileStatus=0, totalNum=0, currNo=0, mothFile=[ForMonth [body=202412293, monthTime=20241229, fileNum=3], ForMonth [body=202412303, monthTime=20241230, fileNum=3], ForMonth [body=202412313, monthTime=20241231, fileNum=3], ForMonth [body=202501013, monthTime=20250101, fileNum=3], ForMonth [body=202501023, monthTime=20250102, fileNum=3], ForMonth [body=202501033, monthTime=20250103, fileNum=3], ForMonth [body=202501043, monthTime=20250104, fileNum=3], ForMonth [body=202501053, monthTime=20250105, fileNum=3], ForMonth [body=202501063, monthTime=20250106, fileNum=3], ForMonth [body=202501073, monthTime=20250107, fileNum=3], ForMonth [body=202501083, monthTime=20250108, fileNum=3], ForMonth [body=202501093, monthTime=20250109, fileNum=3], ForMonth [body=202501103, monthTime=20250110, fileNum=3], ForMonth [body=202501113, monthTime=20250111, fileNum=3], ForMonth [body=202501123, monthTime=20250112, fileNum=3], ForMonth [body=202501133, monthTime=20250113, fileNum=3]]]
+```
+
