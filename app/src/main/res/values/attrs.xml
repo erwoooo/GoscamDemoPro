@@ -53,6 +53,8 @@
         <attr name="i_switch_btn_show" format="boolean"/>
         <attr name="i_top_line" format="boolean"/>
         <attr name="i_bottom_line" format="boolean"/>
+        <attr name="i_right_image_two" format="reference"/>
+        <attr name="i_right_image_two_show" format="boolean"/>
     </declare-styleable>
     <declare-styleable name="DirectionControlView">
         <attr name="background" format="reference"/>

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <include
+            android:id="@+id/tb_top"
+            layout="@layout/layout_toolbar"/>
+
+        <com.gocam.goscamdemopro.utils.ItemViewForSetting
+            android:id="@+id/ringtone_reminder"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/w_90px"
+            android:layout_marginTop="@dimen/w_20px"
+            app:i_left_txt="@string/string_ringtone_reminder"
+            app:i_switch_btn_show="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tb_top"/>
+
+        <com.gocam.goscamdemopro.utils.ItemViewForSetting
+            android:id="@+id/light_reminder"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/w_90px"
+            app:i_left_txt="@string/string_light_reminder"
+            app:i_switch_btn_show="true"
+            app:i_top_line="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ringtone_reminder"/>
+
+        <com.gocam.goscamdemopro.utils.ItemViewForSetting
+            android:id="@+id/vibration_reminder"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/w_90px"
+            app:i_left_txt="@string/string_vibration_reminder"
+            app:i_switch_btn_show="true"
+            app:i_top_line="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/light_reminder"/>
+
+        <com.gocam.goscamdemopro.utils.ItemViewForSetting
+            android:id="@+id/tv_ringtone"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/w_90px"
+            app:i_left_txt="@string/string_ringtone"
+            app:i_right_image_show="true"
+            app:i_top_line="true"
+            app:i_right_image="@mipmap/icon_more"
+            app:i_right_txt="cry"
+            app:i_right_txt_show="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/vibration_reminder"/>
+
+        <com.gocam.goscamdemopro.utils.ItemViewForSetting
+            android:id="@+id/light_color"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/w_90px"
+            app:i_left_txt="@string/string_light_color"
+            app:i_right_image_show="true"
+            app:i_top_line="true"
+            app:i_right_image="@mipmap/icon_more"
+            app:i_right_image_two_show="true"
+            app:i_right_image_two="@color/red"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_ringtone"/>
+
+        <com.gocam.goscamdemopro.utils.ItemViewForSetting
+            android:id="@+id/light_effects"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/w_90px"
+            app:i_left_txt="@string/string_light_effects"
+            app:i_right_image_show="true"
+            app:i_top_line="true"
+            app:i_right_image="@mipmap/icon_more"
+            app:i_right_txt="@string/light"
+            app:i_right_txt_show="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/light_color"/>
+
+        <FrameLayout
+            android:id="@+id/fl"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

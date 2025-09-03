@@ -38,7 +38,7 @@ object RetrofitClient {
         val retrofit = Retrofit.Builder()
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl(ConfigManager.getUrl())
+            .baseUrl(ConfigManager.getInstance().url)
             .build()
         mApiService = retrofit.create(ApiService::class.java)
     }

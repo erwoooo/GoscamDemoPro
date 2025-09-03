@@ -29,6 +29,8 @@ public class FileUtils {
     private static final String Temp = "Temp";
     private static final String Preset = "Preset";
 
+    private static final String TimeAlbum = "TimeAlbum";
+
     static {
         MainDir = GApplication.app.getString(R.string.app_name);
     }
@@ -380,6 +382,19 @@ public class FileUtils {
             return file.mkdirs();
         }
         return true;
+    }
+
+    public static File getTimeAlbum(String account, String iRouterID, String fileType, String time) {
+        String videoDir = null;
+        videoDir = getMainDir() + File.separator + account + File.separator + iRouterID +
+                File.separator + TimeAlbum + File.separator + CacheDir + File.separator
+                + fileType + File.separator + time;
+        File file = null;
+        file = new File(videoDir);
+        if (!file.exists() || !file.isDirectory()) {
+            boolean b = file.mkdirs();
+        }
+        return file;
     }
 
     public static String getDoorbellPath(String account, String deviceId) {

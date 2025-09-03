@@ -1,5 +1,7 @@
 package com.gocam.goscamdemopro.net
 
+import com.gocam.goscamdemopro.baby.GetSleepInfoResult
+import com.gocam.goscamdemopro.baby.GetTotalTimeResult
 import com.gocam.goscamdemopro.entity.*
 import com.golway.uilib.bean.BaseResponse
 import okhttp3.RequestBody
@@ -84,4 +86,10 @@ interface ApiService {
 
     @POST(".")
     suspend fun getPlayVoice(@Body body: RequestBody):Response<BaseResponse<VoicePlayParam?>>
+
+    @POST(".")
+    suspend fun getSleepInfo(@Body body: RequestBody):Response<BaseResponse<GetSleepInfoResult?>>
+
+    @POST(".")
+    suspend fun getTotalSleepTime(@Body body: RequestBody):Response<BaseResponse<GetTotalTimeResult?>>
 }

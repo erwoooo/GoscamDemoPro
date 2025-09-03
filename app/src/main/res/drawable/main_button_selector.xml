@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:state_enabled="false">
-        <shape xmlns:android="http://schemas.android.com/apk/res/android"
+        <shape
                android:shape="rectangle">
             <size android:width="22dp" android:height="18dp"/>
             <!--<solid android:color="@color/mainButtonDisableColor"/>-->
@@ -15,7 +15,7 @@
         </shape>
     </item>
     <item android:state_pressed="true">
-        <shape xmlns:android="http://schemas.android.com/apk/res/android"
+        <shape
                android:shape="rectangle">
             <size android:width="22dp" android:height="18dp"/>
             <solid android:color="#80bbfd"/>
@@ -28,7 +28,7 @@
         </shape>
     </item>
     <item>
-        <shape xmlns:android="http://schemas.android.com/apk/res/android"
+        <shape
                android:shape="rectangle">
             <size android:width="22dp" android:height="18dp"/>
             <!--<solid android:color="@color/mainButtonNormalColor"/>-->

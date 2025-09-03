@@ -3,6 +3,8 @@ package com.gocam.goscamdemopro.data
 import android.annotation.SuppressLint
 import android.util.Log
 import com.gocam.goscamdemopro.GApplication
+import com.gocam.goscamdemopro.baby.GetSleepInfoResult
+import com.gocam.goscamdemopro.baby.GetTotalTimeResult
 import com.gocam.goscamdemopro.entity.*
 import com.gocam.goscamdemopro.net.RetrofitClient
 import com.gocam.goscamdemopro.ws.WsManager
@@ -819,4 +821,100 @@ object RemoteDataSource : DataSource {
         }
     }
 
+    override suspend fun getVoiceInfoList(deviceId: String, type: Int): VoicePlayParam? {
+        val job = asyncTask {
+            val map = mapOf(
+                Pair("DeviceId", deviceId),
+                Pair("UserType", GApplication.app.userType),
+                Pair("SessionId", GApplication.app.user.sessionId),
+                Pair("AccessToken", gsoSession.accessToken),
+                Pair("UserName",   GApplication.app.user.userName!!),
+                Pair("VoiceType",   type),
+            )
+            val nMap = mapOf(
+                Pair("Body", map),
+                Pair("MessageType", GetVoiceInfoListRequest)
+            )
+            val json = Gson().toJson(nMap).toRequestBody()
+            val response = RetrofitClient.apiService.getPlayVoice(json)
+            Log.e(TAG, "checkBindStatus: $response")
+            return@asyncTask response.body()
+        }
+        val result = job.await()
+
+        return if (result is BaseResponse<VoicePlayParam?>){
+            result.Body
+        }else{
+            null
+        }
+    }
+
+    override suspend fun getSleepInfo(
+        deviceId: String,
+        utcTimeBegin: Int,
+        utcTimeEnd: Int,
+        mRecordId: Int
+    ): GetSleepInfoResult? {
+        val job = asyncTask {
+            val map = mapOf(
+                Pair("DeviceId", deviceId),
+                Pair("UserType", GApplication.app.userType),
+                Pair("SessionId", GApplication.app.user.sessionId),
+                Pair("AccessToken", gsoSession.accessToken),
+                Pair("UserName",   GApplication.app.user.userName!!),
+                Pair("UTCTimeBegin",   utcTimeBegin),
+                Pair("UTCTimeEnd",   utcTimeEnd),
+                Pair("RecordId",   mRecordId),
+                Pair("PageSize",   50),
+            )
+            val nMap = mapOf(
+                Pair("Body", map),
+                Pair("MessageType", GetSleepInfoRequest)
+            )
+            val json = Gson().toJson(nMap).toRequestBody()
+            val response = RetrofitClient.apiService.getSleepInfo(json)
+            Log.e(TAG, "checkBindStatus: $response")
+            return@asyncTask response.body()
+        }
+        val result = job.await()
+
+        return if (result is BaseResponse<GetSleepInfoResult?>){
+            result.Body
+        }else{
+            null
+        }
+    }
+
+    override suspend fun getTotalSleepTime(
+        deviceId: String,
+        utcTimeBegin: Int,
+        utcTimeEnd: Int
+    ): GetTotalTimeResult? {
+        val job = asyncTask {
+            val map = mapOf(
+                Pair("DeviceId", deviceId),
+                Pair("UserType", GApplication.app.userType),
+                Pair("SessionId", GApplication.app.user.sessionId),
+                Pair("AccessToken", gsoSession.accessToken),
+                Pair("UserName",   GApplication.app.user.userName!!),
+                Pair("UTCTimeBegin",   utcTimeBegin),
+                Pair("UTCTimeEnd",   utcTimeEnd)
+            )
+            val nMap = mapOf(
+                Pair("Body", map),
+                Pair("MessageType", GetTotalSleepTimeRequest)
+            )
+            val json = Gson().toJson(nMap).toRequestBody()
+            val response = RetrofitClient.apiService.getTotalSleepTime(json)
+            Log.e(TAG, "checkBindStatus: $response")
+            return@asyncTask response.body()
+        }
+        val result = job.await()
+
+        return if (result is BaseResponse<GetTotalTimeResult?>){
+            result.Body
+        }else{
+            null
+        }
+    }
 }

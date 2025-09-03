@@ -19,13 +19,12 @@ class ZxingCaptureKtActivity: BaseActivity<ActivityZxCaptureBinding,ZxingCapture
     lateinit var mCaptureFragment:CaptureFragment
     lateinit var devId:String
     val TAG = "ZxingCaptureKtActivity"
-    lateinit var resultCode: String
     override fun getLayoutId(): Int {
         return R.layout.activity_zx_capture
     }
 
     override fun onCreateData(bundle: Bundle?) {
-        resultCode = intent.getStringExtra("COME_FROM") as String
+        var resultCode = intent.getStringExtra("COME_FROM")
         mCaptureFragment = CaptureFragment()
         CodeUtils.setFragmentArgs(mCaptureFragment,R.layout.zxing_camera)
         mCaptureFragment.analyzeCallback = object :CodeUtils.AnalyzeCallback{

@@ -17,6 +17,9 @@ import com.icare.echo.EchoUtil
 import com.gocam.goscamdemopro.GApplication
 
 import com.gocam.goscamdemopro.R
+import com.gocam.goscamdemopro.baby.LifeReportActivity
+import com.gocam.goscamdemopro.baby.MusicPlayActivity
+import com.gocam.goscamdemopro.baby.TimeAlbumActivity
 import com.gocam.goscamdemopro.base.BaseActivity
 import com.gocam.goscamdemopro.databinding.ActivityIpcPlayVideoBinding
 import com.gocam.goscamdemopro.databinding.ActivityPlayVideoBinding
@@ -24,6 +27,7 @@ import com.gocam.goscamdemopro.entity.Device
 import com.gocam.goscamdemopro.play.GAudioTrack
 import com.gocam.goscamdemopro.play.PlayViewModel
 import com.gocam.goscamdemopro.play.TalkPlay
+import com.gocam.goscamdemopro.set.ai.AiPlacationActivity
 import com.gocam.goscamdemopro.talk.StreamTalkPlay
 import com.gocam.goscamdemopro.utils.DeviceManager
 import com.gocam.goscamdemopro.utils.dbg
@@ -180,10 +184,8 @@ class IpcPlayEchoActivity : BaseActivity<ActivityIpcPlayVideoBinding, PlayViewMo
         constPzt = mBinding?.constrainPzt
         mBinding?.btnPzt?.apply {
             setOnClickListener {
-
                 scrMenu?.visibility = View.GONE
                 constPzt?.visibility = View.VISIBLE
-
             }
         }
 
@@ -268,8 +270,25 @@ class IpcPlayEchoActivity : BaseActivity<ActivityIpcPlayVideoBinding, PlayViewMo
             }
         }
 
-
         mBinding?.apply {
+            btnMusic.visibility = if (mDevice?.devCap?.isPeripheral == true) View.VISIBLE else View.GONE
+            btnLife.visibility = if (mDevice?.devCap?.isPeripheral == true) View.VISIBLE else View.GONE
+            btnAlbum.visibility = if (mDevice?.devCap?.isPeripheral == true) View.VISIBLE else View.GONE
+            btnMusic.setOnClickListener {
+                val intent = Intent(this@IpcPlayEchoActivity, MusicPlayActivity::class.java)
+                intent.putExtra("dev", mDevice?.devId)
+                this@IpcPlayEchoActivity.startActivity(intent)
+            }
+            btnLife.setOnClickListener {
+                val intent = Intent(this@IpcPlayEchoActivity, LifeReportActivity::class.java)
+                intent.putExtra("dev", mDevice?.devId)
+                this@IpcPlayEchoActivity.startActivity(intent)
+            }
+            btnAlbum.setOnClickListener {
+                val intent = Intent(this@IpcPlayEchoActivity, TimeAlbumActivity::class.java)
+                intent.putExtra("dev", mDevice?.devId)
+                this@IpcPlayEchoActivity.startActivity(intent)
+            }
             ivPztLeft.setOnClickListener {
                 mViewModel?.operatePzt(mDevice!!.devId,Ptz.PTZ_LEFT)
                 /**

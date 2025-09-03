@@ -330,4 +330,152 @@
     <string name="string_upload_bottom">upload</string>
     <string name="string_upload_failed">upload failed</string>
     <string name="string_upload_success">uploaded successfully</string>
+    <string name="string_peripheral">Peripheral</string>
+    <string name="string_reminder">Reminder</string>
+    <string name="string_add_peripherals">Add peripherals</string>
+    <string name="string_add_peripherals_failed">Please check if the accessories are turned on</string>
+    <string name="string_add_peripherals_toast">Long press the pairing key to match the code</string>
+    <string name="face_add_success">Added successfully</string>
+    <string name="dev_add_fail">Device add failed</string>
+    <string name="string_ringtone_reminder">Ringtone reminder</string>
+    <string name="string_light_reminder">Light reminder</string>
+    <string name="string_vibration_reminder">Vibration reminder</string>
+    <string name="string_ringtone">Ringtone</string>
+    <string name="string_light_color">Light color</string>
+    <string name="string_light_effects">Lighting effects</string>
+    <string name="string_ringtone_select">ringing tone</string>
+    <string name="string_light_select">Light selection</string>
+    <string name="string_delete_reminder">Delete Reminder Device</string>
+    <string name="string_wonderful_snap">Wonderful snap</string>
+    <string name="string_wonderful_video">Wonderful video</string>
+    <string name="string_detector">Detector</string>
+    <string name="string_alarm_reminder">Alarm reminder function</string>
+    <string name="string_alarm_reminder_toast">After activation, all alarms are alerted through the alarm system</string>
+    <string name="string_alarm_volume">alarm volume</string>
+    <string name="string_reminder_duration">Reminder duration</string>
+    <string name="string_working_hours">Working hours</string>
+    <string name="string_working_hours_toast">After setting, alarm reminders will only be issued during that time period</string>
+    <string name="string_reminder_mode">Reminder method</string>
+    <string name="cancel">Cancel</string>
+    <string name="music">Music</string>
+    <string name="device_offline">Device offline</string>
+    <string name="string_detected_crying">Detected crying</string>
+    <string name="string_hit_the_fence">I hit the fence</string>
+    <string name="string_fell_asleep">Fell asleep</string>
+    <string name="string_awake">Awake</string>
+    <string name="string_cover_face">Cover your face</string>
+    <string-array name="reminder_light_color"> <!--外设铃声设置-->
+        <item>#ff0000</item>
+        <item>#FFFFFF</item>
+        <item>#FFF000</item>
+        <item>#009b4c</item>
+        <item>#0000ff</item>
+        <item>#9D32FA</item>
+    </string-array>
+    <array name="reminder_ringtone"> <!--外设铃声设置-->
+        <item>dingdong_sound</item>
+        <item>alarm_sound_1</item>
+        <item>alarm_sound_2</item>
+        <item>alarm_sound_3</item>
+        <item>alarm_sound_4</item>
+        <item>cry_sound_1</item>
+        <item>cry_sound_2</item>
+        <item>cry_sound_3</item>
+        <item>wakeup</item>
+        <item>asleep_1</item>
+        <item>asleep_2</item>
+    </array>
+    <array name="reminder_light_effects"> <!--外设铃声设置-->
+        <item>Always-on light</item>
+        <item>Flashing</item>
+    </array>
+    <string name="string_sleep_monitor">Sleep monitoring</string>
+    <string name="string_boundary">Electronic fence</string>
+    <string name="detection_sensitivity">detection sensitivity</string>
+    <string name="detection_sensitivity_set">detection sensitivity set</string>
+    <string name="string_ai_placation">Intelligent comfort</string>
+    <string name="cry_detection">Crying detection</string>
+    <string name="cry_detection_title">After activation, detect the baby\'s crying and alert with an alarm</string>
+    <string name="string_night_light">The night light soothes</string>
+    <string name="string_night_light_title">After activation, turn on the night light when the baby cries</string>
+    <string name="string_musical_comfort">Music soothes</string>
+    <string name="string_musical_comfort_title">After activation, play corresponding music when the baby cries</string>
+    <string name="string_select_music">Choose soothing music</string>
+    <string name="string_comfort_time">Comfort period</string>
+    <string name="string_comfort_time_title">After setting, only pacify during that time period</string>
+    <string name="string_cry_detection_warn_1">Detected brief crying and immediately reported to the police</string>
+    <string name="string_cry_detection_warn_2">Alarm when prolonged crying is detected</string>
+    <string name="string_cry_detection_warn_3">Alarm when crying is detected for a period of time</string>
+    <string name="string_random">random</string>
+    <string name="string_electronic_fence_title">After opening, prevent babies from approaching dangerous areas</string>
+    <string name="string_detection_time">Detection time period</string>
+    <string name="string_detection_time_title">After setting, only detect during that time period</string>
+    <string name="string_visible_boundary">Display fence border</string>
+    <string name="string_visible_boundary_title">After activation, display borders in the video</string>
+    <string name="string_electronic_fence_height">Alarm immediately upon detection of touching the warning line</string>
+    <string name="string_electronic_fence_mid">Alarm when multiple touches on the warning line are detected</string>
+    <string name="string_electronic_fence_low">Alarm when touching the warning line for a period of time</string>
+    <string name="string_basic_setting">Basic Settings</string>
+    <string name="twinkle">Flashing</string>
+    <string name="light">Lights always on</string>
+    <string name="string_ai_setting">AI mode</string>
+    <string name="string_cry_inform">Record and notify when baby crying is detected</string>
+    <string name="string_monitor_sleep">Automatically detect the baby\'s sleep status after activation, including covering the face, falling asleep, and engaging in activities</string>
+    <string name="string_electronic_fence_toast">Set an area and remind upon touch</string>
+    <string name="string_privacy_occlusion">Privacy occlusion</string>
+    <string name="string_privacy_occlusion_toast">Set an area that can block video footage outside of that area</string>
+    <string name="string_automatic_tracking">Automatic tracking</string>
+    <string name="string_automatic_tracking_toast">After activation, it automatically follows moving objects. It is recommended to activate the living room</string>
+    <string name="setting_message_record_time">Message recording duration</string>
+    <string name="string_musical_comfort_detail_title">When it is turned on, the corresponding music is played when the baby cries</string>
+    <string name="string_support_off">Not enabled</string>
+    <string name="turn_on">Opened</string>
+    <array name="soothing_music_play_raw_id_9"><!--智能安抚音频-->
+        <item>blind-mice</item>
+        <item>brahms</item>
+        <item>canon-in</item>
+        <item>dream-chase</item>
+        <item>dreaming</item>
+    </array>
+    <string name="string_open_height">Opened-High</string>
+    <string name="string_open_mid">Opened-Middle</string>
+    <string name="string_open_low">Opened-Low</string>
+    <string name="string_sleep_monitor_title">After activation, detect reminders for falling asleep, covering the face, awakening, and activity</string>
+    <string name="string_shelter_monitor">Face Covering Detection</string>
+    <string name="string_shelter_monitor_title">Reminder when mouth and nose cannot be detected after the baby falls asleep</string>
+    <string name="string_wake_up">Awakening detection</string>
+    <string name="string_wake_up_title">After activation, detect the baby\'s wake-up reminder</string>
+    <string name="string_events_monitor">Activity detection</string>
+    <string name="string_events_monitor_title">After activation, the baby\'s body movement reminder</string>
+    <string name="string_sleep_quality">Sleep quality monitoring</string>
+    <string name="string_sleep_quality_title">Monitor baby\'s sleep quality after activation</string>
+    <string name="setting_sensitivity">Sensitivity</string>
+    <string name="string_sensitivity_height">high sensitivity</string>
+    <string name="string_sensitivity_mid">Medium sensitivity</string>
+    <string name="string_sensitivity_low">Low sensitivity</string>
+    <string name="string_shelter_monitor_height">Alarm immediately if face covering is detected</string>
+    <string name="string_shelter_monitor_mid">Alarm when multiple face coverings are detected</string>
+    <string name="string_shelter_monitor_low">Alarm when face covering is detected for a period of time</string>
+    <string name="string_wake_up_height">Alarm immediately upon detecting eye opening</string>
+    <string name="string_wake_up_mid">Alarm detected when eyes open for 1 minute</string>
+    <string name="string_wake_up_low">Alarm detected when eyes are open for 2 minutes or more</string>
+    <string name="string_reset">eliminate</string>
+    <string name="string_boundary_toast">Click on the screen (to form a closed border) to set the fence border, that is, after turning on the "electronic fence", an alarm will be triggered when the baby touches the border position.</string>
+    <string name="string_privacy_occlusion_title">After activation, set screen occlusion outside the designated area to protect privacy</string>
+    <string name="string_privacy_explain">Click on the screen (to form a closed border) to set a privacy area, that is, after turning on "privacy masking", the video outside of this area will become a blurred mosaic and not visible.</string>
+    <string name="tv_life_report">Life report</string>
+    <string name="tv_time_album">Exciting Moments</string>
+    <string name="tv_play_music">Play</string>
+    <string name="tv_play_up">Up</string>
+    <string name="tv_play_next">Next</string>
+    <string name="string_sleep_record">七天睡眠记录：</string>
+    <string name="string_activity_count">活动次数：</string>
+    <string name="string_cry_count">哭闹次数：</string>
+    <string name="string_max_sleep">最长睡眠时间：</string>
+    <string name="string_all_sleep">总睡眠时长：</string>
+    <string name="string_activity_status">宝宝活动状态：</string>
+    <string name="string_no_baby">No baby found</string>
+    <string name="string_baby_eventing">The baby is moving</string>
+    <string name="string_baby_sleeping">The baby is sleeping</string>
+
 </resources>

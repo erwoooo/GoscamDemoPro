@@ -122,6 +122,8 @@ public class DevCap {
     public boolean isSupportWarnSoundLight;
     //插值设备
     public int interpolationType;
+    // 是否有外设
+    public boolean isPeripheral;
 
     public DevCap parseDevCap(String deviceID,DevCapabilityA a){
         this.deviceID = deviceID;

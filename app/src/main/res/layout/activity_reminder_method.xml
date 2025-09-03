@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include
+            android:id="@+id/tb_top"
+            layout="@layout/layout_toolbar"/>
+
+        <com.gocam.goscamdemopro.utils.ItemViewForSetting
+            android:id="@+id/detected_crying"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/w_90px"
+            android:layout_marginTop="@dimen/w_20px"
+            app:i_left_txt="@string/string_detected_crying"
+            app:i_right_image_show="true"
+            app:i_right_image="@mipmap/icon_more"
+            app:i_right_image_two_show="true"
+            app:i_right_image_two="@color/red"
+            app:i_right_txt="cry"
+            app:i_right_txt_show="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tb_top"/>
+
+        <com.gocam.goscamdemopro.utils.ItemViewForSetting
+            android:id="@+id/hit_the_fence"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/w_90px"
+            app:i_left_txt="@string/string_hit_the_fence"
+            app:i_right_image_show="true"
+            app:i_top_line="true"
+            app:i_right_image="@mipmap/icon_more"
+            app:i_right_image_two_show="true"
+            app:i_right_image_two="@color/red"
+            app:i_right_txt="cry"
+            app:i_right_txt_show="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/detected_crying"/>
+
+        <com.gocam.goscamdemopro.utils.ItemViewForSetting
+            android:id="@+id/fell_asleep"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/w_90px"
+            app:i_left_txt="@string/string_fell_asleep"
+            app:i_right_image_show="true"
+            app:i_top_line="true"
+            app:i_right_image="@mipmap/icon_more"
+            app:i_right_image_two_show="true"
+            app:i_right_image_two="@color/red"
+            app:i_right_txt="cry"
+            app:i_right_txt_show="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/hit_the_fence"/>
+
+        <com.gocam.goscamdemopro.utils.ItemViewForSetting
+            android:id="@+id/tv_awake"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/w_90px"
+            app:i_left_txt="@string/string_awake"
+            app:i_right_image_show="true"
+            app:i_top_line="true"
+            app:i_right_image="@mipmap/icon_more"
+            app:i_right_image_two_show="true"
+            app:i_right_image_two="@color/red"
+            app:i_right_txt="cry"
+            app:i_right_txt_show="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fell_asleep"/>
+
+        <com.gocam.goscamdemopro.utils.ItemViewForSetting
+            android:id="@+id/cover_face"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/w_90px"
+            app:i_left_txt="@string/string_cover_face"
+            app:i_right_image_show="true"
+            app:i_top_line="true"
+            app:i_right_image="@mipmap/icon_more"
+            app:i_right_image_two_show="true"
+            app:i_right_image_two="@color/red"
+            app:i_right_txt="cry"
+            app:i_right_txt_show="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_awake"/>
+
+        <FrameLayout
+            android:id="@+id/fl"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

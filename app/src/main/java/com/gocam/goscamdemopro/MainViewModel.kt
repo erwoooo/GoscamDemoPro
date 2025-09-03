@@ -52,7 +52,7 @@ class MainViewModel : BaseViewModel<BaseModel>(), OnPlatformEventCallback {
 
     private fun refreshDataStatus() {
         val deviceList = DeviceManager.getInstance().deviceList
-        var hasVPhoto: Boolean = false
+        var hasVPhoto = false
         for (device: Device in deviceList) {
             if (device.devType == DeviceType.V_PHOTO) {
                 hasVPhoto = true

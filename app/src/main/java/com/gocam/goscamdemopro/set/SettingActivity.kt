@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.lifecycle.coroutineScope
 import com.gocam.goscamdemopro.GApplication
 import com.gocam.goscamdemopro.R
@@ -12,6 +13,7 @@ import com.gocam.goscamdemopro.cloud.data.GosCloud
 import com.gocam.goscamdemopro.data.RemoteDataSource
 import com.gocam.goscamdemopro.databinding.ActivitySettingBinding
 import com.gocam.goscamdemopro.entity.Device
+import com.gocam.goscamdemopro.set.ai.AiModeSettingActivity
 import com.gocam.goscamdemopro.utils.DeviceManager
 import com.gos.platform.api.contact.DeviceType
 import kotlinx.coroutines.launch
@@ -23,7 +25,7 @@ class SettingActivity : BaseBindActivity<ActivitySettingBinding>() {
     }
 
     override fun onCreateData(bundle: Bundle?) {
-        val devId = intent.getStringExtra("dev")
+        val devId = intent.getStringExtra("dev")?: return
         mDevice = DeviceManager.getInstance().findDeviceById(devId)
         if (mDevice == null)
             finish()
@@ -34,6 +36,8 @@ class SettingActivity : BaseBindActivity<ActivitySettingBinding>() {
             toolBar.backImg.setOnClickListener {
                 finish()
             }
+
+            btnAiMode.visibility = if (mDevice.devCap.isPeripheral) View.VISIBLE else View.GONE
 
             btnModifyName.setOnClickListener {
                 val intent = Intent(this@SettingActivity, CommonSetActivity::class.java)
@@ -111,6 +115,13 @@ class SettingActivity : BaseBindActivity<ActivitySettingBinding>() {
             btnDoorbellVolume.setOnClickListener {
                 val intent = Intent(this@SettingActivity,DoorbellVolumeActivity::class.java)
                 intent.putExtra("dev",mDevice.devId)
+                this@SettingActivity.startActivity(intent)
+            }
+
+            btnAiMode.setOnClickListener {
+                // Ai模式设置页面
+                val intent = Intent(this@SettingActivity, AiModeSettingActivity::class.java)
+                intent.putExtra("dev", mDevice.devId)
                 this@SettingActivity.startActivity(intent)
             }
         }

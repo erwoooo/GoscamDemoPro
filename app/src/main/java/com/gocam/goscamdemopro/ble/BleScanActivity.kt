@@ -25,6 +25,7 @@ import com.clj.fastble.BleManager
 import com.clj.fastble.callback.*
 import com.clj.fastble.data.BleDevice
 import com.clj.fastble.exception.BleException
+import com.clj.fastble.scan.BleScanRuleConfig
 import com.clj.fastble.utils.HexUtil
 import com.clj.fastble.utils.HexUtil.formatHexString
 import com.gocam.goscamdemopro.GApplication
@@ -56,6 +57,10 @@ class BleScanActivity: BaseActivity<ActivityBleScanLayoutBinding,BleConViewModel
     val UUID_SERVICE_N12:String = "0000ffff-0000-1000-8000-00805f9b34fb"
     val UUID_WRITE_N12:String = "0000ff01-0000-1000-8000-00805f9b34fb"
     val UUID_NOTIFY_N12:String = "0000ff03-0000-1000-8000-00805f9b34fb"
+
+    val UUID_SERVICE_9200:String = "0000ffe0-0000-1000-8000-00805f9b34fb"
+    val UUID_WRITE_9200:String = "0000ffe1-0000-1000-8000-00805f9b34fb"
+    val UUID_NOTIFY_9200:String = "0000ffe1-0000-1000-8000-00805f9b34fb"
 
 
     var UUID_SERVICE:String = UUID_SERVICE_N12
@@ -97,15 +102,15 @@ class BleScanActivity: BaseActivity<ActivityBleScanLayoutBinding,BleConViewModel
             override fun onBleCon(dev: BleDevice) {
                 Log.e(TAG, "onBleCon: 点击设备", )
                 BleManager.getInstance().cancelScan()
-                if (dev.name.toString().contains(N11)){
-                    UUID_SERVICE = UUID_SERVICE_N11
-                    UUID_WRITE = UUID_WRITE_N11
-                    UUID_NOTIFY = UUID_NOTIFY_N11
-                }else{
-                    UUID_SERVICE = UUID_SERVICE_N12
-                    UUID_WRITE = UUID_WRITE_N12
-                    UUID_NOTIFY = UUID_NOTIFY_N12
-                }
+//                if (dev.name.toString().contains(N11)){
+//                    UUID_SERVICE = UUID_SERVICE_N11
+//                    UUID_WRITE = UUID_WRITE_N11
+//                    UUID_NOTIFY = UUID_NOTIFY_N11
+//                }else{
+//                    UUID_SERVICE = UUID_SERVICE_N12
+//                    UUID_WRITE = UUID_WRITE_N12
+//                    UUID_NOTIFY = UUID_NOTIFY_N12
+//                }
                 connectBleDev(dev)
             }
 
@@ -235,7 +240,7 @@ class BleScanActivity: BaseActivity<ActivityBleScanLayoutBinding,BleConViewModel
 
                 for (service in bleGatt.services){
                     Log.e(TAG, "sendDataToBle: service = ${service.uuid}" )
-                    if (service.uuid.toString() == UUID_SERVICE){
+                    if (service.uuid.toString() == UUID_SERVICE_9200){
                         Log.e(TAG, "sendDataToBle: 开始做service信息")
                         openNotifyService(dev,service)
                     }
@@ -269,6 +274,7 @@ class BleScanActivity: BaseActivity<ActivityBleScanLayoutBinding,BleConViewModel
         Thread.sleep(1000)
         service?.let {
             for (character in it.characteristics){
+                Log.e(TAG, "sendDataToBle: character = ${character.uuid}" )
                 if (character.uuid.toString() == UUID_NOTIFY){
                     BleManager.getInstance().notify(dev,character.service.uuid.toString(),character.uuid.toString(),object : BleNotifyCallback(){
                         override fun onNotifySuccess() {

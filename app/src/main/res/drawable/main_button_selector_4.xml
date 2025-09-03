@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_enabled="false">
+        <shape
+               android:shape="rectangle">
+            <size android:width="@dimen/w_100px" android:height="@dimen/w_80px"/>
+            <!--<solid android:color="@color/mainButtonDisableColor"/>-->
+            <solid android:color="@color/_8BE2C0"/>
+            <corners android:radius="@dimen/w_60px"/>
+            <padding
+                android:bottom="@dimen/w_10px"
+                android:left="@dimen/w_40px"
+                android:right="@dimen/w_40px"
+                android:top="@dimen/w_10px"/>
+        </shape>
+    </item>
+    <item android:state_pressed="true">
+        <shape
+               android:shape="rectangle">
+            <size android:width="@dimen/w_100px" android:height="@dimen/w_80px"/>
+            <solid android:color="@color/_8BE2C0"/>
+            <corners android:radius="@dimen/w_60px"/>
+            <padding
+                android:bottom="@dimen/w_10px"
+                android:left="@dimen/w_40px"
+                android:right="@dimen/w_40px"
+                android:top="@dimen/w_10px"/>
+        </shape>
+    </item>
+    <item>
+        <shape
+               android:shape="rectangle">
+            <size android:width="@dimen/w_100px" android:height="@dimen/w_80px"/>
+            <!--<solid android:color="@color/mainButtonNormalColor"/>-->
+            <solid android:color="@color/_3CCF9B"/>
+            <corners android:radius="@dimen/w_60px"/>
+            <padding
+                android:bottom="@dimen/w_10px"
+                android:left="@dimen/w_40px"
+                android:right="@dimen/w_40px"
+                android:top="@dimen/w_10px"/>
+        </shape>
+    </item>
+</selector>

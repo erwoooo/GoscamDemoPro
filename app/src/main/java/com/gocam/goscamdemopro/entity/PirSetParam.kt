@@ -1,5 +1,8 @@
 package com.gocam.goscamdemopro.entity
 
+import com.gos.platform.api.devparam.BoundarySettingParamElement
+import com.gos.platform.api.devparam.PeripheralElement
+
 data class DevSetParam(
     val Body: DevSetBody,
     val MessageType: String
@@ -262,4 +265,51 @@ data class NightStarParam(
 
 data class NightStarRotateParam(
    var un_switch:Int
+):BaseDeviceParam()
+
+data class PeripheralParam(
+    var dev_list: List<PeripheralElement>
+):BaseDeviceParam()
+
+data class ReminderMethodParam(
+    var SubDevId: String,
+    var eventTypeId: Int,
+    var reminder_method: List<PeripheralElement.MethodBean>
+):BaseDeviceParam()
+
+data class CryAlarmPushSettingParam(
+    var un_switch: Int,
+    var un_sensitivity: Int,
+    var un_soundsoothes: Int,
+    var un_musicindex: Int,
+    var starttime: Int,
+    var endtime: Int,
+    var un_nightlamp: Int
+):BaseDeviceParam()
+
+data class SleepDetectionParam(
+    var un_switch: Int,
+    var detect_masked_face: Int,
+    var detect_awaken: Int,
+    var detect_motion: Int,
+    var sleep_quality: Int,
+    var heartrate_breathe: Int
+):BaseDeviceParam()
+
+data class BoundarySettingParam(
+    var un_switch: Int,
+    var un_sensitivity: Int,
+    var show_polygon: Int,
+    var starttime: Int,
+    var endtime: Int,
+    var permcnt: Int,
+    var perms: MutableList<BoundarySettingParamElement.Perms>
+):BaseDeviceParam()
+
+data class PrivacySettingParam(
+    var un_switch: Int,
+    var x0: Int,
+    var x1: Int,
+    var y0: Int,
+    var y1: Int
 ):BaseDeviceParam()

@@ -150,6 +150,47 @@
                     android:background="@drawable/main_button_selector"
                     />
 
+                <Button
+                    android:visibility="visible"
+                    android:id="@+id/btn_life"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tv_life_report"
+                    android:textAllCaps="false"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:textColor="#fff"
+                    android:background="@drawable/main_button_selector"
+                    />
+
+                <Button
+                    android:visibility="visible"
+                    android:id="@+id/btn_music"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/music"
+                    android:textAllCaps="false"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:textColor="#fff"
+                    android:background="@drawable/main_button_selector"
+                    />
+
+                <Button
+                    android:visibility="visible"
+                    android:id="@+id/btn_album"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tv_time_album"
+                    android:textAllCaps="false"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:textColor="#fff"
+                    android:background="@drawable/main_button_selector"
+                    />
             </LinearLayout>
         </ScrollView>
 

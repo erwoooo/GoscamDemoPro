@@ -1,5 +1,7 @@
 package com.gocam.goscamdemopro.data
 
+import com.gocam.goscamdemopro.baby.GetSleepInfoResult
+import com.gocam.goscamdemopro.baby.GetTotalTimeResult
 import com.gocam.goscamdemopro.entity.*
 import com.golway.uilib.bean.BaseResponse
 
@@ -71,4 +73,7 @@ interface DataSource {
     suspend fun checkBindStatus(deviceId: String):BindStatus?
 
     suspend fun getVoicePlay(deviceId: String):VoicePlayParam?
+    suspend fun getVoiceInfoList(deviceId: String, type: Int):VoicePlayParam?
+    suspend fun getSleepInfo(deviceId: String, utcTimeBegin: Int, utcTimeEnd: Int, mRecordId: Int): GetSleepInfoResult?
+    suspend fun getTotalSleepTime(deviceId: String, utcTimeBegin: Int, utcTimeEnd: Int): GetTotalTimeResult?
 }

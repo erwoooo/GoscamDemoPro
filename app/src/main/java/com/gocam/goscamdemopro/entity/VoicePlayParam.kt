@@ -11,7 +11,9 @@ class VoicePlayParam {
 
 data class Param(
     val VoicePlayId:Int,
+    val VoiceTimeLength:Int,
     val VoiceUrl:String,
     val PlayLanguage:String,
     val Describe:String,
+    val VoiceMD5:String,
 )

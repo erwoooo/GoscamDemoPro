@@ -728,6 +728,7 @@ public class Device implements Comparable<Device> {
                 //如果是4，代表有4个画面，大于0就属于套装设备
                 //isPackageDevice = true;
             }
+            devCap.isPeripheral = cap.cap87 == 1;
 
 
 

@@ -7,10 +7,14 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="_aaeeeeee">#ddeeeeee</color>
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
     <color name="app_color">#68A5FE</color>
+    <color name="_2e2e2e">#2e2e2e</color>
+    <color name="_B337FF79">#B337FF79</color>
+
 
     <color name="buttonNormalColor">#FFFFFF</color>
     <color name="buttonPressedColor">#fbfbf8</color>
@@ -23,5 +27,26 @@
     <color name="text2">#333333</color>
     <color name="_3CCF9B">#3CCF9B</color>
     <color name="red">#ff0000</color>
+    <color name="price">#F8433A</color>
+    <color name="_8BE2C0">#8BE2C0</color>
+    <color name="_999999">#999999</color>
+    <color name="_FE492B">#FE492B</color>
+    <color name="textColor">#1F1A17</color>
+    <color name="textHintColor">#838281</color>
+    <color name="_3CCF96">#3CCF96</color>
+    <color name="color_7298FB">#7298FB</color>
+    <color name="color_3251E5">#3251E5</color>
+    <color name="color_FF9D2E">#FF9D2E</color>
+    <color name="color_FEFEFE">#FEFEFE</color>
+    <color name="color_00FF00">#00FF00</color>
+    <color name="color_FFFF00">#FFFF00</color>
+    <color name="color_7AE6C0">#7AE6C0</color>
+    <color name="color_8BEFCC">#8BEFCC</color>
+    <color name="color_CCF8E8">#CCF8E8</color>
+    <color name="color_FBC86D">#FBC86D</color>
+    <color name="color_666666">#666666</color>
+    <color name="color_0F0F0F">#0F0F0F</color>
+    <color name="wifi_change">#E6E6E6</color>
+
 
 </resources>

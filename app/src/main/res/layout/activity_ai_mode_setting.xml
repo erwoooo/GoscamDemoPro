@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include layout="@layout/layout_toolbar" android:id="@+id/tool_bar" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <Button
+                    android:id="@+id/btn_comfort"
+                    style="@style/style_setting_item"
+                    android:text="@string/string_ai_placation"
+                   />
+
+                <Button
+                    android:id="@+id/btn_sleep_monitor"
+                    style="@style/style_setting_item"
+                    android:text="@string/string_sleep_monitor"
+                    />
+
+                <Button
+                    android:id="@+id/btn_boundary"
+                    style="@style/style_setting_item"
+                    android:text="@string/string_boundary"
+                    />
+
+                <Button
+                    android:id="@+id/btn_privacy_occlusion"
+                    style="@style/style_setting_item"
+                    android:text="@string/string_privacy_occlusion"
+                    />
+
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+</layout>

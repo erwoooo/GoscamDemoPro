@@ -18,8 +18,10 @@ import com.gocam.goscamdemopro.base.BaseActivity
 import com.gocam.goscamdemopro.cloud.CloudDayActivity
 import com.gocam.goscamdemopro.databinding.ActivityMainBinding
 import com.gocam.goscamdemopro.entity.Device
-import com.gocam.goscamdemopro.n12.N12SetActivity
+import com.gocam.goscamdemopro.ipcset.IPCSetActivity
+import com.gocam.goscamdemopro.peripheral.PeripheralListActivity
 import com.gocam.goscamdemopro.play.PlayEchoActivity
+import com.gocam.goscamdemopro.play.ipc.IpcPlayEchoActivity
 import com.gocam.goscamdemopro.set.SettingActivity
 import com.gocam.goscamdemopro.tf.TfDayActivity
 import com.gocam.goscamdemopro.utils.DeviceManager
@@ -123,6 +125,12 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(),
                 if (device.devType == DeviceType.V_PHOTO) {
                     isOnline = DeviceManager.getInstance().isOnline(device.devId)
                 }
+                if (device.getDevCap().isPeripheral) {
+                    vh.ibtnAdd.visibility = View.VISIBLE
+                } else {
+                    vh.ibtnAdd.visibility = View.INVISIBLE
+                }
+
                 ("DevName:" + device.devName
                     .toString() + "\nDevId:" + device.devId.toString() +
                         "\nDevType:" + device.devType.toString() +
@@ -137,13 +145,12 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(),
                                 device.devId
                             )
                         }
- /*                       DeviceType.IPC,DeviceType.GLO_NIGHT->{
-
-                            N12SetActivity.startActivity(
+                        DeviceType.IPC,DeviceType.GLO_NIGHT->{
+                            IpcPlayEchoActivity.startActivity(
                                 vh.itemView.context,
                                 device.devId
                             )
-                        }*/
+                        }
                         DeviceType.V_PHOTO -> {
                             UploadFileActivity.startActivity(
                                 vh.itemView.context,
@@ -173,53 +180,50 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(),
                     )
                 }
                 (vh as Vh).ibtnSetting.setOnClickListener {
-                    when(device.devType){
-                        DeviceType.DOOR_BELL->{
-                            val intent = Intent(vh.itemView.context, SettingActivity::class.java)
-                            intent.putExtra("dev", device.devId)
-                            vh.itemView.context.startActivity(intent)
-                        }
-                        DeviceType.IPC,DeviceType.GLO_NIGHT->{
-                            val intent = Intent(vh.itemView.context, SettingActivity::class.java)
-                            intent.putExtra("dev", device.devId)
-                            vh.itemView.context.startActivity(intent)
-//                            val intent = Intent(vh.itemView.context, IPCSetActivity::class.java)
-//                            intent.putExtra("dev", device.devId)
-//                            vh.itemView.context.startActivity(intent)
-                        }
-                        else -> {
-                            val intent = Intent(vh.itemView.context, SettingActivity::class.java)
-                            intent.putExtra("dev", device.devId)
-                            vh.itemView.context.startActivity(intent)
-                        }
+                    if (device.devType == DeviceType.GLO_NIGHT) {
+                        val intent = Intent(vh.itemView.context, IPCSetActivity::class.java)
+                        intent.putExtra("dev", device.devId)
+                        vh.itemView.context.startActivity(intent)
+                    } else {
+                        val intent = Intent(vh.itemView.context, SettingActivity::class.java)
+                        intent.putExtra("dev", device.devId)
+                        vh.itemView.context.startActivity(intent)
                     }
+                }
+                (vh as Vh).ibtnAdd.setOnClickListener {
+                    // 跳转到外设页面
+                    val intent = Intent(vh.itemView.context, PeripheralListActivity::class.java)
+                    intent.putExtra("dev", device.devId)
+                    vh.itemView.context.startActivity(intent)
                 }
             }
         }
 
         override fun getItemViewType(position: Int): Int {
-            return if (deviceList == null || deviceList.size == 0) 1 else 2
+            return if (deviceList.size == 0) 1 else 2
         }
 
         override fun getItemCount(): Int {
-            return if (deviceList == null || deviceList.size == 0) 1 else deviceList.size
+            return if (deviceList.size == 0) 1 else deviceList.size
         }
 
         internal inner class Vh(@NonNull itemView: View) : RecyclerView.ViewHolder(itemView) {
             var tv: TextView
+            var ibtnAdd: TextView
             var ibtnTf: ImageButton
             var ibtnCloud: ImageButton
             var ibtnSetting: ImageButton
 
             init {
                 tv = itemView.findViewById(R.id.tv)
+                ibtnAdd = itemView.findViewById(R.id.ibtn_add)
                 ibtnTf = itemView.findViewById(R.id.ibtn_tf)
                 ibtnCloud = itemView.findViewById(R.id.ibtn_cloud)
                 ibtnSetting = itemView.findViewById(R.id.ibtn_setting)
             }
         }
 
-        internal inner class EmptyVh(@NonNull itemView: View?) :
+        internal inner class EmptyVh(itemView: View?) :
             RecyclerView.ViewHolder(itemView!!)
     }
 
