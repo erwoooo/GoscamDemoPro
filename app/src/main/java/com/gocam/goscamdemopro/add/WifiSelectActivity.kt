@@ -4,12 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import com.gocam.goscamdemopro.GApplication
 import com.gocam.goscamdemopro.R
-import com.gocam.goscamdemopro.base.BaseActivity
 import com.gocam.goscamdemopro.base.BaseBindActivity
-import com.gocam.goscamdemopro.base.BaseViewModel
-import com.gocam.goscamdemopro.ble.BleScanActivity
 import com.gocam.goscamdemopro.databinding.ActivityWifiSelectBinding
-import com.gocam.goscamdemopro.utils.PermissionUtil
 
 class WifiSelectActivity : BaseBindActivity<ActivityWifiSelectBinding>() {
     override fun getLayoutId(): Int {
@@ -34,38 +30,6 @@ class WifiSelectActivity : BaseBindActivity<ActivityWifiSelectBinding>() {
                 intent.putExtra("psw",psw)
                 this@WifiSelectActivity.startActivity(intent)
             }
-
-            btnScanBle.setOnClickListener {
-                val ssid = etSsid.text.toString()
-                val psw = etPassword.text.toString()
-                if (psw.isEmpty() || ssid.isEmpty())
-                    return@setOnClickListener
-                val intent = Intent(this@WifiSelectActivity, BleScanActivity::class.java)
-                intent.putExtra("ssid",ssid)
-                intent.putExtra("psw",psw)
-                this@WifiSelectActivity.startActivity(intent)
-            }
-
-            btnScanQr.setOnClickListener {
-
-              val intent = Intent(this@WifiSelectActivity,ScanQrCodeActivity::class.java)
-              this@WifiSelectActivity.startActivity(intent)
-            }
-
-            btnAddPhoto.setOnClickListener {
-                val ssid = etSsid.text.toString()
-                val psw = etPassword.text.toString()
-                if (psw.isEmpty() || ssid.isEmpty())
-                    return@setOnClickListener
-                GApplication.app.vPhotoUser.isVPhotoPackage = true
-                GApplication.app.vPhotoUser.indexVPhoto = 0
-                GApplication.app.vPhotoUser.totalVPhoto = 1
-                val intent = Intent(this@WifiSelectActivity, AddVPhotoActivity::class.java)
-                intent.putExtra("ssid",ssid)
-                intent.putExtra("psw",psw)
-                this@WifiSelectActivity.startActivity(intent)
-            }
-
         }
     }
 }

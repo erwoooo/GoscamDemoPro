@@ -75,9 +75,6 @@ class SettingActivity : BaseBindActivity<ActivitySettingBinding>() {
                             mDevice.devId,
                             isOwner
                         )
-                        if (mDevice.devType == DeviceType.V_PHOTO) {
-                            GosCloud.getCloud().deleteByDevice(mDevice.devId, GApplication.app.vPhotoUser.vphotoAccessToken, GApplication.app.vPhotoUser.vphotUserId)
-                        }
                         checkNotNull(result) {
                             finish()
                         }
@@ -109,12 +106,6 @@ class SettingActivity : BaseBindActivity<ActivitySettingBinding>() {
             btnSoftUpdate.setOnClickListener {
                 val intent = Intent(this@SettingActivity, DevSoftUpdateActivity::class.java)
                 intent.putExtra("dev", mDevice.devId)
-                this@SettingActivity.startActivity(intent)
-            }
-
-            btnDoorbellVolume.setOnClickListener {
-                val intent = Intent(this@SettingActivity,DoorbellVolumeActivity::class.java)
-                intent.putExtra("dev",mDevice.devId)
                 this@SettingActivity.startActivity(intent)
             }
 

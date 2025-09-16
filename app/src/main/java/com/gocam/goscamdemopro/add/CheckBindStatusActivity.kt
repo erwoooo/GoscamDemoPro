@@ -13,7 +13,6 @@ import com.gocam.goscamdemopro.base.BaseActivity
 import com.gocam.goscamdemopro.data.RemoteDataSource
 import com.gocam.goscamdemopro.databinding.ActivityCheckBindStatusBinding
 import com.gocam.goscamdemopro.entity.BindStatusResult
-import com.gocam.goscamdemopro.vphoto.VPhotoAddDevResultActivity
 import com.golway.uilib.bean.BaseResponse
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -65,14 +64,8 @@ class CheckBindStatusActivity :
                             //Binding successful
                             mBinding?.tv?.text="success"
                             bindOver = true
-                            if (GApplication.app.vPhotoUser.isVPhotoPackage) {
-                                val intent = Intent(this@CheckBindStatusActivity, VPhotoAddDevResultActivity::class.java)
-                                intent.putExtra("CODE", 0)
-                                startActivity(intent)
-                            } else {
-                                val intent = Intent(this@CheckBindStatusActivity, MainActivity::class.java)
-                                startActivity(intent)
-                            }
+                            val intent = Intent(this@CheckBindStatusActivity, MainActivity::class.java)
+                            startActivity(intent)
                             finish()
                         }
                         -10000->{

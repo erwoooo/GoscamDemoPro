@@ -43,14 +43,14 @@ class RegisterViewModel : BaseViewModel<BaseModel>() {
         }
     }
 
-    fun register(userInfo: String, psw: String, code: String) {
+    fun register(userInfo: String, psw: String, code: String, way: Int) {
         viewModelScope.launch {
             val response = RemoteDataSource.register(
                 GApplication.app.userType,
-                RegistWay.EMAIL,
+                way,
                 userInfo,
                 psw,
-                "",
+                userInfo,
                 userInfo,
                 code,
                 "+86"

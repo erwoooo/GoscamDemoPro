@@ -18,27 +18,12 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <com.gocam.goscamdemopro.utils.ItemViewForSetting
-                        android:id="@+id/siv_move_switch"
-                        style="@style/dev_setting_main_"
-                        app:i_left_txt="@string/string_boundary"
-                        app:i_right_image_show="false"
-                        app:i_switch_btn_show="true"/>
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingStart="16dp"
-                        android:paddingBottom="22dp"
-                        android:background="@drawable/slt_setting_item_bg"
-                        android:text="@string/string_electronic_fence_title"
-                        android:textSize="12sp" />
-                </LinearLayout>
+                <com.gocam.goscamdemopro.utils.ItemViewForSetting
+                    android:id="@+id/siv_move_switch"
+                    style="@style/dev_setting_main_"
+                    app:i_left_txt="@string/string_boundary"
+                    app:i_right_image_show="false"
+                    app:i_switch_btn_show="true"/>
 
                 <com.gocam.goscamdemopro.utils.ItemViewForSetting
                     android:id="@+id/item_sensitivity"
@@ -49,54 +34,22 @@
                     app:i_right_txt_show="true"
                     app:i_top_line="true" />
 
-                <LinearLayout
-                    android:id="@+id/ll_detection_time"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                <com.gocam.goscamdemopro.utils.ItemViewForSetting
+                    android:id="@+id/item_detection_time"
+                    style="@style/dev_setting_main_"
+                    app:i_left_txt="@string/string_detection_time"
+                    app:i_right_image="@mipmap/icon_more"
+                    app:i_right_txt="@string/string_support_off"
+                    app:i_right_txt_show="true"
+                    app:i_top_line="true" />
 
-                    <com.gocam.goscamdemopro.utils.ItemViewForSetting
-                        android:id="@+id/item_detection_time"
-                        style="@style/dev_setting_main_"
-                        app:i_left_txt="@string/string_detection_time"
-                        app:i_right_image="@mipmap/icon_more"
-                        app:i_right_txt="@string/string_support_off"
-                        app:i_right_txt_show="true"
-                        app:i_top_line="true" />
-
-                    <TextView
-                        android:id="@+id/item_events_title"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingStart="16dp"
-                        android:paddingBottom="22dp"
-                        android:background="@drawable/slt_setting_item_bg"
-                        android:text="@string/string_detection_time_title"
-                        android:textSize="12sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <com.gocam.goscamdemopro.utils.ItemViewForSetting
-                        android:id="@+id/item_boundary_switch"
-                        style="@style/dev_setting_main_"
-                        app:i_left_txt="@string/string_visible_boundary"
-                        app:i_right_image_show="false"
-                        app:i_switch_btn_show="true"
-                        app:i_top_line="true"/>
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingStart="16dp"
-                        android:paddingBottom="22dp"
-                        android:background="@drawable/slt_setting_item_bg"
-                        android:text="@string/string_visible_boundary_title"
-                        android:textSize="12sp" />
-                </LinearLayout>
+                <com.gocam.goscamdemopro.utils.ItemViewForSetting
+                    android:id="@+id/item_boundary_switch"
+                    style="@style/dev_setting_main_"
+                    app:i_left_txt="@string/string_visible_boundary"
+                    app:i_right_image_show="false"
+                    app:i_switch_btn_show="true"
+                    app:i_top_line="true"/>
 
                 <FrameLayout
                     android:layout_width="match_parent"

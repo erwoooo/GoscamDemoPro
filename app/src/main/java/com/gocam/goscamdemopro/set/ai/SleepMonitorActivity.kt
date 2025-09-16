@@ -40,7 +40,7 @@ class SleepMonitorActivity : BaseBindActivity<ActivitySleepMonitorBinding>() {
         if (mDevice == null)
             finish()
         mBinding?.apply {
-            llShelter.setOnClickListener {
+            itemShelter.setOnClickListener {
                 if (mDialog.isShowing) {
                     mDialog.dismiss()
                 } else {
@@ -54,7 +54,7 @@ class SleepMonitorActivity : BaseBindActivity<ActivitySleepMonitorBinding>() {
                 }
             }
 
-            llWakeUp.setOnClickListener {
+            itemWakeUp.setOnClickListener {
                 if (mDialog.isShowing) {
                     mDialog.dismiss()
                 } else {

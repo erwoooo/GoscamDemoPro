@@ -70,7 +70,7 @@ public class WsManager extends WebSocketListener {
     private final long maxInterval = 60000;//Maximum reconnection interval
 
     //Domestic official
-    //private  final String mWsUrl = "ws://119.23.130.8:8000";
+    private final static String WS_URL_CN_TEST = "ws://119.23.124.137:8000";
     private final static String WS_URL_CN = "wss://cnapp-open.ulifecam.com/websocketMessage";
     //Foreign official
     private final static String WS_URL_EN = "wss://usapp-open.ulifecam.com/websocketMessage";
@@ -150,6 +150,9 @@ public class WsManager extends WebSocketListener {
                     break;
                 case ConfigManager.CN_SERVER:
                     mWsUrl = WS_URL_CN;
+                    break;
+                case ConfigManager.TEST_SERVER_NET_CN:
+                    mWsUrl = WS_URL_CN_TEST;
                     break;
                 default:
                     throw new RuntimeException("ws url is no matched,serverType="+ ConfigManager.serverType);

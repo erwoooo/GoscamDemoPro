@@ -101,7 +101,7 @@ class BoundaryMonitorActivity : BaseBindActivity<ActivityBoundaryMonitorBinding>
                     mDialog.show()
                 }
             }
-            llDetectionTime.setOnClickListener {
+            itemDetectionTime.setOnClickListener {
                 if (mDetectionDialog.isShowing) {
                     mDetectionDialog.dismiss()
                 } else {

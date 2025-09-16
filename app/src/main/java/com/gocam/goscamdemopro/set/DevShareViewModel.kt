@@ -33,7 +33,9 @@ class DevShareViewModel : BaseViewModel<BaseModel>() {
         viewModelScope.launch {
             val result = RemoteDataSource.getShareUserList(deviceId)
             Log.e(TAG, "getShareList: $result")
-            shareUserList.postValue(result?.UserList)
+            result?.UserList?.let {
+                shareUserList.postValue(it)
+            }
         }
     }
 

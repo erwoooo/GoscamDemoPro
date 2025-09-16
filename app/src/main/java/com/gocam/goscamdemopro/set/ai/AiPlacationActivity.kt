@@ -85,14 +85,14 @@ class AiPlacationActivity : BaseBindActivity<ActivityAiPlacationBinding>() {
         if (mDevice == null)
             finish()
         mBinding?.apply {
-            llMusic.setOnClickListener {
+            itemMusic.setOnClickListener {
                 if (mMusicDialog.isShowing) {
                     mMusicDialog.dismiss()
                 } else {
                     mMusicDialog.show()
                 }
             }
-            llComfortTime.setOnClickListener {
+            itemComfortTime.setOnClickListener {
                 if (mComfortDialog.isShowing) {
                     mComfortDialog.dismiss()
                 } else {

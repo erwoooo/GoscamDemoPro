@@ -313,3 +313,11 @@ data class PrivacySettingParam(
     var y0: Int,
     var y1: Int
 ):BaseDeviceParam()
+
+data class NightLightColorParam(
+    var un_colorindex: Int
+):BaseDeviceParam()
+
+data class AiDetectionBoxParam(
+    var un_switch: Int
+):BaseDeviceParam()

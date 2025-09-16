@@ -7,7 +7,6 @@ import com.gocam.goscamdemopro.base.BaseBindActivity
 import com.gocam.goscamdemopro.databinding.ActivityAddVphotoScheduleBinding
 import com.gocam.goscamdemopro.entity.Device
 import com.gocam.goscamdemopro.utils.DeviceManager
-import com.gocam.goscamdemopro.vphoto.AddVPhotoScheduleActivity.MyTimerTask
 import com.gos.platform.device.inter.OnDevEventCallback
 import com.gos.platform.device.result.DevResult
 import com.gos.platform.device.result.DevResult.DevCmd

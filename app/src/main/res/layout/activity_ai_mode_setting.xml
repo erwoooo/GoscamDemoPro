@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -43,6 +44,20 @@
                     android:text="@string/string_privacy_occlusion"
                     />
 
+                <Button
+                    android:id="@+id/btn_light_color"
+                    style="@style/style_setting_item"
+                    android:text="@string/string_night_light_color"
+                    />
+
+                <com.gocam.goscamdemopro.utils.ItemViewForSetting
+                    android:id="@+id/siv_move_switch"
+                    style="@style/dev_setting_main_"
+                    android:layout_marginStart="@dimen/w_20px"
+                    android:layout_marginTop="@dimen/w_30px"
+                    app:i_left_txt="@string/string_privacy_occlusion"
+                    app:i_right_image_show="false"
+                    app:i_switch_btn_show="true"/>
             </LinearLayout>
         </ScrollView>
     </LinearLayout>

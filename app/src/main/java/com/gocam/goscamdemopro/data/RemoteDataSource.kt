@@ -64,6 +64,9 @@ object RemoteDataSource : DataSource {
 
     }
 
+    /**
+     * 登录
+     */
     override suspend fun login(username: String, psw: String): LoginBeanResult? {
         val job = asyncTask {
 
@@ -101,6 +104,9 @@ object RemoteDataSource : DataSource {
         }
     }
 
+    /**
+     * 获取验证码
+     */
     override suspend fun getVerificationCode(
         findType: Int,
         userInfo: String,
@@ -137,6 +143,9 @@ object RemoteDataSource : DataSource {
             null
     }
 
+    /**
+     * 注册
+     */
     override suspend fun register(
         userType: Int,
         registWay: Int,
@@ -176,6 +185,10 @@ object RemoteDataSource : DataSource {
             null
     }
 
+    /**
+     * 修改密码
+     */
+
     override suspend fun modifyUserPassword(
         userName: String,
         code: String,
@@ -208,6 +221,10 @@ object RemoteDataSource : DataSource {
         else
             null
     }
+
+    /**
+     * 获取设备列表
+     */
 
     override suspend fun getDeviceList(userName: String): List<Device>? {
         val job = asyncTask {
@@ -273,6 +290,9 @@ object RemoteDataSource : DataSource {
         TODO("Not yet implemented")
     }
 
+    /**
+     * 获取绑定Token
+     */
     override suspend fun getBindToken(userName: String, deviceId: String?): BindTokenResult? {
         val job = asyncTask {
             val map = mapOf(
@@ -298,6 +318,10 @@ object RemoteDataSource : DataSource {
         } else
             null
     }
+
+    /**
+     * 查看绑定结果
+     */
 
     override suspend fun queryUserBindResult(
         userName: String,
@@ -327,6 +351,9 @@ object RemoteDataSource : DataSource {
             null
     }
 
+    /**
+     * 修改设备名称
+     */
     override suspend fun modifyDeviceAttr(
         deviceId: String,
         deviceName: String,
@@ -363,6 +390,9 @@ object RemoteDataSource : DataSource {
             null
     }
 
+    /**
+     * 分享
+     */
     override suspend fun shareSmartDevice(
         userName: String,
         deviceId: String,
@@ -407,71 +437,9 @@ object RemoteDataSource : DataSource {
             null
     }
 
-    override suspend fun bindSmartDevice(
-        userName: String?,
-        deviceId: String?,
-        isOwner: Boolean,
-        deviceName: String,
-        deviceType: Int,
-        streamUser: String?,
-        streamPsw: String?,
-        areaId: String?,
-        appMatchType: Int,
-        linkDevice: String
-    ): PlatResult? {
-        val job = asyncTask {
-            val map = mapOf(
-                Pair("UserName", userName),
-                Pair("DeviceId", deviceId),
-                Pair("DeviceOwner", isOwner),
-                Pair("DeviceName", deviceName),
-                Pair("DeviceType", deviceType),
-                Pair("StreamUser", streamUser),
-                Pair("StreamPassword", streamPsw),
-                Pair("AreaId", areaId),
-                Pair("AppMatchType", appMatchType),
-                Pair("LinkDevice", linkDevice),
-                Pair("UserType", GApplication.app.userType),
-                Pair("SessionId", GApplication.app.user.sessionId),
-                Pair("AccessToken", gsoSession.accessToken),
-            )
-
-            val nMap = mapOf(
-                Pair("Body", map),
-                Pair("MessageType", BindSmartDeviceRequest)
-            )
-            val json = Gson().toJson(nMap).toRequestBody()
-            val response = RetrofitClient.apiService.bindSmartDevice(json)
-            return@asyncTask response.body()
-        }
-        val result = job.await()
-        return if (result is BaseResponse<PlatResult?>)
-            result.Body
-        else
-            null
-    }
-
-    override suspend fun forceUnbindDevice(deviceId: String): PlatResult? {
-        val job = asyncTask {
-            val map = mapOf(
-                Pair("DeviceId", deviceId)
-            )
-
-            val nMap = mapOf(
-                Pair("Body", map),
-                Pair("MessageType", ForceUnbindDeviceRequest)
-            )
-            val json = Gson().toJson(nMap).toRequestBody()
-            val response = RetrofitClient.apiService.forceUnbindDevice(json)
-            return@asyncTask response.body()
-        }
-        val result = job.await()
-        return if (result is BaseResponse<PlatResult?>)
-            result.Body
-        else
-            null
-    }
-
+    /**
+     * 获取分享列表
+     */
     override suspend fun getShareUserList(deviceId: String): ShareUserList? {
         val job = asyncTask {
             val map = mapOf(
@@ -498,6 +466,9 @@ object RemoteDataSource : DataSource {
             null
     }
 
+    /**
+     * 删除分享
+     */
     override suspend fun unbindSharedSmartDevice(
         userName: String,
         deviceId: String,
@@ -530,6 +501,9 @@ object RemoteDataSource : DataSource {
             null
     }
 
+    /**
+     * 删除设备
+     */
     override suspend fun unbindSmartDevice(
         userName: String,
         deviceId: String,
@@ -562,6 +536,9 @@ object RemoteDataSource : DataSource {
             null
     }
 
+    /**
+     * 获取能力级
+     */
     override suspend fun getDeviceParam(vararg cmd: String, deviceId: String): List<ParamArray> {
         val job = asyncTask {
             cmdArray.clear()
@@ -596,7 +573,9 @@ object RemoteDataSource : DataSource {
 
     }
 
-
+    /**
+     * 设置能力级
+     */
     override suspend fun setDeviceParam(vararg baseParamArray: BaseParamArray, deviceId: String) {
         val job = asyncTask {
             devParamArray.clear()
@@ -628,6 +607,9 @@ object RemoteDataSource : DataSource {
 
     }
 
+    /**
+     * 获取bypass数据
+     */
     override suspend fun getCmdParam(
         baseDeviceParam: BaseDeviceParam,
         deviceId: String
@@ -660,6 +642,9 @@ object RemoteDataSource : DataSource {
             null
     }
 
+    /**
+     * 设备升级，从服务器查看设备端软件版本信息
+     */
     override suspend fun checkNewVer(deviceType: String): FirmWareParam? {
         val job = asyncTask {
             val map = mapOf(
@@ -687,6 +672,9 @@ object RemoteDataSource : DataSource {
             null
     }
 
+    /**
+     * 唤醒设备
+     */
     override suspend fun wakeDevice(deviceId: String) : WakeUpParam?{
         val job = asyncTask {
             val map = mapOf(
@@ -715,6 +703,9 @@ object RemoteDataSource : DataSource {
     }
 
 
+    /**
+     * 查询低功耗设备状态
+     */
     override suspend fun queryDeviceOnlineStatusSyn(deviceId: String) : DevicePlatStatus?{
         val job = asyncTask {
             val map = mapOf(
@@ -742,6 +733,9 @@ object RemoteDataSource : DataSource {
     }
 
 
+    /**
+     * 发送bypass命令
+     */
     override suspend fun setCmdReq(deviceId: String, baseDeviceParam: BaseDeviceParam,) {
         val job = asyncTask {
             val cmdBody = CmdBody(
@@ -764,7 +758,9 @@ object RemoteDataSource : DataSource {
 
     }
 
-
+    /**
+     * 检查设备绑定状态
+     */
     override suspend fun checkBindStatus(deviceId: String): BindStatus? {
         val job = asyncTask {
             val map = mapOf(
@@ -793,7 +789,9 @@ object RemoteDataSource : DataSource {
 
     }
 
-
+    /**
+     * 获取区域告警播放列表
+     */
     override suspend fun getVoicePlay(deviceId: String): VoicePlayParam? {
         val job = asyncTask {
             val map = mapOf(
@@ -821,6 +819,9 @@ object RemoteDataSource : DataSource {
         }
     }
 
+    /**
+     * 获取音乐列表
+     */
     override suspend fun getVoiceInfoList(deviceId: String, type: Int): VoicePlayParam? {
         val job = asyncTask {
             val map = mapOf(
@@ -849,6 +850,9 @@ object RemoteDataSource : DataSource {
         }
     }
 
+    /**
+     * 获取宝宝睡眠记录
+     */
     override suspend fun getSleepInfo(
         deviceId: String,
         utcTimeBegin: Int,
@@ -885,6 +889,9 @@ object RemoteDataSource : DataSource {
         }
     }
 
+    /**
+     * 获取宝宝7天总睡眠记录
+     */
     override suspend fun getTotalSleepTime(
         deviceId: String,
         utcTimeBegin: Int,

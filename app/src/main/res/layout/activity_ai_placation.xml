@@ -13,29 +13,14 @@
 
         <include layout="@layout/layout_toolbar"/>
 
-        <LinearLayout
-            android:id="@+id/ll_cry"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <com.gocam.goscamdemopro.utils.ItemViewForSetting
-                android:id="@+id/item_cry"
-                style="@style/dev_setting_main_"
-                app:i_left_txt="@string/cry_detection"
-                android:layout_marginTop="@dimen/w_20px"
-                app:i_right_image_show="false"
-                app:i_switch_btn_show="true"
-                android:visibility="visible" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="12sp"
-                android:paddingStart="16dp"
-                android:paddingBottom="22dp"
-                android:background="@drawable/slt_setting_item_bg"
-                android:text="@string/cry_detection_title"/>
-        </LinearLayout>
+        <com.gocam.goscamdemopro.utils.ItemViewForSetting
+            android:id="@+id/item_cry"
+            style="@style/dev_setting_main_"
+            app:i_left_txt="@string/cry_detection"
+            android:layout_marginTop="@dimen/w_20px"
+            app:i_right_image_show="false"
+            app:i_switch_btn_show="true"
+            android:visibility="visible" />
 
         <com.gocam.goscamdemopro.utils.ItemViewForSetting
             android:id="@+id/item_sensitivity"
@@ -46,106 +31,40 @@
             app:i_right_txt_show="true"
             app:i_top_line="true" />
 
-        <LinearLayout
-            android:id="@+id/ll_night_light"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+        <com.gocam.goscamdemopro.utils.ItemViewForSetting
+            android:id="@+id/item_night_light"
+            style="@style/dev_setting_main_"
+            android:visibility="visible"
+            app:i_left_txt="@string/string_night_light"
+            app:i_right_image_show="false"
+            app:i_switch_btn_show="true"
+            app:i_top_line="true" />
 
-            <com.gocam.goscamdemopro.utils.ItemViewForSetting
-                android:id="@+id/item_night_light"
-                style="@style/dev_setting_main_"
-                android:visibility="visible"
-                app:i_left_txt="@string/string_night_light"
-                app:i_right_image_show="false"
-                app:i_switch_btn_show="true"
-                app:i_top_line="true" />
+        <com.gocam.goscamdemopro.utils.ItemViewForSetting
+            android:id="@+id/item_musical_comfort"
+            style="@style/dev_setting_main_"
+            android:visibility="visible"
+            app:i_left_txt="@string/string_musical_comfort"
+            app:i_right_image_show="false"
+            app:i_switch_btn_show="true"
+            app:i_top_line="true" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/slt_setting_item_bg"
-                android:paddingStart="16dp"
-                android:paddingBottom="22dp"
-                android:text="@string/string_night_light_title"
-                android:textSize="12sp" />
-        </LinearLayout>
+        <com.gocam.goscamdemopro.utils.ItemViewForSetting
+            android:id="@+id/item_music"
+            style="@style/dev_setting_main_"
+            app:i_left_txt="@string/music"
+            app:i_right_image="@mipmap/icon_more"
+            app:i_right_txt="@string/string_support_off"
+            app:i_right_txt_show="true"
+            app:i_top_line="true" />
 
-        <LinearLayout
-            android:id="@+id/ll_musical_comfort"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <com.gocam.goscamdemopro.utils.ItemViewForSetting
-                android:id="@+id/item_musical_comfort"
-                style="@style/dev_setting_main_"
-                android:visibility="visible"
-                app:i_left_txt="@string/string_musical_comfort"
-                app:i_right_image_show="false"
-                app:i_switch_btn_show="true"
-                app:i_top_line="true" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/slt_setting_item_bg"
-                android:paddingStart="16dp"
-                android:paddingBottom="22dp"
-                android:text="@string/string_musical_comfort_title"
-                android:textSize="12sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll_music"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <com.gocam.goscamdemopro.utils.ItemViewForSetting
-                android:id="@+id/item_music"
-                style="@style/dev_setting_main_"
-                app:i_left_txt="@string/music"
-                app:i_right_image="@mipmap/icon_more"
-                app:i_right_txt="@string/string_support_off"
-                app:i_right_txt_show="true"
-                app:i_top_line="true" />
-
-            <TextView
-                android:id="@+id/item_wake_up_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/slt_setting_item_bg"
-                android:paddingStart="16dp"
-                android:paddingBottom="22dp"
-                android:text="@string/string_select_music"
-                android:textSize="12sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll_comfort_time"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <com.gocam.goscamdemopro.utils.ItemViewForSetting
-                android:id="@+id/item_comfort_time"
-                style="@style/dev_setting_main_"
-                app:i_left_txt="@string/string_comfort_time"
-                app:i_right_image="@mipmap/icon_more"
-                app:i_right_txt="@string/string_support_off"
-                app:i_right_txt_show="true"
-                app:i_top_line="true" />
-
-            <TextView
-                android:id="@+id/item_events_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/slt_setting_item_bg"
-                android:paddingStart="16dp"
-                android:paddingBottom="22dp"
-                android:text="@string/string_comfort_time_title"
-                android:textSize="12sp" />
-        </LinearLayout>
+        <com.gocam.goscamdemopro.utils.ItemViewForSetting
+            android:id="@+id/item_comfort_time"
+            style="@style/dev_setting_main_"
+            app:i_left_txt="@string/string_comfort_time"
+            app:i_right_image="@mipmap/icon_more"
+            app:i_right_txt="@string/string_support_off"
+            app:i_right_txt_show="true"
+            app:i_top_line="true" />
     </LinearLayout>
 </layout>

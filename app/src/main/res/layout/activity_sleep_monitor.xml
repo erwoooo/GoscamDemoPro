@@ -12,105 +12,40 @@
 
         <include layout="@layout/layout_toolbar"/>
 
-        <LinearLayout
-            android:id="@+id/ll_sleep"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <com.gocam.goscamdemopro.utils.ItemViewForSetting
-                android:id="@+id/item_sleep"
-                style="@style/dev_setting_main_"
-                app:i_left_txt="@string/string_sleep_monitor"
-                android:layout_marginTop="@dimen/w_20px"
-                app:i_right_image_show="false"
-                app:i_switch_btn_show="true"
-                android:visibility="visible" />
+        <com.gocam.goscamdemopro.utils.ItemViewForSetting
+            android:id="@+id/item_sleep"
+            style="@style/dev_setting_main_"
+            app:i_left_txt="@string/string_sleep_monitor"
+            android:layout_marginTop="@dimen/w_20px"
+            app:i_right_image_show="false"
+            app:i_switch_btn_show="true"
+            android:visibility="visible" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="12sp"
-                android:paddingStart="16dp"
-                android:paddingBottom="22dp"
-                android:background="@drawable/slt_setting_item_bg"
-                android:text="@string/string_sleep_monitor_title"/>
-        </LinearLayout>
+        <com.gocam.goscamdemopro.utils.ItemViewForSetting
+            android:id="@+id/item_shelter"
+            style="@style/dev_setting_main_"
+            app:i_left_txt="@string/string_shelter_monitor"
+            app:i_right_image="@mipmap/icon_more"
+            app:i_right_txt="@string/string_support_off"
+            app:i_right_txt_show="true"
+            app:i_top_line="true" />
 
-        <LinearLayout
-            android:id="@+id/ll_shelter"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+        <com.gocam.goscamdemopro.utils.ItemViewForSetting
+            android:id="@+id/item_wake_up"
+            style="@style/dev_setting_main_"
+            app:i_left_txt="@string/string_wake_up"
+            app:i_right_image="@mipmap/icon_more"
+            app:i_right_txt="@string/string_support_off"
+            app:i_right_txt_show="true"
+            app:i_top_line="true" />
 
-            <com.gocam.goscamdemopro.utils.ItemViewForSetting
-                android:id="@+id/item_shelter"
-                style="@style/dev_setting_main_"
-                app:i_left_txt="@string/string_shelter_monitor"
-                app:i_right_image="@mipmap/icon_more"
-                app:i_right_txt="@string/string_support_off"
-                app:i_right_txt_show="true"
-                app:i_top_line="true" />
-
-            <TextView
-                android:id="@+id/item_shelter_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/slt_setting_item_bg"
-                android:paddingStart="16dp"
-                android:paddingBottom="22dp"
-                android:text="@string/string_shelter_monitor_title"
-                android:textSize="12sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll_wake_up"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <com.gocam.goscamdemopro.utils.ItemViewForSetting
-                android:id="@+id/item_wake_up"
-                style="@style/dev_setting_main_"
-                app:i_left_txt="@string/string_wake_up"
-                app:i_right_image="@mipmap/icon_more"
-                app:i_right_txt="@string/string_support_off"
-                app:i_right_txt_show="true"
-                app:i_top_line="true" />
-
-            <TextView
-                android:id="@+id/item_wake_up_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/slt_setting_item_bg"
-                android:paddingStart="16dp"
-                android:paddingBottom="22dp"
-                android:text="@string/string_wake_up_title"
-                android:textSize="12sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll_sleep_quality"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <com.gocam.goscamdemopro.utils.ItemViewForSetting
-                android:id="@+id/item_sleep_quality"
-                style="@style/dev_setting_main_"
-                android:visibility="visible"
-                app:i_left_txt="@string/string_sleep_quality"
-                app:i_right_image_show="false"
-                app:i_switch_btn_show="true"
-                app:i_top_line="true" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/slt_setting_item_bg"
-                android:paddingStart="16dp"
-                android:paddingBottom="22dp"
-                android:text="@string/string_sleep_quality_title"
-                android:textSize="12sp" />
-        </LinearLayout>
+        <com.gocam.goscamdemopro.utils.ItemViewForSetting
+            android:id="@+id/item_sleep_quality"
+            style="@style/dev_setting_main_"
+            android:visibility="visible"
+            app:i_left_txt="@string/string_sleep_quality"
+            app:i_right_image_show="false"
+            app:i_switch_btn_show="true"
+            app:i_top_line="true" />
     </LinearLayout>
 </layout>

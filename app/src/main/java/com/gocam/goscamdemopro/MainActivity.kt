@@ -20,17 +20,16 @@ import com.gocam.goscamdemopro.databinding.ActivityMainBinding
 import com.gocam.goscamdemopro.entity.Device
 import com.gocam.goscamdemopro.ipcset.IPCSetActivity
 import com.gocam.goscamdemopro.peripheral.PeripheralListActivity
-import com.gocam.goscamdemopro.play.PlayEchoActivity
+import com.gocam.goscamdemopro.play.ipc.HomeActivity
 import com.gocam.goscamdemopro.play.ipc.IpcPlayEchoActivity
+import com.gocam.goscamdemopro.play.ipc.LivePlayActivity
 import com.gocam.goscamdemopro.set.SettingActivity
 import com.gocam.goscamdemopro.tf.TfDayActivity
 import com.gocam.goscamdemopro.utils.DeviceManager
 import com.gocam.goscamdemopro.utils.FileUtils
-import com.gocam.goscamdemopro.vphoto.UploadFileActivity
 import com.gos.platform.api.contact.DeviceType
 import com.gos.platform.api.domain.DeviceStatus
 import com.gos.platform.device.jni.DevSession
-import ulife.goscam.com.loglib.dbg
 import java.io.File
 
 class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(),
@@ -122,9 +121,6 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(),
             if (vh is Vh) {
                 val device: Device = deviceList.get(i)
                 var isOnline = false
-                if (device.devType == DeviceType.V_PHOTO) {
-                    isOnline = DeviceManager.getInstance().isOnline(device.devId)
-                }
                 if (device.getDevCap().isPeripheral) {
                     vh.ibtnAdd.visibility = View.VISIBLE
                 } else {
@@ -138,34 +134,10 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(),
                     (vh as Vh).tv.text = it
                 }
                 vh.itemView.setOnClickListener(View.OnClickListener {
-                    when(device.devType){
-                        DeviceType.DOOR_BELL->{
-                            PlayEchoActivity.startActivity(
-                                vh.itemView.context,
-                                device.devId
-                            )
-                        }
-                        DeviceType.IPC,DeviceType.GLO_NIGHT->{
-                            IpcPlayEchoActivity.startActivity(
-                                vh.itemView.context,
-                                device.devId
-                            )
-                        }
-                        DeviceType.V_PHOTO -> {
-                            UploadFileActivity.startActivity(
-                                vh.itemView.context,
-                                device.devId
-                            )
-                        }
-
-                        else->{
-                            PlayEchoActivity.startActivity(
-                                vh.itemView.context,
-                                device.devId
-                            )
-                        }
-                    }
-
+                    HomeActivity.startActivity(
+                        vh.itemView.context,
+                        device.devId
+                    )
                 })
                 (vh as Vh).ibtnTf.setOnClickListener {
                     TfDayActivity.startActivity(

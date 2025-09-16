@@ -1,5 +1,6 @@
 package com.gocam.goscamdemopro.utils;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
@@ -7,24 +8,23 @@ import android.graphics.drawable.GradientDrawable;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.gocam.goscamdemopro.R;
-import com.suke.widget.SwitchButton;
 
 //设置界面的ItemView
 public class ItemViewForSetting extends FrameLayout implements View.OnClickListener {
     protected View view;
-    protected ImageView ivLeftPic;
     protected TextView tvLeft;
-    protected LSwitchButton switchButton;
+    protected Switch switchButton;
     protected TextView tvRight;
     protected ImageView ivRightPic;
     protected View ivRightPicTwo;
 
-    int leftIvRes;
     boolean leftIvShow;
     String leftText;
     float leftTextSize;
@@ -46,9 +46,7 @@ public class ItemViewForSetting extends FrameLayout implements View.OnClickListe
 
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.ItemView);
         if (typedArray != null) {
-            leftIvRes = typedArray.getResourceId(R.styleable.ItemView_i_left_image, 0);
             leftTextSize = typedArray.getDimensionPixelSize(R.styleable.ItemView_i_left_txt_size, 0);
-            leftIvShow = typedArray.getBoolean(R.styleable.ItemView_i_left_image_show, true);
 
             leftText = typedArray.getString(R.styleable.ItemView_i_left_txt);
             leftTextShow = typedArray.getBoolean(R.styleable.ItemView_i_left_txt_show, true);
@@ -79,10 +77,6 @@ public class ItemViewForSetting extends FrameLayout implements View.OnClickListe
         super.onFinishInflate();
         view = View.inflate(getContext(), R.layout.layout_item_for_setting, null);
         addView(view);
-
-		ivLeftPic = view.findViewById(R.id.iv_left_pic);
-		ivLeftPic.setImageResource(leftIvRes);
-		ivLeftPic.setVisibility(leftIvShow?View.VISIBLE:View.GONE);
 
         tvLeft = view.findViewById(R.id.tv_left_text);
         if (leftTextSize > 0) {
@@ -135,9 +129,9 @@ public class ItemViewForSetting extends FrameLayout implements View.OnClickListe
 
     public void setOnCheckedChangeListener(OnCheckedChangeListener l) {
         this.mCheckedChangeListener = l;
-        switchButton.setOnCheckedChangeListener(new SwitchButton.OnCheckedChangeListener() {
+        switchButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(SwitchButton view, boolean isChecked) {
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 switchButton.setChecked(isChecked);
                 mCheckedChangeListener.onCheckedChanged(ItemViewForSetting.this, isChecked);
             }
@@ -203,10 +197,6 @@ public class ItemViewForSetting extends FrameLayout implements View.OnClickListe
         drawable.setColor(Color.parseColor(res));
         drawable.setStroke(2, Color.parseColor("#000000"));
         ivRightPicTwo.setBackground(drawable);
-    }
-
-    public void isTagVisible(int v) {
-        findViewById(R.id.view_version_tag).setVisibility(v);
     }
 
     public boolean isRightPicSelected() {

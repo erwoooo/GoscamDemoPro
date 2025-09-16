@@ -26,11 +26,6 @@
         android:orientation="horizontal"
         android:paddingStart="15dp">
 
-        <ImageView
-            android:id="@+id/iv_left_pic"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical" />
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -43,26 +38,14 @@
                 android:layout_gravity="center_vertical"
                 android:maxLines="2"
                 android:textColor="@color/textColor" />
-            <View
-                android:id="@+id/view_version_tag"
-                android:layout_width="12dp"
-                android:layout_height="12dp"
-                android:layout_gravity="center|top"
-                android:layout_marginStart="3dp"
-                android:layout_marginTop="1dp"
-                android:layout_marginEnd="1dp"
-                android:visibility="gone"
-                android:background="@drawable/shape_record_rec" />
         </LinearLayout>
 
-        <com.gocam.goscamdemopro.utils.LSwitchButton
+        <Switch
             android:id="@+id/lsb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginEnd="15dp"
-            app:sb_show_indicator="false"
-            app:sb_checked_color="@color/_3CCF9B"/>
+            android:layout_marginEnd="15dp"/>
 
         <TextView
             android:id="@+id/tv_right_text"

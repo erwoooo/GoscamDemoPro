@@ -37,7 +37,7 @@ class CommonSetActivity : BaseActivity<ActivityCommonSetBinding, CommonSetViewMo
 
         mViewModel?.getDeviceParam(deviceId)
 
-        mViewModel?.apply {
+        mViewModel.apply {
             mCameraParamResult.observe(this@CommonSetActivity) {
                 mBinding?.cameraSwitch?.apply {
                     setOnCheckedChangeListener(null)

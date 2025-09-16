@@ -2,12 +2,22 @@ package com.gocam.goscamdemopro.set.ai
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.lifecycle.lifecycleScope
 import com.gocam.goscamdemopro.R
 import com.gocam.goscamdemopro.base.BaseBindActivity
+import com.gocam.goscamdemopro.data.RemoteDataSource
 import com.gocam.goscamdemopro.databinding.ActivityAiModeSettingBinding
+import com.gocam.goscamdemopro.entity.AiDetectionBoxParam
+import com.gocam.goscamdemopro.entity.BoundarySettingParam
+import com.gocam.goscamdemopro.entity.DevParamArray
 import com.gocam.goscamdemopro.entity.Device
+import com.gocam.goscamdemopro.entity.NightLightColorParam
 import com.gocam.goscamdemopro.set.DevShareActivity
 import com.gocam.goscamdemopro.utils.DeviceManager
+import com.google.gson.Gson
+import com.gos.platform.api.devparam.DevParam.DevParamCmdType
+import com.gos.platform.api.devparam.DevParam.DevParamCmdType.BoundaryParam
+import kotlinx.coroutines.launch
 
 /**
  *
@@ -45,6 +55,41 @@ class AiModeSettingActivity : BaseBindActivity<ActivityAiModeSettingBinding>() {
                 intent.putExtra("dev", mDevice.devId)
                 this@AiModeSettingActivity.startActivity(intent)
             }
+            btnLightColor.setOnClickListener {
+                val intent = Intent(this@AiModeSettingActivity, NightLightSettingActivity::class.java)
+                intent.putExtra("dev", mDevice.devId)
+                this@AiModeSettingActivity.startActivity(intent)
+            }
+            sivMoveSwitch.setOnCheckedChangeListener { v, isChecked ->
+                saveCap(if (isChecked) 1 else 0)
+            }
+        }
+        getCap()
+    }
+
+    private fun getCap() {
+        lifecycleScope.launch {
+            val result = RemoteDataSource.getDeviceParam(DevParamCmdType.DetectionBox, deviceId = mDevice.devId)
+            result.let {
+                for (param in it) {
+                    if (param.CMDType == DevParamCmdType.DetectionBox) {
+                        val boundaryParam = Gson().fromJson(param.DeviceParam, AiDetectionBoxParam::class.java)
+                        mBinding?.sivMoveSwitch?.isChecked = boundaryParam.un_switch == 1
+                    }
+                }
+            }
+        }
+    }
+
+    private fun saveCap(index: Int) {
+        val methodParam =
+            AiDetectionBoxParam(index)
+        val devParamArray = DevParamArray(
+            DevParamCmdType.DetectionBox,
+            methodParam
+        )
+        lifecycleScope.launch {
+            val result = RemoteDataSource.setDeviceParam(devParamArray, deviceId = mDevice.devId)
         }
     }
 }

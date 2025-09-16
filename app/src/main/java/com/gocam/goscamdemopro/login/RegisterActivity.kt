@@ -6,6 +6,7 @@ import com.gocam.goscamdemopro.base.BaseActivity
 import com.gocam.goscamdemopro.databinding.ActivityRegisterBinding
 import com.gocam.goscamdemopro.utils.CountDownTimerUtil
 import com.gocam.goscamdemopro.utils.RegexUtils
+import com.gos.platform.api.contact.RegistWay
 
 class RegisterActivity : BaseActivity<ActivityRegisterBinding, RegisterViewModel>(),
     CountDownTimerUtil.CountDownTimerListener {
@@ -21,7 +22,7 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding, RegisterViewModel
             }
             btnCode.setOnClickListener {
                 val userName = etUserName.text.toString()
-                if (RegexUtils.isMatch(RegexUtils.REGEX_EMAIL, userName)) {
+                if (RegexUtils.isMatch(RegexUtils.REGEX_MOBILE_EXACT, userName)) {
                     if (userName.length < 4 || userName.length > 81) {
                         showToast(getString(R.string.username_format_error_tip))
                     } else {
@@ -36,12 +37,17 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding, RegisterViewModel
                 val firstPsw = etPassword.text.toString()
                 val secondPsw = etPasswordAgain.text.toString()
                 val code = etVerificationCode.text.toString()
-                if (RegexUtils.isMatch(RegexUtils.REGEX_EMAIL, userName)) {
+                if (RegexUtils.isMatch(RegexUtils.REGEX_MOBILE_EXACT, userName)) {
+                    if (checkPasswordPassed(firstPsw, secondPsw)) {
+                        showLoading()
+                        mViewModel.register(userName, firstPsw, code, RegistWay.PHONE)
+                    }
+                } else if (RegexUtils.isMatch(RegexUtils.REGEX_EMAIL, userName)) {
                     if (userName.length < 4 || userName.length > 81) {
                         showToast(getString(R.string.username_format_error_tip))
                     } else if (checkPasswordPassed(firstPsw, secondPsw)) {
                         showLoading()
-                        mViewModel.register(userName, firstPsw, code)
+                        mViewModel.register(userName, firstPsw, code, RegistWay.EMAIL)
                     }
                 }
             }

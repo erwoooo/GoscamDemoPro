@@ -52,9 +52,9 @@ class DevShareActivity : BaseActivity<ActivityDevShareBinding, DevShareViewModel
             }
         }
 
-        mViewModel?.apply {
+        mViewModel.apply {
             mShareUserList.observe(this@DevShareActivity) {
-                shareAdapter!!.setData(it as ArrayList<String>)
+                shareAdapter?.setData(it as ArrayList<String>)
             }
 
             mShareResult.observe(this@DevShareActivity) {

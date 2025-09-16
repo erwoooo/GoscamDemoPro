@@ -39,9 +39,7 @@ interface DataSource {
     // share device
     suspend fun shareSmartDevice(userName: String,deviceId:String,isOwner:Int,deviceName:String,deviceType:Int,streamUser:String?,streamPsw:String?,areaId:String?,appMatchType:Int):ShareDeviceResult?
 
-    suspend fun bindSmartDevice(userName: String?,deviceId:String?,isOwner:Boolean,deviceName:String,deviceType:Int,streamUser:String?,streamPsw:String?,areaId:String?,appMatchType:Int, linkDevice:String):PlatResult?
 
-    suspend fun forceUnbindDevice(deviceId:String):PlatResult?
     // get a list of user you've shared
     suspend fun getShareUserList(deviceId:String):ShareUserList?
 

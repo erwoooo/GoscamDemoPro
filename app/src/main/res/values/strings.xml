@@ -477,5 +477,7 @@
     <string name="string_no_baby">No baby found</string>
     <string name="string_baby_eventing">The baby is moving</string>
     <string name="string_baby_sleeping">The baby is sleeping</string>
+    <string name="string_night_light_color">Night light color</string>
+
 
 </resources>
